@@ -1,9 +1,9 @@
 ﻿{
     "additionalProperties": {
       "groupId": "com.cloudmersive",
-      "artifactId": "cloudmersive-barcode-api-java-client",
-      "artifactDescription": "Cloudmersive Barcode API Java Client",
-      "artifactUrl": "https://cloudmersive.com/barcode-api",
+      "artifactId": "cloudmersive-virus-api-java-client",
+      "artifactDescription": "Cloudmersive Virus Scan API Java Client",
+      "artifactUrl": "https://cloudmersive.com/virus-api",
   
       "developerName": "Cloudmersive",
       "developerOrganization": "Cloudmersive",
@@ -15,9 +15,9 @@
   
       "artifactVersion": "10.0.0",
 
-      "scmConnection": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.Barcode.git",
-    "scmDeveloperConnection": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.Barcode.git",
-      "scmUrl": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.Barcode.git"
+      "scmConnection": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.VirusScan.git",
+    "scmDeveloperConnection": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.VirusScan.git",
+      "scmUrl": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.VirusScan.git"
     }
   }
   
