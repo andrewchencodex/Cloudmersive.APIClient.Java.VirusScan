@@ -1,0 +1,23 @@
+﻿{
+    "additionalProperties": {
+      "groupId": "com.cloudmersive",
+      "artifactId": "cloudmersive-barcode-api-java-client",
+      "artifactDescription": "Cloudmersive Barcode API Java Client",
+      "artifactUrl": "https://cloudmersive.com/barcode-api",
+  
+      "developerName": "Cloudmersive",
+      "developerOrganization": "Cloudmersive",
+      "developerEmail": "support@cloudmersive.com",
+      "developerOrganizationUrl": "https://cloudmersive.com/",
+  
+      "licenseName": "Apache License 2.0",
+      "licenseUrl": "https://www.apache.org/licenses/LICENSE-2.0.html",
+  
+      "artifactVersion": "10.0.0",
+
+      "scmConnection": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.Barcode.git",
+    "scmDeveloperConnection": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.Barcode.git",
+      "scmUrl": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.Barcode.git"
+    }
+  }
+  
