@@ -13,30 +13,30 @@
 
 package org.openapitools.client.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.openapitools.client.model.CloudStorageVirusFound;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  * Model tests for CloudStorageVirusScanResult
  */
-public class CloudStorageVirusScanResultTest {
+class CloudStorageVirusScanResultTest {
     private final CloudStorageVirusScanResult model = new CloudStorageVirusScanResult();
 
     /**
      * Model tests for CloudStorageVirusScanResult
      */
     @Test
-    public void testCloudStorageVirusScanResult() {
+    void testCloudStorageVirusScanResult() {
         // TODO: test CloudStorageVirusScanResult
     }
 
@@ -44,7 +44,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'successful'
      */
     @Test
-    public void successfulTest() {
+    void successfulTest() {
         // TODO: test successful
     }
 
@@ -52,7 +52,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'cleanResult'
      */
     @Test
-    public void cleanResultTest() {
+    void cleanResultTest() {
         // TODO: test cleanResult
     }
 
@@ -60,7 +60,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'foundViruses'
      */
     @Test
-    public void foundVirusesTest() {
+    void foundVirusesTest() {
         // TODO: test foundViruses
     }
 
@@ -68,7 +68,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'errorDetailedDescription'
      */
     @Test
-    public void errorDetailedDescriptionTest() {
+    void errorDetailedDescriptionTest() {
         // TODO: test errorDetailedDescription
     }
 
@@ -76,7 +76,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'fileSize'
      */
     @Test
-    public void fileSizeTest() {
+    void fileSizeTest() {
         // TODO: test fileSize
     }
 
@@ -84,7 +84,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsContentModerationRejection'
      */
     @Test
-    public void containsContentModerationRejectionTest() {
+    void containsContentModerationRejectionTest() {
         // TODO: test containsContentModerationRejection
     }
 
@@ -92,7 +92,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsExecutable'
      */
     @Test
-    public void containsExecutableTest() {
+    void containsExecutableTest() {
         // TODO: test containsExecutable
     }
 
@@ -100,7 +100,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsInvalidFile'
      */
     @Test
-    public void containsInvalidFileTest() {
+    void containsInvalidFileTest() {
         // TODO: test containsInvalidFile
     }
 
@@ -108,7 +108,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsScript'
      */
     @Test
-    public void containsScriptTest() {
+    void containsScriptTest() {
         // TODO: test containsScript
     }
 
@@ -116,7 +116,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsPasswordProtectedFile'
      */
     @Test
-    public void containsPasswordProtectedFileTest() {
+    void containsPasswordProtectedFileTest() {
         // TODO: test containsPasswordProtectedFile
     }
 
@@ -124,7 +124,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsRestrictedFileFormat'
      */
     @Test
-    public void containsRestrictedFileFormatTest() {
+    void containsRestrictedFileFormatTest() {
         // TODO: test containsRestrictedFileFormat
     }
 
@@ -132,7 +132,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsMacros'
      */
     @Test
-    public void containsMacrosTest() {
+    void containsMacrosTest() {
         // TODO: test containsMacros
     }
 
@@ -140,7 +140,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsXmlExternalEntities'
      */
     @Test
-    public void containsXmlExternalEntitiesTest() {
+    void containsXmlExternalEntitiesTest() {
         // TODO: test containsXmlExternalEntities
     }
 
@@ -148,7 +148,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsInsecureDeserialization'
      */
     @Test
-    public void containsInsecureDeserializationTest() {
+    void containsInsecureDeserializationTest() {
         // TODO: test containsInsecureDeserialization
     }
 
@@ -156,7 +156,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsHtml'
      */
     @Test
-    public void containsHtmlTest() {
+    void containsHtmlTest() {
         // TODO: test containsHtml
     }
 
@@ -164,7 +164,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsUnsafeArchive'
      */
     @Test
-    public void containsUnsafeArchiveTest() {
+    void containsUnsafeArchiveTest() {
         // TODO: test containsUnsafeArchive
     }
 
@@ -172,7 +172,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'containsOleEmbeddedObject'
      */
     @Test
-    public void containsOleEmbeddedObjectTest() {
+    void containsOleEmbeddedObjectTest() {
         // TODO: test containsOleEmbeddedObject
     }
 
@@ -180,7 +180,7 @@ public class CloudStorageVirusScanResultTest {
      * Test the property 'verifiedFileFormat'
      */
     @Test
-    public void verifiedFileFormatTest() {
+    void verifiedFileFormatTest() {
         // TODO: test verifiedFileFormat
     }
 

@@ -1,28 +1,24 @@
+    private static volatile boolean chunkedTransfer = false;
+
     /**
      * Enable chunked transfer encoding for multipart uploads (file parameters).
      *
-     * This configures the underlying OkHttpClient to:
-     *  - use HTTP/1.1 (so Transfer-Encoding: chunked applies), and
-     *  - wrap multipart request bodies so the content length is unknown.
+     * When enabled, multipart request bodies are streamed using chunked
+     * transfer encoding (no Content-Length header). When disabled (the default),
+     * bodies are buffered to a byte array so a known Content-Length is sent.
      *
-     * Calling this method multiple times will not add duplicate interceptors.
-     *
-     * @return ApiClient
+     * @return this ApiClient instance for method chaining
      */
     public ApiClient enableChunkedTransfer() {
-        OkHttpClient base = getHttpClient();
+        chunkedTransfer = true;
+        return this;
+    }
 
-        // Don't add the interceptor more than once.
-        for (Interceptor i : base.interceptors()) {
-            if (i instanceof ForceChunkedMultipartInterceptor) {
-                return this;
-            }
-        }
-
-        OkHttpClient chunked = base.newBuilder()
-                .protocols(Collections.singletonList(Protocol.HTTP_1_1))
-                .addInterceptor(new ForceChunkedMultipartInterceptor())
-                .build();
-
-        return setHttpClient(chunked);
+    /**
+     * Check whether chunked transfer encoding is enabled.
+     *
+     * @return true if chunked transfer is enabled
+     */
+    public static boolean isChunkedTransferEnabled() {
+        return chunkedTransfer;
     }

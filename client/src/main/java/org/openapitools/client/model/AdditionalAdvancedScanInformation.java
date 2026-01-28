@@ -13,79 +13,65 @@
 
 package org.openapitools.client.model;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.StringJoiner;
 import java.util.Objects;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
-import java.util.Arrays;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Arrays;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import org.openapitools.client.JSON;
 
+import org.openapitools.client.ApiClient;
 /**
  * Additional non-threat content verification information
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T23:59:36.607801Z[Etc/UTC]", comments = "Generator version: 7.12.0")
+@JsonPropertyOrder({
+  AdditionalAdvancedScanInformation.JSON_PROPERTY_CONTAINS_J_S_O_N,
+  AdditionalAdvancedScanInformation.JSON_PROPERTY_CONTAINS_X_M_L,
+  AdditionalAdvancedScanInformation.JSON_PROPERTY_CONTAINS_IMAGE,
+  AdditionalAdvancedScanInformation.JSON_PROPERTY_HASH_S_H_A1,
+  AdditionalAdvancedScanInformation.JSON_PROPERTY_RELEVANT_SUBFILE_NAME,
+  AdditionalAdvancedScanInformation.JSON_PROPERTY_RELEVANT_SUBFILE_HASH_S_H_A1,
+  AdditionalAdvancedScanInformation.JSON_PROPERTY_IS_AUTHENTICODE_SIGNED
+})
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T21:04:27.160244900-08:00[America/Los_Angeles]", comments = "Generator version: 7.12.0")
 public class AdditionalAdvancedScanInformation {
-  public static final String SERIALIZED_NAME_CONTAINS_J_S_O_N = "ContainsJSON";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_J_S_O_N)
+  public static final String JSON_PROPERTY_CONTAINS_J_S_O_N = "ContainsJSON";
   @javax.annotation.Nullable
   private Boolean containsJSON;
 
-  public static final String SERIALIZED_NAME_CONTAINS_X_M_L = "ContainsXML";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_X_M_L)
+  public static final String JSON_PROPERTY_CONTAINS_X_M_L = "ContainsXML";
   @javax.annotation.Nullable
   private Boolean containsXML;
 
-  public static final String SERIALIZED_NAME_CONTAINS_IMAGE = "ContainsImage";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_IMAGE)
+  public static final String JSON_PROPERTY_CONTAINS_IMAGE = "ContainsImage";
   @javax.annotation.Nullable
   private Boolean containsImage;
 
-  public static final String SERIALIZED_NAME_HASH_S_H_A1 = "Hash_SHA1";
-  @SerializedName(SERIALIZED_NAME_HASH_S_H_A1)
+  public static final String JSON_PROPERTY_HASH_S_H_A1 = "Hash_SHA1";
   @javax.annotation.Nullable
   private String hashSHA1;
 
-  public static final String SERIALIZED_NAME_RELEVANT_SUBFILE_NAME = "RelevantSubfileName";
-  @SerializedName(SERIALIZED_NAME_RELEVANT_SUBFILE_NAME)
+  public static final String JSON_PROPERTY_RELEVANT_SUBFILE_NAME = "RelevantSubfileName";
   @javax.annotation.Nullable
   private String relevantSubfileName;
 
-  public static final String SERIALIZED_NAME_RELEVANT_SUBFILE_HASH_S_H_A1 = "RelevantSubfileHash_SHA1";
-  @SerializedName(SERIALIZED_NAME_RELEVANT_SUBFILE_HASH_S_H_A1)
+  public static final String JSON_PROPERTY_RELEVANT_SUBFILE_HASH_S_H_A1 = "RelevantSubfileHash_SHA1";
   @javax.annotation.Nullable
   private String relevantSubfileHashSHA1;
 
-  public static final String SERIALIZED_NAME_IS_AUTHENTICODE_SIGNED = "IsAuthenticodeSigned";
-  @SerializedName(SERIALIZED_NAME_IS_AUTHENTICODE_SIGNED)
+  public static final String JSON_PROPERTY_IS_AUTHENTICODE_SIGNED = "IsAuthenticodeSigned";
   @javax.annotation.Nullable
   private Boolean isAuthenticodeSigned;
 
-  public AdditionalAdvancedScanInformation() {
+  public AdditionalAdvancedScanInformation() { 
   }
 
   public AdditionalAdvancedScanInformation containsJSON(@javax.annotation.Nullable Boolean containsJSON) {
@@ -98,10 +84,15 @@ public class AdditionalAdvancedScanInformation {
    * @return containsJSON
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_J_S_O_N)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsJSON() {
     return containsJSON;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_J_S_O_N)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsJSON(@javax.annotation.Nullable Boolean containsJSON) {
     this.containsJSON = containsJSON;
   }
@@ -117,10 +108,15 @@ public class AdditionalAdvancedScanInformation {
    * @return containsXML
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_X_M_L)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsXML() {
     return containsXML;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_X_M_L)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsXML(@javax.annotation.Nullable Boolean containsXML) {
     this.containsXML = containsXML;
   }
@@ -136,10 +132,15 @@ public class AdditionalAdvancedScanInformation {
    * @return containsImage
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_IMAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsImage() {
     return containsImage;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_IMAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsImage(@javax.annotation.Nullable Boolean containsImage) {
     this.containsImage = containsImage;
   }
@@ -155,10 +156,15 @@ public class AdditionalAdvancedScanInformation {
    * @return hashSHA1
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_HASH_S_H_A1)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getHashSHA1() {
     return hashSHA1;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_HASH_S_H_A1)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setHashSHA1(@javax.annotation.Nullable String hashSHA1) {
     this.hashSHA1 = hashSHA1;
   }
@@ -174,10 +180,15 @@ public class AdditionalAdvancedScanInformation {
    * @return relevantSubfileName
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_RELEVANT_SUBFILE_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getRelevantSubfileName() {
     return relevantSubfileName;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_RELEVANT_SUBFILE_NAME)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRelevantSubfileName(@javax.annotation.Nullable String relevantSubfileName) {
     this.relevantSubfileName = relevantSubfileName;
   }
@@ -193,10 +204,15 @@ public class AdditionalAdvancedScanInformation {
    * @return relevantSubfileHashSHA1
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_RELEVANT_SUBFILE_HASH_S_H_A1)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getRelevantSubfileHashSHA1() {
     return relevantSubfileHashSHA1;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_RELEVANT_SUBFILE_HASH_S_H_A1)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setRelevantSubfileHashSHA1(@javax.annotation.Nullable String relevantSubfileHashSHA1) {
     this.relevantSubfileHashSHA1 = relevantSubfileHashSHA1;
   }
@@ -212,16 +228,23 @@ public class AdditionalAdvancedScanInformation {
    * @return isAuthenticodeSigned
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_IS_AUTHENTICODE_SIGNED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getIsAuthenticodeSigned() {
     return isAuthenticodeSigned;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_IS_AUTHENTICODE_SIGNED)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setIsAuthenticodeSigned(@javax.annotation.Nullable Boolean isAuthenticodeSigned) {
     this.isAuthenticodeSigned = isAuthenticodeSigned;
   }
 
 
-
+  /**
+   * Return true if this AdditionalAdvancedScanInformation object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -271,104 +294,74 @@ public class AdditionalAdvancedScanInformation {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    openapiFields.add("ContainsJSON");
-    openapiFields.add("ContainsXML");
-    openapiFields.add("ContainsImage");
-    openapiFields.add("Hash_SHA1");
-    openapiFields.add("RelevantSubfileName");
-    openapiFields.add("RelevantSubfileHash_SHA1");
-    openapiFields.add("IsAuthenticodeSigned");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
+  /**
+   * Convert the instance into URL query string.
+   *
+   * @return URL query string
+   */
+  public String toUrlQueryString() {
+    return toUrlQueryString(null);
   }
 
   /**
-   * Validates the JSON Element and throws an exception if issues found
+   * Convert the instance into URL query string.
    *
-   * @param jsonElement JSON Element
-   * @throws IOException if the JSON Element is invalid with respect to AdditionalAdvancedScanInformation
+   * @param prefix prefix of the query string
+   * @return URL query string
    */
-  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
-      if (jsonElement == null) {
-        if (!AdditionalAdvancedScanInformation.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in AdditionalAdvancedScanInformation is not found in the empty JSON string", AdditionalAdvancedScanInformation.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Map.Entry<String, JsonElement> entry : entries) {
-        if (!AdditionalAdvancedScanInformation.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `AdditionalAdvancedScanInformation` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
-        }
-      }
-        JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if ((jsonObj.get("Hash_SHA1") != null && !jsonObj.get("Hash_SHA1").isJsonNull()) && !jsonObj.get("Hash_SHA1").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `Hash_SHA1` to be a primitive type in the JSON string but got `%s`", jsonObj.get("Hash_SHA1").toString()));
-      }
-      if ((jsonObj.get("RelevantSubfileName") != null && !jsonObj.get("RelevantSubfileName").isJsonNull()) && !jsonObj.get("RelevantSubfileName").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `RelevantSubfileName` to be a primitive type in the JSON string but got `%s`", jsonObj.get("RelevantSubfileName").toString()));
-      }
-      if ((jsonObj.get("RelevantSubfileHash_SHA1") != null && !jsonObj.get("RelevantSubfileHash_SHA1").isJsonNull()) && !jsonObj.get("RelevantSubfileHash_SHA1").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `RelevantSubfileHash_SHA1` to be a primitive type in the JSON string but got `%s`", jsonObj.get("RelevantSubfileHash_SHA1").toString()));
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!AdditionalAdvancedScanInformation.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'AdditionalAdvancedScanInformation' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<AdditionalAdvancedScanInformation> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(AdditionalAdvancedScanInformation.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<AdditionalAdvancedScanInformation>() {
-           @Override
-           public void write(JsonWriter out, AdditionalAdvancedScanInformation value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public AdditionalAdvancedScanInformation read(JsonReader in) throws IOException {
-             JsonElement jsonElement = elementAdapter.read(in);
-             validateJsonElement(jsonElement);
-             return thisAdapter.fromJsonTree(jsonElement);
-           }
-
-       }.nullSafe();
+  public String toUrlQueryString(String prefix) {
+    String suffix = "";
+    String containerSuffix = "";
+    String containerPrefix = "";
+    if (prefix == null) {
+      // style=form, explode=true, e.g. /pet?name=cat&type=manx
+      prefix = "";
+    } else {
+      // deepObject style e.g. /pet?id[name]=cat&id[type]=manx
+      prefix = prefix + "[";
+      suffix = "]";
+      containerSuffix = "]";
+      containerPrefix = "[";
     }
-  }
 
-  /**
-   * Create an instance of AdditionalAdvancedScanInformation given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of AdditionalAdvancedScanInformation
-   * @throws IOException if the JSON string is invalid with respect to AdditionalAdvancedScanInformation
-   */
-  public static AdditionalAdvancedScanInformation fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, AdditionalAdvancedScanInformation.class);
-  }
+    StringJoiner joiner = new StringJoiner("&");
 
-  /**
-   * Convert an instance of AdditionalAdvancedScanInformation to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
+    // add `ContainsJSON` to the URL query string
+    if (getContainsJSON() != null) {
+      joiner.add(String.format("%sContainsJSON%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsJSON()))));
+    }
+
+    // add `ContainsXML` to the URL query string
+    if (getContainsXML() != null) {
+      joiner.add(String.format("%sContainsXML%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsXML()))));
+    }
+
+    // add `ContainsImage` to the URL query string
+    if (getContainsImage() != null) {
+      joiner.add(String.format("%sContainsImage%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsImage()))));
+    }
+
+    // add `Hash_SHA1` to the URL query string
+    if (getHashSHA1() != null) {
+      joiner.add(String.format("%sHash_SHA1%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getHashSHA1()))));
+    }
+
+    // add `RelevantSubfileName` to the URL query string
+    if (getRelevantSubfileName() != null) {
+      joiner.add(String.format("%sRelevantSubfileName%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getRelevantSubfileName()))));
+    }
+
+    // add `RelevantSubfileHash_SHA1` to the URL query string
+    if (getRelevantSubfileHashSHA1() != null) {
+      joiner.add(String.format("%sRelevantSubfileHash_SHA1%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getRelevantSubfileHashSHA1()))));
+    }
+
+    // add `IsAuthenticodeSigned` to the URL query string
+    if (getIsAuthenticodeSigned() != null) {
+      joiner.add(String.format("%sIsAuthenticodeSigned%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getIsAuthenticodeSigned()))));
+    }
+
+    return joiner.toString();
   }
 }
 

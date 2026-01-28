@@ -13,57 +13,43 @@
 
 package org.openapitools.client.model;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.StringJoiner;
 import java.util.Objects;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.openapitools.client.model.VirusFound;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.openapitools.client.JSON;
-
+import org.openapitools.client.ApiClient;
 /**
  * Result of running a virus scan
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T23:59:36.607801Z[Etc/UTC]", comments = "Generator version: 7.12.0")
+@JsonPropertyOrder({
+  VirusScanResult.JSON_PROPERTY_CLEAN_RESULT,
+  VirusScanResult.JSON_PROPERTY_FOUND_VIRUSES
+})
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T21:04:27.160244900-08:00[America/Los_Angeles]", comments = "Generator version: 7.12.0")
 public class VirusScanResult {
-  public static final String SERIALIZED_NAME_CLEAN_RESULT = "CleanResult";
-  @SerializedName(SERIALIZED_NAME_CLEAN_RESULT)
+  public static final String JSON_PROPERTY_CLEAN_RESULT = "CleanResult";
   @javax.annotation.Nullable
   private Boolean cleanResult;
 
-  public static final String SERIALIZED_NAME_FOUND_VIRUSES = "FoundViruses";
-  @SerializedName(SERIALIZED_NAME_FOUND_VIRUSES)
+  public static final String JSON_PROPERTY_FOUND_VIRUSES = "FoundViruses";
   @javax.annotation.Nullable
   private List<VirusFound> foundViruses = new ArrayList<>();
 
-  public VirusScanResult() {
+  public VirusScanResult() { 
   }
 
   public VirusScanResult cleanResult(@javax.annotation.Nullable Boolean cleanResult) {
@@ -76,10 +62,15 @@ public class VirusScanResult {
    * @return cleanResult
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CLEAN_RESULT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getCleanResult() {
     return cleanResult;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CLEAN_RESULT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCleanResult(@javax.annotation.Nullable Boolean cleanResult) {
     this.cleanResult = cleanResult;
   }
@@ -103,16 +94,23 @@ public class VirusScanResult {
    * @return foundViruses
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_FOUND_VIRUSES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<VirusFound> getFoundViruses() {
     return foundViruses;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_FOUND_VIRUSES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFoundViruses(@javax.annotation.Nullable List<VirusFound> foundViruses) {
     this.foundViruses = foundViruses;
   }
 
 
-
+  /**
+   * Return true if this VirusScanResult object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -152,104 +150,54 @@ public class VirusScanResult {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    openapiFields.add("CleanResult");
-    openapiFields.add("FoundViruses");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
+  /**
+   * Convert the instance into URL query string.
+   *
+   * @return URL query string
+   */
+  public String toUrlQueryString() {
+    return toUrlQueryString(null);
   }
 
   /**
-   * Validates the JSON Element and throws an exception if issues found
+   * Convert the instance into URL query string.
    *
-   * @param jsonElement JSON Element
-   * @throws IOException if the JSON Element is invalid with respect to VirusScanResult
+   * @param prefix prefix of the query string
+   * @return URL query string
    */
-  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
-      if (jsonElement == null) {
-        if (!VirusScanResult.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in VirusScanResult is not found in the empty JSON string", VirusScanResult.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Map.Entry<String, JsonElement> entry : entries) {
-        if (!VirusScanResult.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `VirusScanResult` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
-        }
-      }
-        JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if (jsonObj.get("FoundViruses") != null && !jsonObj.get("FoundViruses").isJsonNull()) {
-        JsonArray jsonArrayfoundViruses = jsonObj.getAsJsonArray("FoundViruses");
-        if (jsonArrayfoundViruses != null) {
-          // ensure the json data is an array
-          if (!jsonObj.get("FoundViruses").isJsonArray()) {
-            throw new IllegalArgumentException(String.format("Expected the field `FoundViruses` to be an array in the JSON string but got `%s`", jsonObj.get("FoundViruses").toString()));
-          }
-
-          // validate the optional field `FoundViruses` (array)
-          for (int i = 0; i < jsonArrayfoundViruses.size(); i++) {
-            VirusFound.validateJsonElement(jsonArrayfoundViruses.get(i));
-          };
-        }
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!VirusScanResult.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'VirusScanResult' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<VirusScanResult> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(VirusScanResult.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<VirusScanResult>() {
-           @Override
-           public void write(JsonWriter out, VirusScanResult value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public VirusScanResult read(JsonReader in) throws IOException {
-             JsonElement jsonElement = elementAdapter.read(in);
-             validateJsonElement(jsonElement);
-             return thisAdapter.fromJsonTree(jsonElement);
-           }
-
-       }.nullSafe();
+  public String toUrlQueryString(String prefix) {
+    String suffix = "";
+    String containerSuffix = "";
+    String containerPrefix = "";
+    if (prefix == null) {
+      // style=form, explode=true, e.g. /pet?name=cat&type=manx
+      prefix = "";
+    } else {
+      // deepObject style e.g. /pet?id[name]=cat&id[type]=manx
+      prefix = prefix + "[";
+      suffix = "]";
+      containerSuffix = "]";
+      containerPrefix = "[";
     }
-  }
 
-  /**
-   * Create an instance of VirusScanResult given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of VirusScanResult
-   * @throws IOException if the JSON string is invalid with respect to VirusScanResult
-   */
-  public static VirusScanResult fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, VirusScanResult.class);
-  }
+    StringJoiner joiner = new StringJoiner("&");
 
-  /**
-   * Convert an instance of VirusScanResult to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
+    // add `CleanResult` to the URL query string
+    if (getCleanResult() != null) {
+      joiner.add(String.format("%sCleanResult%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCleanResult()))));
+    }
+
+    // add `FoundViruses` to the URL query string
+    if (getFoundViruses() != null) {
+      for (int i = 0; i < getFoundViruses().size(); i++) {
+        if (getFoundViruses().get(i) != null) {
+          joiner.add(getFoundViruses().get(i).toUrlQueryString(String.format("%sFoundViruses%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    return joiner.toString();
   }
 }
 

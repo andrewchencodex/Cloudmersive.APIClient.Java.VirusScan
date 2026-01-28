@@ -13,54 +13,40 @@
 
 package org.openapitools.client.model;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.StringJoiner;
 import java.util.Objects;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
-import java.util.Arrays;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.util.Arrays;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import org.openapitools.client.JSON;
 
+import org.openapitools.client.ApiClient;
 /**
  * Result of performing a convert documentbatch job operation
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T23:59:36.607801Z[Etc/UTC]", comments = "Generator version: 7.12.0")
+@JsonPropertyOrder({
+  ScanCloudStorageBatchJobCreateResult.JSON_PROPERTY_SUCCESSFUL,
+  ScanCloudStorageBatchJobCreateResult.JSON_PROPERTY_ASYNC_JOB_I_D
+})
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T21:04:27.160244900-08:00[America/Los_Angeles]", comments = "Generator version: 7.12.0")
 public class ScanCloudStorageBatchJobCreateResult {
-  public static final String SERIALIZED_NAME_SUCCESSFUL = "Successful";
-  @SerializedName(SERIALIZED_NAME_SUCCESSFUL)
+  public static final String JSON_PROPERTY_SUCCESSFUL = "Successful";
   @javax.annotation.Nullable
   private Boolean successful;
 
-  public static final String SERIALIZED_NAME_ASYNC_JOB_I_D = "AsyncJobID";
-  @SerializedName(SERIALIZED_NAME_ASYNC_JOB_I_D)
+  public static final String JSON_PROPERTY_ASYNC_JOB_I_D = "AsyncJobID";
   @javax.annotation.Nullable
   private String asyncJobID;
 
-  public ScanCloudStorageBatchJobCreateResult() {
+  public ScanCloudStorageBatchJobCreateResult() { 
   }
 
   public ScanCloudStorageBatchJobCreateResult successful(@javax.annotation.Nullable Boolean successful) {
@@ -73,10 +59,15 @@ public class ScanCloudStorageBatchJobCreateResult {
    * @return successful
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SUCCESSFUL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getSuccessful() {
     return successful;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_SUCCESSFUL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSuccessful(@javax.annotation.Nullable Boolean successful) {
     this.successful = successful;
   }
@@ -92,16 +83,23 @@ public class ScanCloudStorageBatchJobCreateResult {
    * @return asyncJobID
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ASYNC_JOB_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getAsyncJobID() {
     return asyncJobID;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_ASYNC_JOB_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAsyncJobID(@javax.annotation.Nullable String asyncJobID) {
     this.asyncJobID = asyncJobID;
   }
 
 
-
+  /**
+   * Return true if this ScanCloudStorageBatchJobCreateResult object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -141,93 +139,49 @@ public class ScanCloudStorageBatchJobCreateResult {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    openapiFields.add("Successful");
-    openapiFields.add("AsyncJobID");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
+  /**
+   * Convert the instance into URL query string.
+   *
+   * @return URL query string
+   */
+  public String toUrlQueryString() {
+    return toUrlQueryString(null);
   }
 
   /**
-   * Validates the JSON Element and throws an exception if issues found
+   * Convert the instance into URL query string.
    *
-   * @param jsonElement JSON Element
-   * @throws IOException if the JSON Element is invalid with respect to ScanCloudStorageBatchJobCreateResult
+   * @param prefix prefix of the query string
+   * @return URL query string
    */
-  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
-      if (jsonElement == null) {
-        if (!ScanCloudStorageBatchJobCreateResult.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in ScanCloudStorageBatchJobCreateResult is not found in the empty JSON string", ScanCloudStorageBatchJobCreateResult.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Map.Entry<String, JsonElement> entry : entries) {
-        if (!ScanCloudStorageBatchJobCreateResult.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ScanCloudStorageBatchJobCreateResult` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
-        }
-      }
-        JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if ((jsonObj.get("AsyncJobID") != null && !jsonObj.get("AsyncJobID").isJsonNull()) && !jsonObj.get("AsyncJobID").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `AsyncJobID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AsyncJobID").toString()));
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!ScanCloudStorageBatchJobCreateResult.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'ScanCloudStorageBatchJobCreateResult' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<ScanCloudStorageBatchJobCreateResult> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(ScanCloudStorageBatchJobCreateResult.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<ScanCloudStorageBatchJobCreateResult>() {
-           @Override
-           public void write(JsonWriter out, ScanCloudStorageBatchJobCreateResult value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public ScanCloudStorageBatchJobCreateResult read(JsonReader in) throws IOException {
-             JsonElement jsonElement = elementAdapter.read(in);
-             validateJsonElement(jsonElement);
-             return thisAdapter.fromJsonTree(jsonElement);
-           }
-
-       }.nullSafe();
+  public String toUrlQueryString(String prefix) {
+    String suffix = "";
+    String containerSuffix = "";
+    String containerPrefix = "";
+    if (prefix == null) {
+      // style=form, explode=true, e.g. /pet?name=cat&type=manx
+      prefix = "";
+    } else {
+      // deepObject style e.g. /pet?id[name]=cat&id[type]=manx
+      prefix = prefix + "[";
+      suffix = "]";
+      containerSuffix = "]";
+      containerPrefix = "[";
     }
-  }
 
-  /**
-   * Create an instance of ScanCloudStorageBatchJobCreateResult given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of ScanCloudStorageBatchJobCreateResult
-   * @throws IOException if the JSON string is invalid with respect to ScanCloudStorageBatchJobCreateResult
-   */
-  public static ScanCloudStorageBatchJobCreateResult fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, ScanCloudStorageBatchJobCreateResult.class);
-  }
+    StringJoiner joiner = new StringJoiner("&");
 
-  /**
-   * Convert an instance of ScanCloudStorageBatchJobCreateResult to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
+    // add `Successful` to the URL query string
+    if (getSuccessful() != null) {
+      joiner.add(String.format("%sSuccessful%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSuccessful()))));
+    }
+
+    // add `AsyncJobID` to the URL query string
+    if (getAsyncJobID() != null) {
+      joiner.add(String.format("%sAsyncJobID%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAsyncJobID()))));
+    }
+
+    return joiner.toString();
   }
 }
 

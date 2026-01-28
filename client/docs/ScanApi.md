@@ -5,12 +5,16 @@ All URIs are relative to *https://api.cloudmersive.com*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**scanFile**](ScanApi.md#scanFile) | **POST** /virus/scan/file | Scan a file for viruses |
+| [**scanFileWithHttpInfo**](ScanApi.md#scanFileWithHttpInfo) | **POST** /virus/scan/file | Scan a file for viruses |
 | [**scanFileAdvanced**](ScanApi.md#scanFileAdvanced) | **POST** /virus/scan/file/advanced | Advanced Scan a file for viruses |
+| [**scanFileAdvancedWithHttpInfo**](ScanApi.md#scanFileAdvancedWithHttpInfo) | **POST** /virus/scan/file/advanced | Advanced Scan a file for viruses |
 | [**scanWebsite**](ScanApi.md#scanWebsite) | **POST** /virus/scan/website | Scan a website for malicious content and threats |
+| [**scanWebsiteWithHttpInfo**](ScanApi.md#scanWebsiteWithHttpInfo) | **POST** /virus/scan/website | Scan a website for malicious content and threats |
 
 
-<a id="scanFile"></a>
-# **scanFile**
+
+## scanFile
+
 > VirusScanResult scanFile(inputFile)
 
 Scan a file for viruses
@@ -18,6 +22,7 @@ Scan a file for viruses
 Scan files and content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -28,33 +33,34 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanApi apiInstance = new ScanApi(defaultClient);
-    File inputFile = new File("/path/to/file"); // File | Input file to perform the operation on.
-    try {
-      VirusScanResult result = apiInstance.scanFile(inputFile);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanApi#scanFile");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanApi apiInstance = new ScanApi(defaultClient);
+        File inputFile = new File("/path/to/file"); // File | Input file to perform the operation on.
+        try {
+            VirusScanResult result = apiInstance.scanFile(inputFile);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanApi#scanFile");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -64,22 +70,99 @@ public class Example {
 
 [**VirusScanResult**](VirusScanResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanFileAdvanced"></a>
-# **scanFileAdvanced**
+## scanFileWithHttpInfo
+
+> ApiResponse<VirusScanResult> scanFile scanFileWithHttpInfo(inputFile)
+
+Scan a file for viruses
+
+Scan files and content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanApi apiInstance = new ScanApi(defaultClient);
+        File inputFile = new File("/path/to/file"); // File | Input file to perform the operation on.
+        try {
+            ApiResponse<VirusScanResult> response = apiInstance.scanFileWithHttpInfo(inputFile);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanApi#scanFile");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **inputFile** | **File**| Input file to perform the operation on. | |
+
+### Return type
+
+ApiResponse<[**VirusScanResult**](VirusScanResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanFileAdvanced
+
 > VirusScanAdvancedResult scanFileAdvanced(inputFile, fileName, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes)
 
 Advanced Scan a file for viruses
@@ -87,6 +170,7 @@ Advanced Scan a file for viruses
 Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash, MSG, and a wide range of image file formats.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -97,47 +181,48 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanApi apiInstance = new ScanApi(defaultClient);
-    File inputFile = new File("/path/to/file"); // File | Input file to perform the operation on.
-    String fileName = "fileName_example"; // String | Optional: specify the original file name of the file being scanned.  By default the file name is taken from inputFile parameter, but if this is not provided, or you wish to override it, you can specify the original file name using this parameter.
-    Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
-    Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
-    Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, BAT scripts, JS scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros (including support for .DOCX, .XLSX, .PPTX, .DOC and .XLS), and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].  If set to true, HTML files containing script tags will be allowed, but ContainsScript will be set to true if script tags are present.
-    Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
-    Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
-    Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
-    String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include permitJavascriptInHtml to allow JavaScript in HTML files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include blockInvalidUris to block invalid URIs in Office documents.  Include permitAuthenticodeSignedExecutables to allow executables if they have a valid Authenticode signature.  Include scanMultipartFile to scan multi-part files such as split zip files.  Include ignoreRestrictFileTypesForAttachments to ignore restrictFileTypes setting for file attachments.  Default is no options.
-    String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
-    try {
-      VirusScanAdvancedResult result = apiInstance.scanFileAdvanced(inputFile, fileName, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanApi#scanFileAdvanced");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanApi apiInstance = new ScanApi(defaultClient);
+        File inputFile = new File("/path/to/file"); // File | Input file to perform the operation on.
+        String fileName = "fileName_example"; // String | Optional: specify the original file name of the file being scanned.  By default the file name is taken from inputFile parameter, but if this is not provided, or you wish to override it, you can specify the original file name using this parameter.
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, BAT scripts, JS scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros (including support for .DOCX, .XLSX, .PPTX, .DOC and .XLS), and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].  If set to true, HTML files containing script tags will be allowed, but ContainsScript will be set to true if script tags are present.
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include permitJavascriptInHtml to allow JavaScript in HTML files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include blockInvalidUris to block invalid URIs in Office documents.  Include permitAuthenticodeSignedExecutables to allow executables if they have a valid Authenticode signature.  Include scanMultipartFile to scan multi-part files such as split zip files.  Include ignoreRestrictFileTypesForAttachments to ignore restrictFileTypes setting for file attachments.  Default is no options.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            VirusScanAdvancedResult result = apiInstance.scanFileAdvanced(inputFile, fileName, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanApi#scanFileAdvanced");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -161,22 +246,127 @@ public class Example {
 
 [**VirusScanAdvancedResult**](VirusScanAdvancedResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanWebsite"></a>
-# **scanWebsite**
+## scanFileAdvancedWithHttpInfo
+
+> ApiResponse<VirusScanAdvancedResult> scanFileAdvanced scanFileAdvancedWithHttpInfo(inputFile, fileName, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes)
+
+Advanced Scan a file for viruses
+
+Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash, MSG, and a wide range of image file formats.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanApi apiInstance = new ScanApi(defaultClient);
+        File inputFile = new File("/path/to/file"); // File | Input file to perform the operation on.
+        String fileName = "fileName_example"; // String | Optional: specify the original file name of the file being scanned.  By default the file name is taken from inputFile parameter, but if this is not provided, or you wish to override it, you can specify the original file name using this parameter.
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, BAT scripts, JS scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros (including support for .DOCX, .XLSX, .PPTX, .DOC and .XLS), and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].  If set to true, HTML files containing script tags will be allowed, but ContainsScript will be set to true if script tags are present.
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include permitJavascriptInHtml to allow JavaScript in HTML files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include blockInvalidUris to block invalid URIs in Office documents.  Include permitAuthenticodeSignedExecutables to allow executables if they have a valid Authenticode signature.  Include scanMultipartFile to scan multi-part files such as split zip files.  Include ignoreRestrictFileTypesForAttachments to ignore restrictFileTypes setting for file attachments.  Default is no options.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            ApiResponse<VirusScanAdvancedResult> response = apiInstance.scanFileAdvancedWithHttpInfo(inputFile, fileName, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanApi#scanFileAdvanced");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **inputFile** | **File**| Input file to perform the operation on. | |
+| **fileName** | **String**| Optional: specify the original file name of the file being scanned.  By default the file name is taken from inputFile parameter, but if this is not provided, or you wish to override it, you can specify the original file name using this parameter. | [optional] |
+| **allowExecutables** | **Boolean**| Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). | [optional] |
+| **allowInvalidFiles** | **Boolean**| Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). | [optional] |
+| **allowScripts** | **Boolean**| Set to false to block script files, such as a PHP files, Python scripts, BAT scripts, JS scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowPasswordProtectedFiles** | **Boolean**| Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowMacros** | **Boolean**| Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros (including support for .DOCX, .XLSX, .PPTX, .DOC and .XLS), and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowXmlExternalEntities** | **Boolean**| Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowInsecureDeserialization** | **Boolean**| Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowHtml** | **Boolean**| Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].  If set to true, HTML files containing script tags will be allowed, but ContainsScript will be set to true if script tags are present. | [optional] |
+| **allowUnsafeArchives** | **Boolean**| Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. | [optional] |
+| **allowOleEmbeddedObject** | **Boolean**| Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. | [optional] |
+| **allowUnwantedAction** | **Boolean**| Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. | [optional] |
+| **options** | **String**| Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include permitJavascriptInHtml to allow JavaScript in HTML files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include blockInvalidUris to block invalid URIs in Office documents.  Include permitAuthenticodeSignedExecutables to allow executables if they have a valid Authenticode signature.  Include scanMultipartFile to scan multi-part files such as split zip files.  Include ignoreRestrictFileTypesForAttachments to ignore restrictFileTypes setting for file attachments.  Default is no options. | [optional] |
+| **restrictFileTypes** | **String**| Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. | [optional] |
+
+### Return type
+
+ApiResponse<[**VirusScanAdvancedResult**](VirusScanAdvancedResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanWebsite
+
 > WebsiteScanResult scanWebsite(input)
 
 Scan a website for malicious content and threats
@@ -184,6 +374,7 @@ Scan a website for malicious content and threats
 Operation includes scanning the content of the URL for various types of malicious content and threats, including viruses and threats (including Phishing).
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -194,33 +385,34 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanApi apiInstance = new ScanApi(defaultClient);
-    WebsiteScanRequest input = new WebsiteScanRequest(); // WebsiteScanRequest | 
-    try {
-      WebsiteScanResult result = apiInstance.scanWebsite(input);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanApi#scanWebsite");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanApi apiInstance = new ScanApi(defaultClient);
+        WebsiteScanRequest input = new WebsiteScanRequest(); // WebsiteScanRequest | 
+        try {
+            WebsiteScanResult result = apiInstance.scanWebsite(input);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanApi#scanWebsite");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -230,14 +422,90 @@ public class Example {
 
 [**WebsiteScanResult**](WebsiteScanResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+## scanWebsiteWithHttpInfo
+
+> ApiResponse<WebsiteScanResult> scanWebsite scanWebsiteWithHttpInfo(input)
+
+Scan a website for malicious content and threats
+
+Operation includes scanning the content of the URL for various types of malicious content and threats, including viruses and threats (including Phishing).
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanApi apiInstance = new ScanApi(defaultClient);
+        WebsiteScanRequest input = new WebsiteScanRequest(); // WebsiteScanRequest | 
+        try {
+            ApiResponse<WebsiteScanResult> response = apiInstance.scanWebsiteWithHttpInfo(input);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanApi#scanWebsite");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **input** | [**WebsiteScanRequest**](WebsiteScanRequest.md)|  | |
+
+### Return type
+
+ApiResponse<[**WebsiteScanResult**](WebsiteScanResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: application/json, text/json, application/xml, text/xml, application/x-www-form-urlencoded
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |

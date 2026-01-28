@@ -5,19 +5,30 @@ All URIs are relative to *https://api.cloudmersive.com*
 | Method | HTTP request | Description |
 |------------- | ------------- | -------------|
 | [**scanCloudStorageGetAsyncJobStatus**](ScanCloudStorageApi.md#scanCloudStorageGetAsyncJobStatus) | **GET** /virus/scan/cloud-storage/batch-job/status | Get the status and result of a Scan Cloud Storage Batch Job |
+| [**scanCloudStorageGetAsyncJobStatusWithHttpInfo**](ScanCloudStorageApi.md#scanCloudStorageGetAsyncJobStatusWithHttpInfo) | **GET** /virus/scan/cloud-storage/batch-job/status | Get the status and result of a Scan Cloud Storage Batch Job |
 | [**scanCloudStorageScanAwsS3File**](ScanCloudStorageApi.md#scanCloudStorageScanAwsS3File) | **POST** /virus/scan/cloud-storage/aws-s3/single | Scan an AWS S3 file for viruses |
+| [**scanCloudStorageScanAwsS3FileWithHttpInfo**](ScanCloudStorageApi.md#scanCloudStorageScanAwsS3FileWithHttpInfo) | **POST** /virus/scan/cloud-storage/aws-s3/single | Scan an AWS S3 file for viruses |
 | [**scanCloudStorageScanAwsS3FileAdvanced**](ScanCloudStorageApi.md#scanCloudStorageScanAwsS3FileAdvanced) | **POST** /virus/scan/cloud-storage/aws-s3/single/advanced | Advanced Scan an AWS S3 file for viruses |
+| [**scanCloudStorageScanAwsS3FileAdvancedWithHttpInfo**](ScanCloudStorageApi.md#scanCloudStorageScanAwsS3FileAdvancedWithHttpInfo) | **POST** /virus/scan/cloud-storage/aws-s3/single/advanced | Advanced Scan an AWS S3 file for viruses |
 | [**scanCloudStorageScanAzureBlob**](ScanCloudStorageApi.md#scanCloudStorageScanAzureBlob) | **POST** /virus/scan/cloud-storage/azure-blob/single | Scan an Azure Blob for viruses |
+| [**scanCloudStorageScanAzureBlobWithHttpInfo**](ScanCloudStorageApi.md#scanCloudStorageScanAzureBlobWithHttpInfo) | **POST** /virus/scan/cloud-storage/azure-blob/single | Scan an Azure Blob for viruses |
 | [**scanCloudStorageScanAzureBlobAdvanced**](ScanCloudStorageApi.md#scanCloudStorageScanAzureBlobAdvanced) | **POST** /virus/scan/cloud-storage/azure-blob/single/advanced | Advanced Scan an Azure Blob for viruses |
+| [**scanCloudStorageScanAzureBlobAdvancedWithHttpInfo**](ScanCloudStorageApi.md#scanCloudStorageScanAzureBlobAdvancedWithHttpInfo) | **POST** /virus/scan/cloud-storage/azure-blob/single/advanced | Advanced Scan an Azure Blob for viruses |
 | [**scanCloudStorageScanAzureBlobAdvancedBatchJob**](ScanCloudStorageApi.md#scanCloudStorageScanAzureBlobAdvancedBatchJob) | **POST** /virus/scan/cloud-storage/azure-blob/single/advanced/batch-job | Advanced Scan an Azure Blob for viruses via a batch job |
+| [**scanCloudStorageScanAzureBlobAdvancedBatchJobWithHttpInfo**](ScanCloudStorageApi.md#scanCloudStorageScanAzureBlobAdvancedBatchJobWithHttpInfo) | **POST** /virus/scan/cloud-storage/azure-blob/single/advanced/batch-job | Advanced Scan an Azure Blob for viruses via a batch job |
 | [**scanCloudStorageScanGcpStorageFile**](ScanCloudStorageApi.md#scanCloudStorageScanGcpStorageFile) | **POST** /virus/scan/cloud-storage/gcp-storage/single | Scan an Google Cloud Platform (GCP) Storage file for viruses |
+| [**scanCloudStorageScanGcpStorageFileWithHttpInfo**](ScanCloudStorageApi.md#scanCloudStorageScanGcpStorageFileWithHttpInfo) | **POST** /virus/scan/cloud-storage/gcp-storage/single | Scan an Google Cloud Platform (GCP) Storage file for viruses |
 | [**scanCloudStorageScanGcpStorageFileAdvanced**](ScanCloudStorageApi.md#scanCloudStorageScanGcpStorageFileAdvanced) | **POST** /virus/scan/cloud-storage/gcp-storage/single/advanced | Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses |
+| [**scanCloudStorageScanGcpStorageFileAdvancedWithHttpInfo**](ScanCloudStorageApi.md#scanCloudStorageScanGcpStorageFileAdvancedWithHttpInfo) | **POST** /virus/scan/cloud-storage/gcp-storage/single/advanced | Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses |
 | [**scanCloudStorageScanSharePointOnlineFile**](ScanCloudStorageApi.md#scanCloudStorageScanSharePointOnlineFile) | **POST** /virus/scan/cloud-storage/sharepoint-online/site/single | Virus Scan a file in a SharePoint Online Site Drive |
+| [**scanCloudStorageScanSharePointOnlineFileWithHttpInfo**](ScanCloudStorageApi.md#scanCloudStorageScanSharePointOnlineFileWithHttpInfo) | **POST** /virus/scan/cloud-storage/sharepoint-online/site/single | Virus Scan a file in a SharePoint Online Site Drive |
 | [**scanCloudStorageScanSharePointOnlineFileAdvanced**](ScanCloudStorageApi.md#scanCloudStorageScanSharePointOnlineFileAdvanced) | **POST** /virus/scan/cloud-storage/sharepoint-online/site/advanced | Advanced Virus Scan a file in a SharePoint Online Site Drive |
+| [**scanCloudStorageScanSharePointOnlineFileAdvancedWithHttpInfo**](ScanCloudStorageApi.md#scanCloudStorageScanSharePointOnlineFileAdvancedWithHttpInfo) | **POST** /virus/scan/cloud-storage/sharepoint-online/site/advanced | Advanced Virus Scan a file in a SharePoint Online Site Drive |
 
 
-<a id="scanCloudStorageGetAsyncJobStatus"></a>
-# **scanCloudStorageGetAsyncJobStatus**
+
+## scanCloudStorageGetAsyncJobStatus
+
 > ScanCloudStorageJobStatusResult scanCloudStorageGetAsyncJobStatus(asyncJobID)
 
 Get the status and result of a Scan Cloud Storage Batch Job
@@ -25,6 +36,7 @@ Get the status and result of a Scan Cloud Storage Batch Job
 Returns the result of the Async Job - possible states can be STARTED or COMPLETED.  This API is only available for Cloudmersive Managed Instance and Private Cloud deployments.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -35,33 +47,34 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanCloudStorageApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
-    String asyncJobID = "asyncJobID_example"; // String | 
-    try {
-      ScanCloudStorageJobStatusResult result = apiInstance.scanCloudStorageGetAsyncJobStatus(asyncJobID);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageGetAsyncJobStatus");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String asyncJobID = "asyncJobID_example"; // String | 
+        try {
+            ScanCloudStorageJobStatusResult result = apiInstance.scanCloudStorageGetAsyncJobStatus(asyncJobID);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageGetAsyncJobStatus");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -71,22 +84,99 @@ public class Example {
 
 [**ScanCloudStorageJobStatusResult**](ScanCloudStorageJobStatusResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanCloudStorageScanAwsS3File"></a>
-# **scanCloudStorageScanAwsS3File**
+## scanCloudStorageGetAsyncJobStatusWithHttpInfo
+
+> ApiResponse<ScanCloudStorageJobStatusResult> scanCloudStorageGetAsyncJobStatus scanCloudStorageGetAsyncJobStatusWithHttpInfo(asyncJobID)
+
+Get the status and result of a Scan Cloud Storage Batch Job
+
+Returns the result of the Async Job - possible states can be STARTED or COMPLETED.  This API is only available for Cloudmersive Managed Instance and Private Cloud deployments.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanCloudStorageApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String asyncJobID = "asyncJobID_example"; // String | 
+        try {
+            ApiResponse<ScanCloudStorageJobStatusResult> response = apiInstance.scanCloudStorageGetAsyncJobStatusWithHttpInfo(asyncJobID);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageGetAsyncJobStatus");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **asyncJobID** | **String**|  | |
+
+### Return type
+
+ApiResponse<[**ScanCloudStorageJobStatusResult**](ScanCloudStorageJobStatusResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanCloudStorageScanAwsS3File
+
 > CloudStorageVirusScanResult scanCloudStorageScanAwsS3File(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn)
 
 Scan an AWS S3 file for viruses
@@ -94,6 +184,7 @@ Scan an AWS S3 file for viruses
 Scan the contents of a single AWS S3 file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -104,38 +195,39 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanCloudStorageApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
-    String accessKey = "accessKey_example"; // String | AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console
-    String secretKey = "secretKey_example"; // String | AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console
-    String bucketRegion = "bucketRegion_example"; // String | Name of the region of the S3 bucket, such as 'US-East-1'
-    String bucketName = "bucketName_example"; // String | Name of the S3 bucket
-    String keyName = "keyName_example"; // String | Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    String roleArn = "roleArn_example"; // String | Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    try {
-      CloudStorageVirusScanResult result = apiInstance.scanCloudStorageScanAwsS3File(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAwsS3File");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String accessKey = "accessKey_example"; // String | AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console
+        String secretKey = "secretKey_example"; // String | AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console
+        String bucketRegion = "bucketRegion_example"; // String | Name of the region of the S3 bucket, such as 'US-East-1'
+        String bucketName = "bucketName_example"; // String | Name of the S3 bucket
+        String keyName = "keyName_example"; // String | Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        String roleArn = "roleArn_example"; // String | Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        try {
+            CloudStorageVirusScanResult result = apiInstance.scanCloudStorageScanAwsS3File(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAwsS3File");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -150,22 +242,109 @@ public class Example {
 
 [**CloudStorageVirusScanResult**](CloudStorageVirusScanResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanCloudStorageScanAwsS3FileAdvanced"></a>
-# **scanCloudStorageScanAwsS3FileAdvanced**
+## scanCloudStorageScanAwsS3FileWithHttpInfo
+
+> ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanAwsS3File scanCloudStorageScanAwsS3FileWithHttpInfo(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn)
+
+Scan an AWS S3 file for viruses
+
+Scan the contents of a single AWS S3 file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanCloudStorageApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String accessKey = "accessKey_example"; // String | AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console
+        String secretKey = "secretKey_example"; // String | AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console
+        String bucketRegion = "bucketRegion_example"; // String | Name of the region of the S3 bucket, such as 'US-East-1'
+        String bucketName = "bucketName_example"; // String | Name of the S3 bucket
+        String keyName = "keyName_example"; // String | Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        String roleArn = "roleArn_example"; // String | Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        try {
+            ApiResponse<CloudStorageVirusScanResult> response = apiInstance.scanCloudStorageScanAwsS3FileWithHttpInfo(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAwsS3File");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **accessKey** | **String**| AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console | |
+| **secretKey** | **String**| AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console | |
+| **bucketRegion** | **String**| Name of the region of the S3 bucket, such as &#39;US-East-1&#39; | |
+| **bucketName** | **String**| Name of the S3 bucket | |
+| **keyName** | **String**| Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | |
+| **roleArn** | **String**| Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | [optional] |
+
+### Return type
+
+ApiResponse<[**CloudStorageVirusScanResult**](CloudStorageVirusScanResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanCloudStorageScanAwsS3FileAdvanced
+
 > CloudStorageAdvancedVirusScanResult scanCloudStorageScanAwsS3FileAdvanced(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes)
 
 Advanced Scan an AWS S3 file for viruses
@@ -173,6 +352,7 @@ Advanced Scan an AWS S3 file for viruses
 Advanced Scan the contents of a single AWS S3 file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -183,51 +363,52 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanCloudStorageApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
-    String accessKey = "accessKey_example"; // String | AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console
-    String secretKey = "secretKey_example"; // String | AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console
-    String bucketRegion = "bucketRegion_example"; // String | Name of the region of the S3 bucket, such as 'US-East-1'
-    String bucketName = "bucketName_example"; // String | Name of the S3 bucket
-    String keyName = "keyName_example"; // String | Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    String roleArn = "roleArn_example"; // String | Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
-    Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
-    Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
-    Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
-    Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
-    Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
-    Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
-    String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options.
-    String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
-    try {
-      CloudStorageAdvancedVirusScanResult result = apiInstance.scanCloudStorageScanAwsS3FileAdvanced(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAwsS3FileAdvanced");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String accessKey = "accessKey_example"; // String | AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console
+        String secretKey = "secretKey_example"; // String | AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console
+        String bucketRegion = "bucketRegion_example"; // String | Name of the region of the S3 bucket, such as 'US-East-1'
+        String bucketName = "bucketName_example"; // String | Name of the S3 bucket
+        String keyName = "keyName_example"; // String | Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        String roleArn = "roleArn_example"; // String | Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            CloudStorageAdvancedVirusScanResult result = apiInstance.scanCloudStorageScanAwsS3FileAdvanced(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAwsS3FileAdvanced");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -255,22 +436,135 @@ public class Example {
 
 [**CloudStorageAdvancedVirusScanResult**](CloudStorageAdvancedVirusScanResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanCloudStorageScanAzureBlob"></a>
-# **scanCloudStorageScanAzureBlob**
+## scanCloudStorageScanAwsS3FileAdvancedWithHttpInfo
+
+> ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanAwsS3FileAdvanced scanCloudStorageScanAwsS3FileAdvancedWithHttpInfo(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes)
+
+Advanced Scan an AWS S3 file for viruses
+
+Advanced Scan the contents of a single AWS S3 file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanCloudStorageApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String accessKey = "accessKey_example"; // String | AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console
+        String secretKey = "secretKey_example"; // String | AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console
+        String bucketRegion = "bucketRegion_example"; // String | Name of the region of the S3 bucket, such as 'US-East-1'
+        String bucketName = "bucketName_example"; // String | Name of the S3 bucket
+        String keyName = "keyName_example"; // String | Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        String roleArn = "roleArn_example"; // String | Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            ApiResponse<CloudStorageAdvancedVirusScanResult> response = apiInstance.scanCloudStorageScanAwsS3FileAdvancedWithHttpInfo(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAwsS3FileAdvanced");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **accessKey** | **String**| AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console | |
+| **secretKey** | **String**| AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console | |
+| **bucketRegion** | **String**| Name of the region of the S3 bucket, such as &#39;US-East-1&#39; | |
+| **bucketName** | **String**| Name of the S3 bucket | |
+| **keyName** | **String**| Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | |
+| **roleArn** | **String**| Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | [optional] |
+| **allowExecutables** | **Boolean**| Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). | [optional] |
+| **allowInvalidFiles** | **Boolean**| Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). | [optional] |
+| **allowScripts** | **Boolean**| Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowPasswordProtectedFiles** | **Boolean**| Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowMacros** | **Boolean**| Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowXmlExternalEntities** | **Boolean**| Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). | [optional] |
+| **allowInsecureDeserialization** | **Boolean**| Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowHtml** | **Boolean**| Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. | [optional] |
+| **allowUnsafeArchives** | **Boolean**| Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. | [optional] |
+| **allowOleEmbeddedObject** | **Boolean**| Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. | [optional] |
+| **allowUnwantedAction** | **Boolean**| Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. | [optional] |
+| **options** | **String**| Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. | [optional] |
+| **restrictFileTypes** | **String**| Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. | [optional] |
+
+### Return type
+
+ApiResponse<[**CloudStorageAdvancedVirusScanResult**](CloudStorageAdvancedVirusScanResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanCloudStorageScanAzureBlob
+
 > CloudStorageVirusScanResult scanCloudStorageScanAzureBlob(connectionString, containerName, blobPath)
 
 Scan an Azure Blob for viruses
@@ -278,6 +572,7 @@ Scan an Azure Blob for viruses
 Scan the contents of a single Azure Blob and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -288,35 +583,36 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanCloudStorageApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
-    String connectionString = "connectionString_example"; // String | Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal.
-    String containerName = "containerName_example"; // String | Name of the Blob container within the Azure Blob Storage account
-    String blobPath = "blobPath_example"; // String | Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    try {
-      CloudStorageVirusScanResult result = apiInstance.scanCloudStorageScanAzureBlob(connectionString, containerName, blobPath);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAzureBlob");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String connectionString = "connectionString_example"; // String | Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal.
+        String containerName = "containerName_example"; // String | Name of the Blob container within the Azure Blob Storage account
+        String blobPath = "blobPath_example"; // String | Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        try {
+            CloudStorageVirusScanResult result = apiInstance.scanCloudStorageScanAzureBlob(connectionString, containerName, blobPath);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAzureBlob");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -328,22 +624,103 @@ public class Example {
 
 [**CloudStorageVirusScanResult**](CloudStorageVirusScanResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanCloudStorageScanAzureBlobAdvanced"></a>
-# **scanCloudStorageScanAzureBlobAdvanced**
+## scanCloudStorageScanAzureBlobWithHttpInfo
+
+> ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanAzureBlob scanCloudStorageScanAzureBlobWithHttpInfo(connectionString, containerName, blobPath)
+
+Scan an Azure Blob for viruses
+
+Scan the contents of a single Azure Blob and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanCloudStorageApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String connectionString = "connectionString_example"; // String | Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal.
+        String containerName = "containerName_example"; // String | Name of the Blob container within the Azure Blob Storage account
+        String blobPath = "blobPath_example"; // String | Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        try {
+            ApiResponse<CloudStorageVirusScanResult> response = apiInstance.scanCloudStorageScanAzureBlobWithHttpInfo(connectionString, containerName, blobPath);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAzureBlob");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **connectionString** | **String**| Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. | |
+| **containerName** | **String**| Name of the Blob container within the Azure Blob Storage account | |
+| **blobPath** | **String**| Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | |
+
+### Return type
+
+ApiResponse<[**CloudStorageVirusScanResult**](CloudStorageVirusScanResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanCloudStorageScanAzureBlobAdvanced
+
 > CloudStorageAdvancedVirusScanResult scanCloudStorageScanAzureBlobAdvanced(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes)
 
 Advanced Scan an Azure Blob for viruses
@@ -351,6 +728,7 @@ Advanced Scan an Azure Blob for viruses
 Advanced Scan the contents of a single Azure Blob and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -361,48 +739,49 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanCloudStorageApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
-    String connectionString = "connectionString_example"; // String | Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal.
-    String containerName = "containerName_example"; // String | Name of the Blob container within the Azure Blob Storage account
-    String blobPath = "blobPath_example"; // String | Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
-    Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
-    Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
-    Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
-    Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
-    Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
-    Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
-    String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options.
-    String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
-    try {
-      CloudStorageAdvancedVirusScanResult result = apiInstance.scanCloudStorageScanAzureBlobAdvanced(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAzureBlobAdvanced");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String connectionString = "connectionString_example"; // String | Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal.
+        String containerName = "containerName_example"; // String | Name of the Blob container within the Azure Blob Storage account
+        String blobPath = "blobPath_example"; // String | Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            CloudStorageAdvancedVirusScanResult result = apiInstance.scanCloudStorageScanAzureBlobAdvanced(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAzureBlobAdvanced");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -427,22 +806,129 @@ public class Example {
 
 [**CloudStorageAdvancedVirusScanResult**](CloudStorageAdvancedVirusScanResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanCloudStorageScanAzureBlobAdvancedBatchJob"></a>
-# **scanCloudStorageScanAzureBlobAdvancedBatchJob**
+## scanCloudStorageScanAzureBlobAdvancedWithHttpInfo
+
+> ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanAzureBlobAdvanced scanCloudStorageScanAzureBlobAdvancedWithHttpInfo(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes)
+
+Advanced Scan an Azure Blob for viruses
+
+Advanced Scan the contents of a single Azure Blob and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanCloudStorageApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String connectionString = "connectionString_example"; // String | Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal.
+        String containerName = "containerName_example"; // String | Name of the Blob container within the Azure Blob Storage account
+        String blobPath = "blobPath_example"; // String | Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            ApiResponse<CloudStorageAdvancedVirusScanResult> response = apiInstance.scanCloudStorageScanAzureBlobAdvancedWithHttpInfo(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAzureBlobAdvanced");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **connectionString** | **String**| Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. | |
+| **containerName** | **String**| Name of the Blob container within the Azure Blob Storage account | |
+| **blobPath** | **String**| Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | |
+| **allowExecutables** | **Boolean**| Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). | [optional] |
+| **allowInvalidFiles** | **Boolean**| Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). | [optional] |
+| **allowScripts** | **Boolean**| Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowPasswordProtectedFiles** | **Boolean**| Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowMacros** | **Boolean**| Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowXmlExternalEntities** | **Boolean**| Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). | [optional] |
+| **allowInsecureDeserialization** | **Boolean**| Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowHtml** | **Boolean**| Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. | [optional] |
+| **allowUnsafeArchives** | **Boolean**| Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. | [optional] |
+| **allowOleEmbeddedObject** | **Boolean**| Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. | [optional] |
+| **allowUnwantedAction** | **Boolean**| Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. | [optional] |
+| **options** | **String**| Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. | [optional] |
+| **restrictFileTypes** | **String**| Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. | [optional] |
+
+### Return type
+
+ApiResponse<[**CloudStorageAdvancedVirusScanResult**](CloudStorageAdvancedVirusScanResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanCloudStorageScanAzureBlobAdvancedBatchJob
+
 > ScanCloudStorageBatchJobCreateResult scanCloudStorageScanAzureBlobAdvancedBatchJob(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes)
 
 Advanced Scan an Azure Blob for viruses via a batch job
@@ -450,6 +936,7 @@ Advanced Scan an Azure Blob for viruses via a batch job
 Via a batch job, advanced Scan the contents of a single Azure Blob and its content for viruses and threats, great for larger/longer processing jobs.  Requires Managed Instance or Private Cloud.  Returns a job ID which you can then use the Get Job Status API to get the status and output of the job.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -460,48 +947,49 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanCloudStorageApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
-    String connectionString = "connectionString_example"; // String | Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal.
-    String containerName = "containerName_example"; // String | Name of the Blob container within the Azure Blob Storage account
-    String blobPath = "blobPath_example"; // String | Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
-    Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
-    Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
-    Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
-    Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
-    Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
-    Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
-    String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options.
-    String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
-    try {
-      ScanCloudStorageBatchJobCreateResult result = apiInstance.scanCloudStorageScanAzureBlobAdvancedBatchJob(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAzureBlobAdvancedBatchJob");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String connectionString = "connectionString_example"; // String | Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal.
+        String containerName = "containerName_example"; // String | Name of the Blob container within the Azure Blob Storage account
+        String blobPath = "blobPath_example"; // String | Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            ScanCloudStorageBatchJobCreateResult result = apiInstance.scanCloudStorageScanAzureBlobAdvancedBatchJob(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAzureBlobAdvancedBatchJob");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -526,22 +1014,129 @@ public class Example {
 
 [**ScanCloudStorageBatchJobCreateResult**](ScanCloudStorageBatchJobCreateResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanCloudStorageScanGcpStorageFile"></a>
-# **scanCloudStorageScanGcpStorageFile**
+## scanCloudStorageScanAzureBlobAdvancedBatchJobWithHttpInfo
+
+> ApiResponse<ScanCloudStorageBatchJobCreateResult> scanCloudStorageScanAzureBlobAdvancedBatchJob scanCloudStorageScanAzureBlobAdvancedBatchJobWithHttpInfo(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes)
+
+Advanced Scan an Azure Blob for viruses via a batch job
+
+Via a batch job, advanced Scan the contents of a single Azure Blob and its content for viruses and threats, great for larger/longer processing jobs.  Requires Managed Instance or Private Cloud.  Returns a job ID which you can then use the Get Job Status API to get the status and output of the job.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanCloudStorageApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String connectionString = "connectionString_example"; // String | Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal.
+        String containerName = "containerName_example"; // String | Name of the Blob container within the Azure Blob Storage account
+        String blobPath = "blobPath_example"; // String | Path to the blob within the container, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            ApiResponse<ScanCloudStorageBatchJobCreateResult> response = apiInstance.scanCloudStorageScanAzureBlobAdvancedBatchJobWithHttpInfo(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanAzureBlobAdvancedBatchJob");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **connectionString** | **String**| Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. | |
+| **containerName** | **String**| Name of the Blob container within the Azure Blob Storage account | |
+| **blobPath** | **String**| Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | |
+| **allowExecutables** | **Boolean**| Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). | [optional] |
+| **allowInvalidFiles** | **Boolean**| Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). | [optional] |
+| **allowScripts** | **Boolean**| Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowPasswordProtectedFiles** | **Boolean**| Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowMacros** | **Boolean**| Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowXmlExternalEntities** | **Boolean**| Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). | [optional] |
+| **allowInsecureDeserialization** | **Boolean**| Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowHtml** | **Boolean**| Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. | [optional] |
+| **allowUnsafeArchives** | **Boolean**| Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. | [optional] |
+| **allowOleEmbeddedObject** | **Boolean**| Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. | [optional] |
+| **allowUnwantedAction** | **Boolean**| Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. | [optional] |
+| **options** | **String**| Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. | [optional] |
+| **restrictFileTypes** | **String**| Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. | [optional] |
+
+### Return type
+
+ApiResponse<[**ScanCloudStorageBatchJobCreateResult**](ScanCloudStorageBatchJobCreateResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanCloudStorageScanGcpStorageFile
+
 > CloudStorageVirusScanResult scanCloudStorageScanGcpStorageFile(bucketName, objectName, jsonCredentialFile)
 
 Scan an Google Cloud Platform (GCP) Storage file for viruses
@@ -549,6 +1144,7 @@ Scan an Google Cloud Platform (GCP) Storage file for viruses
 Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -559,35 +1155,36 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanCloudStorageApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
-    String bucketName = "bucketName_example"; // String | Name of the bucket in Google Cloud Storage
-    String objectName = "objectName_example"; // String | Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    File jsonCredentialFile = new File("/path/to/file"); // File | Service Account credential for Google Cloud stored in a JSON file.
-    try {
-      CloudStorageVirusScanResult result = apiInstance.scanCloudStorageScanGcpStorageFile(bucketName, objectName, jsonCredentialFile);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanGcpStorageFile");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String bucketName = "bucketName_example"; // String | Name of the bucket in Google Cloud Storage
+        String objectName = "objectName_example"; // String | Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        File jsonCredentialFile = new File("/path/to/file"); // File | Service Account credential for Google Cloud stored in a JSON file.
+        try {
+            CloudStorageVirusScanResult result = apiInstance.scanCloudStorageScanGcpStorageFile(bucketName, objectName, jsonCredentialFile);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanGcpStorageFile");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -599,22 +1196,103 @@ public class Example {
 
 [**CloudStorageVirusScanResult**](CloudStorageVirusScanResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanCloudStorageScanGcpStorageFileAdvanced"></a>
-# **scanCloudStorageScanGcpStorageFileAdvanced**
+## scanCloudStorageScanGcpStorageFileWithHttpInfo
+
+> ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanGcpStorageFile scanCloudStorageScanGcpStorageFileWithHttpInfo(bucketName, objectName, jsonCredentialFile)
+
+Scan an Google Cloud Platform (GCP) Storage file for viruses
+
+Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanCloudStorageApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String bucketName = "bucketName_example"; // String | Name of the bucket in Google Cloud Storage
+        String objectName = "objectName_example"; // String | Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        File jsonCredentialFile = new File("/path/to/file"); // File | Service Account credential for Google Cloud stored in a JSON file.
+        try {
+            ApiResponse<CloudStorageVirusScanResult> response = apiInstance.scanCloudStorageScanGcpStorageFileWithHttpInfo(bucketName, objectName, jsonCredentialFile);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanGcpStorageFile");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **bucketName** | **String**| Name of the bucket in Google Cloud Storage | |
+| **objectName** | **String**| Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | |
+| **jsonCredentialFile** | **File**| Service Account credential for Google Cloud stored in a JSON file. | |
+
+### Return type
+
+ApiResponse<[**CloudStorageVirusScanResult**](CloudStorageVirusScanResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanCloudStorageScanGcpStorageFileAdvanced
+
 > CloudStorageAdvancedVirusScanResult scanCloudStorageScanGcpStorageFileAdvanced(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes)
 
 Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses
@@ -622,6 +1300,7 @@ Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses
 Advanced Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -632,48 +1311,49 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanCloudStorageApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
-    String bucketName = "bucketName_example"; // String | Name of the bucket in Google Cloud Storage
-    String objectName = "objectName_example"; // String | Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    File jsonCredentialFile = new File("/path/to/file"); // File | Service Account credential for Google Cloud stored in a JSON file.
-    Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
-    Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
-    Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
-    Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
-    Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
-    Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
-    Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
-    String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options.
-    String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
-    try {
-      CloudStorageAdvancedVirusScanResult result = apiInstance.scanCloudStorageScanGcpStorageFileAdvanced(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanGcpStorageFileAdvanced");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String bucketName = "bucketName_example"; // String | Name of the bucket in Google Cloud Storage
+        String objectName = "objectName_example"; // String | Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        File jsonCredentialFile = new File("/path/to/file"); // File | Service Account credential for Google Cloud stored in a JSON file.
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            CloudStorageAdvancedVirusScanResult result = apiInstance.scanCloudStorageScanGcpStorageFileAdvanced(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanGcpStorageFileAdvanced");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -698,22 +1378,129 @@ public class Example {
 
 [**CloudStorageAdvancedVirusScanResult**](CloudStorageAdvancedVirusScanResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: multipart/form-data
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanCloudStorageScanSharePointOnlineFile"></a>
-# **scanCloudStorageScanSharePointOnlineFile**
+## scanCloudStorageScanGcpStorageFileAdvancedWithHttpInfo
+
+> ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanGcpStorageFileAdvanced scanCloudStorageScanGcpStorageFileAdvancedWithHttpInfo(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes)
+
+Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses
+
+Advanced Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanCloudStorageApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String bucketName = "bucketName_example"; // String | Name of the bucket in Google Cloud Storage
+        String objectName = "objectName_example"; // String | Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        File jsonCredentialFile = new File("/path/to/file"); // File | Service Account credential for Google Cloud stored in a JSON file.
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String options = "options_example"; // String | Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            ApiResponse<CloudStorageAdvancedVirusScanResult> response = apiInstance.scanCloudStorageScanGcpStorageFileAdvancedWithHttpInfo(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanGcpStorageFileAdvanced");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **bucketName** | **String**| Name of the bucket in Google Cloud Storage | |
+| **objectName** | **String**| Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | |
+| **jsonCredentialFile** | **File**| Service Account credential for Google Cloud stored in a JSON file. | |
+| **allowExecutables** | **Boolean**| Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). | [optional] |
+| **allowInvalidFiles** | **Boolean**| Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). | [optional] |
+| **allowScripts** | **Boolean**| Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowPasswordProtectedFiles** | **Boolean**| Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowMacros** | **Boolean**| Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowXmlExternalEntities** | **Boolean**| Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). | [optional] |
+| **allowInsecureDeserialization** | **Boolean**| Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowHtml** | **Boolean**| Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. | [optional] |
+| **allowUnsafeArchives** | **Boolean**| Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. | [optional] |
+| **allowOleEmbeddedObject** | **Boolean**| Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. | [optional] |
+| **allowUnwantedAction** | **Boolean**| Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. | [optional] |
+| **options** | **String**| Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. | [optional] |
+| **restrictFileTypes** | **String**| Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. | [optional] |
+
+### Return type
+
+ApiResponse<[**CloudStorageAdvancedVirusScanResult**](CloudStorageAdvancedVirusScanResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: multipart/form-data
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanCloudStorageScanSharePointOnlineFile
+
 > CloudStorageVirusScanResult scanCloudStorageScanSharePointOnlineFile(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID)
 
 Virus Scan a file in a SharePoint Online Site Drive
@@ -721,6 +1508,7 @@ Virus Scan a file in a SharePoint Online Site Drive
 Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -731,39 +1519,40 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanCloudStorageApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
-    String clientID = "clientID_example"; // String | Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal.
-    String clientSecret = "clientSecret_example"; // String | Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal
-    String sharepointDomainName = "sharepointDomainName_example"; // String | SharePoint Online domain name, such as mydomain.sharepoint.com
-    String siteID = "siteID_example"; // String | Site ID (GUID) of the SharePoint site you wish to retrieve the file from
-    String filePath = "filePath_example"; // String | Path to the file within the drive, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    String tenantID = "tenantID_example"; // String | Optional; Tenant ID of your Azure Active Directory
-    String itemID = "itemID_example"; // String | SharePoint itemID, such as a DriveItem Id
-    try {
-      CloudStorageVirusScanResult result = apiInstance.scanCloudStorageScanSharePointOnlineFile(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanSharePointOnlineFile");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String clientID = "clientID_example"; // String | Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal.
+        String clientSecret = "clientSecret_example"; // String | Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal
+        String sharepointDomainName = "sharepointDomainName_example"; // String | SharePoint Online domain name, such as mydomain.sharepoint.com
+        String siteID = "siteID_example"; // String | Site ID (GUID) of the SharePoint site you wish to retrieve the file from
+        String filePath = "filePath_example"; // String | Path to the file within the drive, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        String tenantID = "tenantID_example"; // String | Optional; Tenant ID of your Azure Active Directory
+        String itemID = "itemID_example"; // String | SharePoint itemID, such as a DriveItem Id
+        try {
+            CloudStorageVirusScanResult result = apiInstance.scanCloudStorageScanSharePointOnlineFile(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanSharePointOnlineFile");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -779,22 +1568,111 @@ public class Example {
 
 [**CloudStorageVirusScanResult**](CloudStorageVirusScanResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 | **200** | OK |  -  |
 
-<a id="scanCloudStorageScanSharePointOnlineFileAdvanced"></a>
-# **scanCloudStorageScanSharePointOnlineFileAdvanced**
+## scanCloudStorageScanSharePointOnlineFileWithHttpInfo
+
+> ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanSharePointOnlineFile scanCloudStorageScanSharePointOnlineFileWithHttpInfo(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID)
+
+Virus Scan a file in a SharePoint Online Site Drive
+
+Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanCloudStorageApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String clientID = "clientID_example"; // String | Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal.
+        String clientSecret = "clientSecret_example"; // String | Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal
+        String sharepointDomainName = "sharepointDomainName_example"; // String | SharePoint Online domain name, such as mydomain.sharepoint.com
+        String siteID = "siteID_example"; // String | Site ID (GUID) of the SharePoint site you wish to retrieve the file from
+        String filePath = "filePath_example"; // String | Path to the file within the drive, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        String tenantID = "tenantID_example"; // String | Optional; Tenant ID of your Azure Active Directory
+        String itemID = "itemID_example"; // String | SharePoint itemID, such as a DriveItem Id
+        try {
+            ApiResponse<CloudStorageVirusScanResult> response = apiInstance.scanCloudStorageScanSharePointOnlineFileWithHttpInfo(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanSharePointOnlineFile");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **clientID** | **String**| Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. | |
+| **clientSecret** | **String**| Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal | |
+| **sharepointDomainName** | **String**| SharePoint Online domain name, such as mydomain.sharepoint.com | |
+| **siteID** | **String**| Site ID (GUID) of the SharePoint site you wish to retrieve the file from | |
+| **filePath** | **String**| Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | |
+| **tenantID** | **String**| Optional; Tenant ID of your Azure Active Directory | [optional] |
+| **itemID** | **String**| SharePoint itemID, such as a DriveItem Id | [optional] |
+
+### Return type
+
+ApiResponse<[**CloudStorageVirusScanResult**](CloudStorageVirusScanResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+
+## scanCloudStorageScanSharePointOnlineFileAdvanced
+
 > CloudStorageAdvancedVirusScanResult scanCloudStorageScanSharePointOnlineFileAdvanced(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes)
 
 Advanced Virus Scan a file in a SharePoint Online Site Drive
@@ -802,6 +1680,7 @@ Advanced Virus Scan a file in a SharePoint Online Site Drive
 Advanced Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
 
 ### Example
+
 ```java
 // Import classes:
 import org.openapitools.client.ApiClient;
@@ -812,51 +1691,52 @@ import org.openapitools.client.models.*;
 import org.openapitools.client.api.ScanCloudStorageApi;
 
 public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://api.cloudmersive.com");
-    
-    // Configure API key authorization: Apikey
-    ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
-    Apikey.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //Apikey.setApiKeyPrefix("Token");
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
 
-    ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
-    String clientID = "clientID_example"; // String | Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal.
-    String clientSecret = "clientSecret_example"; // String | Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal
-    String sharepointDomainName = "sharepointDomainName_example"; // String | SharePoint Online domain name, such as mydomain.sharepoint.com
-    String siteID = "siteID_example"; // String | Site ID (GUID) of the SharePoint site you wish to retrieve the file from
-    String tenantID = "tenantID_example"; // String | Optional; Tenant ID of your Azure Active Directory
-    String filePath = "filePath_example"; // String | Path to the file within the drive, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
-    String itemID = "itemID_example"; // String | SharePoint itemID, such as a DriveItem Id
-    Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
-    Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
-    Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
-    Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
-    Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
-    Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
-    Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
-    Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
-    String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
-    try {
-      CloudStorageAdvancedVirusScanResult result = apiInstance.scanCloudStorageScanSharePointOnlineFileAdvanced(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanSharePointOnlineFileAdvanced");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String clientID = "clientID_example"; // String | Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal.
+        String clientSecret = "clientSecret_example"; // String | Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal
+        String sharepointDomainName = "sharepointDomainName_example"; // String | SharePoint Online domain name, such as mydomain.sharepoint.com
+        String siteID = "siteID_example"; // String | Site ID (GUID) of the SharePoint site you wish to retrieve the file from
+        String tenantID = "tenantID_example"; // String | Optional; Tenant ID of your Azure Active Directory
+        String filePath = "filePath_example"; // String | Path to the file within the drive, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        String itemID = "itemID_example"; // String | SharePoint itemID, such as a DriveItem Id
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            CloudStorageAdvancedVirusScanResult result = apiInstance.scanCloudStorageScanSharePointOnlineFileAdvanced(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanSharePointOnlineFileAdvanced");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Reason: " + e.getResponseBody());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            e.printStackTrace();
+        }
     }
-  }
 }
 ```
 
 ### Parameters
+
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
@@ -884,14 +1764,126 @@ public class Example {
 
 [**CloudStorageAdvancedVirusScanResult**](CloudStorageAdvancedVirusScanResult.md)
 
+
 ### Authorization
 
 [Apikey](../README.md#Apikey)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
- - **Accept**: application/json, text/json, application/xml, text/xml
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+| **200** | OK |  -  |
+
+## scanCloudStorageScanSharePointOnlineFileAdvancedWithHttpInfo
+
+> ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanSharePointOnlineFileAdvanced scanCloudStorageScanSharePointOnlineFileAdvancedWithHttpInfo(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes)
+
+Advanced Virus Scan a file in a SharePoint Online Site Drive
+
+Advanced Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
+
+### Example
+
+```java
+// Import classes:
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.ApiResponse;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ScanCloudStorageApi;
+
+public class Example {
+    public static void main(String[] args) {
+        ApiClient defaultClient = Configuration.getDefaultApiClient();
+        defaultClient.setBasePath("https://api.cloudmersive.com");
+        
+        // Configure API key authorization: Apikey
+        ApiKeyAuth Apikey = (ApiKeyAuth) defaultClient.getAuthentication("Apikey");
+        Apikey.setApiKey("YOUR API KEY");
+        // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+        //Apikey.setApiKeyPrefix("Token");
+
+        ScanCloudStorageApi apiInstance = new ScanCloudStorageApi(defaultClient);
+        String clientID = "clientID_example"; // String | Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal.
+        String clientSecret = "clientSecret_example"; // String | Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal
+        String sharepointDomainName = "sharepointDomainName_example"; // String | SharePoint Online domain name, such as mydomain.sharepoint.com
+        String siteID = "siteID_example"; // String | Site ID (GUID) of the SharePoint site you wish to retrieve the file from
+        String tenantID = "tenantID_example"; // String | Optional; Tenant ID of your Azure Active Directory
+        String filePath = "filePath_example"; // String | Path to the file within the drive, such as 'hello.pdf' or '/folder/subfolder/world.pdf'.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with 'base64:', such as: 'base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV'.
+        String itemID = "itemID_example"; // String | SharePoint itemID, such as a DriveItem Id
+        Boolean allowExecutables = true; // Boolean | Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended).
+        Boolean allowInvalidFiles = true; // Boolean | Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended).
+        Boolean allowScripts = true; // Boolean | Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowPasswordProtectedFiles = true; // Boolean | Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowMacros = true; // Boolean | Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowXmlExternalEntities = true; // Boolean | Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended).
+        Boolean allowInsecureDeserialization = true; // Boolean | Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended).
+        Boolean allowHtml = true; // Boolean | Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability].
+        Boolean allowUnsafeArchives = true; // Boolean | Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed.
+        Boolean allowOleEmbeddedObject = true; // Boolean | Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed.
+        Boolean allowUnwantedAction = true; // Boolean | Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed.
+        String restrictFileTypes = "restrictFileTypes_example"; // String | Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult=false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled.
+        try {
+            ApiResponse<CloudStorageAdvancedVirusScanResult> response = apiInstance.scanCloudStorageScanSharePointOnlineFileAdvancedWithHttpInfo(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes);
+            System.out.println("Status code: " + response.getStatusCode());
+            System.out.println("Response headers: " + response.getHeaders());
+            System.out.println("Response body: " + response.getData());
+        } catch (ApiException e) {
+            System.err.println("Exception when calling ScanCloudStorageApi#scanCloudStorageScanSharePointOnlineFileAdvanced");
+            System.err.println("Status code: " + e.getCode());
+            System.err.println("Response headers: " + e.getResponseHeaders());
+            System.err.println("Reason: " + e.getResponseBody());
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+### Parameters
+
+
+| Name | Type | Description  | Notes |
+|------------- | ------------- | ------------- | -------------|
+| **clientID** | **String**| Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. | |
+| **clientSecret** | **String**| Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal | |
+| **sharepointDomainName** | **String**| SharePoint Online domain name, such as mydomain.sharepoint.com | |
+| **siteID** | **String**| Site ID (GUID) of the SharePoint site you wish to retrieve the file from | |
+| **tenantID** | **String**| Optional; Tenant ID of your Azure Active Directory | [optional] |
+| **filePath** | **String**| Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. | [optional] |
+| **itemID** | **String**| SharePoint itemID, such as a DriveItem Id | [optional] |
+| **allowExecutables** | **Boolean**| Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). | [optional] |
+| **allowInvalidFiles** | **Boolean**| Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). | [optional] |
+| **allowScripts** | **Boolean**| Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowPasswordProtectedFiles** | **Boolean**| Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowMacros** | **Boolean**| Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowXmlExternalEntities** | **Boolean**| Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). | [optional] |
+| **allowInsecureDeserialization** | **Boolean**| Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). | [optional] |
+| **allowHtml** | **Boolean**| Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. | [optional] |
+| **allowUnsafeArchives** | **Boolean**| Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. | [optional] |
+| **allowOleEmbeddedObject** | **Boolean**| Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. | [optional] |
+| **allowUnwantedAction** | **Boolean**| Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. | [optional] |
+| **restrictFileTypes** | **String**| Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. | [optional] |
+
+### Return type
+
+ApiResponse<[**CloudStorageAdvancedVirusScanResult**](CloudStorageAdvancedVirusScanResult.md)>
+
+
+### Authorization
+
+[Apikey](../README.md#Apikey)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, text/json, application/xml, text/xml
 
 ### HTTP response details
 | Status code | Description | Response headers |

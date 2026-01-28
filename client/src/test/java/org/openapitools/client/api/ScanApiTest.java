@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
 
 /**
  * API tests for ScanApi
@@ -35,26 +37,31 @@ public class ScanApiTest {
 
     private final ScanApi api = new ScanApi();
 
+    
     /**
      * Scan a file for viruses
      *
      * Scan files and content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
      *
-     * @throws ApiException if the Api call fails
+     * @throws ApiException
+     *          if the Api call fails
      */
     @Test
     public void scanFileTest() throws ApiException {
         File inputFile = null;
-        VirusScanResult response = api.scanFile(inputFile);
+        VirusScanResult response = 
+        api.scanFile(inputFile);
+        
         // TODO: test validations
     }
-
+    
     /**
      * Advanced Scan a file for viruses
      *
      * Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash, MSG, and a wide range of image file formats.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
      *
-     * @throws ApiException if the Api call fails
+     * @throws ApiException
+     *          if the Api call fails
      */
     @Test
     public void scanFileAdvancedTest() throws ApiException {
@@ -73,22 +80,27 @@ public class ScanApiTest {
         Boolean allowUnwantedAction = null;
         String options = null;
         String restrictFileTypes = null;
-        VirusScanAdvancedResult response = api.scanFileAdvanced(inputFile, fileName, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+        VirusScanAdvancedResult response = 
+        api.scanFileAdvanced(inputFile, fileName, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+        
         // TODO: test validations
     }
-
+    
     /**
      * Scan a website for malicious content and threats
      *
      * Operation includes scanning the content of the URL for various types of malicious content and threats, including viruses and threats (including Phishing).
      *
-     * @throws ApiException if the Api call fails
+     * @throws ApiException
+     *          if the Api call fails
      */
     @Test
     public void scanWebsiteTest() throws ApiException {
         WebsiteScanRequest input = null;
-        WebsiteScanResult response = api.scanWebsite(input);
+        WebsiteScanResult response = 
+        api.scanWebsite(input);
+        
         // TODO: test validations
     }
-
+    
 }

@@ -13,75 +13,61 @@
 
 package org.openapitools.client.model;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.StringJoiner;
 import java.util.Objects;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
 import org.openapitools.client.model.CloudStorageAdvancedVirusScanResult;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.openapitools.client.JSON;
-
+import org.openapitools.client.ApiClient;
 /**
  * Status of the scan cloud storage job
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T23:59:36.607801Z[Etc/UTC]", comments = "Generator version: 7.12.0")
+@JsonPropertyOrder({
+  ScanCloudStorageJobStatusResult.JSON_PROPERTY_SUCCESSFUL,
+  ScanCloudStorageJobStatusResult.JSON_PROPERTY_ASYNC_JOB_STATUS,
+  ScanCloudStorageJobStatusResult.JSON_PROPERTY_ASYNC_JOB_I_D,
+  ScanCloudStorageJobStatusResult.JSON_PROPERTY_RESULT,
+  ScanCloudStorageJobStatusResult.JSON_PROPERTY_JOB_DURATION,
+  ScanCloudStorageJobStatusResult.JSON_PROPERTY_ERROR_MESSAGE
+})
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T21:04:27.160244900-08:00[America/Los_Angeles]", comments = "Generator version: 7.12.0")
 public class ScanCloudStorageJobStatusResult {
-  public static final String SERIALIZED_NAME_SUCCESSFUL = "Successful";
-  @SerializedName(SERIALIZED_NAME_SUCCESSFUL)
+  public static final String JSON_PROPERTY_SUCCESSFUL = "Successful";
   @javax.annotation.Nullable
   private Boolean successful;
 
-  public static final String SERIALIZED_NAME_ASYNC_JOB_STATUS = "AsyncJobStatus";
-  @SerializedName(SERIALIZED_NAME_ASYNC_JOB_STATUS)
+  public static final String JSON_PROPERTY_ASYNC_JOB_STATUS = "AsyncJobStatus";
   @javax.annotation.Nullable
   private String asyncJobStatus;
 
-  public static final String SERIALIZED_NAME_ASYNC_JOB_I_D = "AsyncJobID";
-  @SerializedName(SERIALIZED_NAME_ASYNC_JOB_I_D)
+  public static final String JSON_PROPERTY_ASYNC_JOB_I_D = "AsyncJobID";
   @javax.annotation.Nullable
   private String asyncJobID;
 
-  public static final String SERIALIZED_NAME_RESULT = "Result";
-  @SerializedName(SERIALIZED_NAME_RESULT)
+  public static final String JSON_PROPERTY_RESULT = "Result";
   @javax.annotation.Nullable
   private CloudStorageAdvancedVirusScanResult result;
 
-  public static final String SERIALIZED_NAME_JOB_DURATION = "JobDuration";
-  @SerializedName(SERIALIZED_NAME_JOB_DURATION)
+  public static final String JSON_PROPERTY_JOB_DURATION = "JobDuration";
   @javax.annotation.Nullable
   private String jobDuration;
 
-  public static final String SERIALIZED_NAME_ERROR_MESSAGE = "ErrorMessage";
-  @SerializedName(SERIALIZED_NAME_ERROR_MESSAGE)
+  public static final String JSON_PROPERTY_ERROR_MESSAGE = "ErrorMessage";
   @javax.annotation.Nullable
   private String errorMessage;
 
-  public ScanCloudStorageJobStatusResult() {
+  public ScanCloudStorageJobStatusResult() { 
   }
 
   public ScanCloudStorageJobStatusResult successful(@javax.annotation.Nullable Boolean successful) {
@@ -94,10 +80,15 @@ public class ScanCloudStorageJobStatusResult {
    * @return successful
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SUCCESSFUL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getSuccessful() {
     return successful;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_SUCCESSFUL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSuccessful(@javax.annotation.Nullable Boolean successful) {
     this.successful = successful;
   }
@@ -113,10 +104,15 @@ public class ScanCloudStorageJobStatusResult {
    * @return asyncJobStatus
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ASYNC_JOB_STATUS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getAsyncJobStatus() {
     return asyncJobStatus;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_ASYNC_JOB_STATUS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAsyncJobStatus(@javax.annotation.Nullable String asyncJobStatus) {
     this.asyncJobStatus = asyncJobStatus;
   }
@@ -132,10 +128,15 @@ public class ScanCloudStorageJobStatusResult {
    * @return asyncJobID
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ASYNC_JOB_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getAsyncJobID() {
     return asyncJobID;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_ASYNC_JOB_I_D)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setAsyncJobID(@javax.annotation.Nullable String asyncJobID) {
     this.asyncJobID = asyncJobID;
   }
@@ -151,10 +152,15 @@ public class ScanCloudStorageJobStatusResult {
    * @return result
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_RESULT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public CloudStorageAdvancedVirusScanResult getResult() {
     return result;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_RESULT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setResult(@javax.annotation.Nullable CloudStorageAdvancedVirusScanResult result) {
     this.result = result;
   }
@@ -170,10 +176,15 @@ public class ScanCloudStorageJobStatusResult {
    * @return jobDuration
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_JOB_DURATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getJobDuration() {
     return jobDuration;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_JOB_DURATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setJobDuration(@javax.annotation.Nullable String jobDuration) {
     this.jobDuration = jobDuration;
   }
@@ -189,16 +200,23 @@ public class ScanCloudStorageJobStatusResult {
    * @return errorMessage
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ERROR_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getErrorMessage() {
     return errorMessage;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_ERROR_MESSAGE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setErrorMessage(@javax.annotation.Nullable String errorMessage) {
     this.errorMessage = errorMessage;
   }
 
 
-
+  /**
+   * Return true if this ScanCloudStorageJobStatusResult object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -246,110 +264,69 @@ public class ScanCloudStorageJobStatusResult {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    openapiFields.add("Successful");
-    openapiFields.add("AsyncJobStatus");
-    openapiFields.add("AsyncJobID");
-    openapiFields.add("Result");
-    openapiFields.add("JobDuration");
-    openapiFields.add("ErrorMessage");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
+  /**
+   * Convert the instance into URL query string.
+   *
+   * @return URL query string
+   */
+  public String toUrlQueryString() {
+    return toUrlQueryString(null);
   }
 
   /**
-   * Validates the JSON Element and throws an exception if issues found
+   * Convert the instance into URL query string.
    *
-   * @param jsonElement JSON Element
-   * @throws IOException if the JSON Element is invalid with respect to ScanCloudStorageJobStatusResult
+   * @param prefix prefix of the query string
+   * @return URL query string
    */
-  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
-      if (jsonElement == null) {
-        if (!ScanCloudStorageJobStatusResult.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in ScanCloudStorageJobStatusResult is not found in the empty JSON string", ScanCloudStorageJobStatusResult.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Map.Entry<String, JsonElement> entry : entries) {
-        if (!ScanCloudStorageJobStatusResult.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `ScanCloudStorageJobStatusResult` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
-        }
-      }
-        JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if ((jsonObj.get("AsyncJobStatus") != null && !jsonObj.get("AsyncJobStatus").isJsonNull()) && !jsonObj.get("AsyncJobStatus").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `AsyncJobStatus` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AsyncJobStatus").toString()));
-      }
-      if ((jsonObj.get("AsyncJobID") != null && !jsonObj.get("AsyncJobID").isJsonNull()) && !jsonObj.get("AsyncJobID").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `AsyncJobID` to be a primitive type in the JSON string but got `%s`", jsonObj.get("AsyncJobID").toString()));
-      }
-      // validate the optional field `Result`
-      if (jsonObj.get("Result") != null && !jsonObj.get("Result").isJsonNull()) {
-        CloudStorageAdvancedVirusScanResult.validateJsonElement(jsonObj.get("Result"));
-      }
-      if ((jsonObj.get("JobDuration") != null && !jsonObj.get("JobDuration").isJsonNull()) && !jsonObj.get("JobDuration").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `JobDuration` to be a primitive type in the JSON string but got `%s`", jsonObj.get("JobDuration").toString()));
-      }
-      if ((jsonObj.get("ErrorMessage") != null && !jsonObj.get("ErrorMessage").isJsonNull()) && !jsonObj.get("ErrorMessage").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `ErrorMessage` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ErrorMessage").toString()));
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!ScanCloudStorageJobStatusResult.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'ScanCloudStorageJobStatusResult' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<ScanCloudStorageJobStatusResult> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(ScanCloudStorageJobStatusResult.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<ScanCloudStorageJobStatusResult>() {
-           @Override
-           public void write(JsonWriter out, ScanCloudStorageJobStatusResult value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public ScanCloudStorageJobStatusResult read(JsonReader in) throws IOException {
-             JsonElement jsonElement = elementAdapter.read(in);
-             validateJsonElement(jsonElement);
-             return thisAdapter.fromJsonTree(jsonElement);
-           }
-
-       }.nullSafe();
+  public String toUrlQueryString(String prefix) {
+    String suffix = "";
+    String containerSuffix = "";
+    String containerPrefix = "";
+    if (prefix == null) {
+      // style=form, explode=true, e.g. /pet?name=cat&type=manx
+      prefix = "";
+    } else {
+      // deepObject style e.g. /pet?id[name]=cat&id[type]=manx
+      prefix = prefix + "[";
+      suffix = "]";
+      containerSuffix = "]";
+      containerPrefix = "[";
     }
-  }
 
-  /**
-   * Create an instance of ScanCloudStorageJobStatusResult given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of ScanCloudStorageJobStatusResult
-   * @throws IOException if the JSON string is invalid with respect to ScanCloudStorageJobStatusResult
-   */
-  public static ScanCloudStorageJobStatusResult fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, ScanCloudStorageJobStatusResult.class);
-  }
+    StringJoiner joiner = new StringJoiner("&");
 
-  /**
-   * Convert an instance of ScanCloudStorageJobStatusResult to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
+    // add `Successful` to the URL query string
+    if (getSuccessful() != null) {
+      joiner.add(String.format("%sSuccessful%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSuccessful()))));
+    }
+
+    // add `AsyncJobStatus` to the URL query string
+    if (getAsyncJobStatus() != null) {
+      joiner.add(String.format("%sAsyncJobStatus%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAsyncJobStatus()))));
+    }
+
+    // add `AsyncJobID` to the URL query string
+    if (getAsyncJobID() != null) {
+      joiner.add(String.format("%sAsyncJobID%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getAsyncJobID()))));
+    }
+
+    // add `Result` to the URL query string
+    if (getResult() != null) {
+      joiner.add(getResult().toUrlQueryString(prefix + "Result" + suffix));
+    }
+
+    // add `JobDuration` to the URL query string
+    if (getJobDuration() != null) {
+      joiner.add(String.format("%sJobDuration%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getJobDuration()))));
+    }
+
+    // add `ErrorMessage` to the URL query string
+    if (getErrorMessage() != null) {
+      joiner.add(String.format("%sErrorMessage%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getErrorMessage()))));
+    }
+
+    return joiner.toString();
   }
 }
 

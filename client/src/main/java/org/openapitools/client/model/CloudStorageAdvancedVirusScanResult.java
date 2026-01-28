@@ -13,138 +13,124 @@
 
 package org.openapitools.client.model;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.StringJoiner;
 import java.util.Objects;
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
+import java.util.Map;
+import java.util.HashMap;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import org.openapitools.client.model.AdditionalAdvancedScanInformation;
 import org.openapitools.client.model.CloudStorageVirusFound;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.TypeAdapterFactory;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import org.openapitools.client.JSON;
-
+import org.openapitools.client.ApiClient;
 /**
  * Result of running an advanced virus scan on cloud storage
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T23:59:36.607801Z[Etc/UTC]", comments = "Generator version: 7.12.0")
+@JsonPropertyOrder({
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_SUCCESSFUL,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CLEAN_RESULT,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_EXECUTABLE,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_INVALID_FILE,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_SCRIPT,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_PASSWORD_PROTECTED_FILE,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_RESTRICTED_FILE_FORMAT,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_MACROS,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_XML_EXTERNAL_ENTITIES,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_INSECURE_DESERIALIZATION,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_HTML,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_UNSAFE_ARCHIVE,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTAINS_OLE_EMBEDDED_OBJECT,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_VERIFIED_FILE_FORMAT,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_FOUND_VIRUSES,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_ERROR_DETAILED_DESCRIPTION,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_FILE_SIZE,
+  CloudStorageAdvancedVirusScanResult.JSON_PROPERTY_CONTENT_INFORMATION
+})
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T21:04:27.160244900-08:00[America/Los_Angeles]", comments = "Generator version: 7.12.0")
 public class CloudStorageAdvancedVirusScanResult {
-  public static final String SERIALIZED_NAME_SUCCESSFUL = "Successful";
-  @SerializedName(SERIALIZED_NAME_SUCCESSFUL)
+  public static final String JSON_PROPERTY_SUCCESSFUL = "Successful";
   @javax.annotation.Nullable
   private Boolean successful;
 
-  public static final String SERIALIZED_NAME_CLEAN_RESULT = "CleanResult";
-  @SerializedName(SERIALIZED_NAME_CLEAN_RESULT)
+  public static final String JSON_PROPERTY_CLEAN_RESULT = "CleanResult";
   @javax.annotation.Nullable
   private Boolean cleanResult;
 
-  public static final String SERIALIZED_NAME_CONTAINS_EXECUTABLE = "ContainsExecutable";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_EXECUTABLE)
+  public static final String JSON_PROPERTY_CONTAINS_EXECUTABLE = "ContainsExecutable";
   @javax.annotation.Nullable
   private Boolean containsExecutable;
 
-  public static final String SERIALIZED_NAME_CONTAINS_INVALID_FILE = "ContainsInvalidFile";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_INVALID_FILE)
+  public static final String JSON_PROPERTY_CONTAINS_INVALID_FILE = "ContainsInvalidFile";
   @javax.annotation.Nullable
   private Boolean containsInvalidFile;
 
-  public static final String SERIALIZED_NAME_CONTAINS_SCRIPT = "ContainsScript";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_SCRIPT)
+  public static final String JSON_PROPERTY_CONTAINS_SCRIPT = "ContainsScript";
   @javax.annotation.Nullable
   private Boolean containsScript;
 
-  public static final String SERIALIZED_NAME_CONTAINS_PASSWORD_PROTECTED_FILE = "ContainsPasswordProtectedFile";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_PASSWORD_PROTECTED_FILE)
+  public static final String JSON_PROPERTY_CONTAINS_PASSWORD_PROTECTED_FILE = "ContainsPasswordProtectedFile";
   @javax.annotation.Nullable
   private Boolean containsPasswordProtectedFile;
 
-  public static final String SERIALIZED_NAME_CONTAINS_RESTRICTED_FILE_FORMAT = "ContainsRestrictedFileFormat";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_RESTRICTED_FILE_FORMAT)
+  public static final String JSON_PROPERTY_CONTAINS_RESTRICTED_FILE_FORMAT = "ContainsRestrictedFileFormat";
   @javax.annotation.Nullable
   private Boolean containsRestrictedFileFormat;
 
-  public static final String SERIALIZED_NAME_CONTAINS_MACROS = "ContainsMacros";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_MACROS)
+  public static final String JSON_PROPERTY_CONTAINS_MACROS = "ContainsMacros";
   @javax.annotation.Nullable
   private Boolean containsMacros;
 
-  public static final String SERIALIZED_NAME_CONTAINS_XML_EXTERNAL_ENTITIES = "ContainsXmlExternalEntities";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_XML_EXTERNAL_ENTITIES)
+  public static final String JSON_PROPERTY_CONTAINS_XML_EXTERNAL_ENTITIES = "ContainsXmlExternalEntities";
   @javax.annotation.Nullable
   private Boolean containsXmlExternalEntities;
 
-  public static final String SERIALIZED_NAME_CONTAINS_INSECURE_DESERIALIZATION = "ContainsInsecureDeserialization";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_INSECURE_DESERIALIZATION)
+  public static final String JSON_PROPERTY_CONTAINS_INSECURE_DESERIALIZATION = "ContainsInsecureDeserialization";
   @javax.annotation.Nullable
   private Boolean containsInsecureDeserialization;
 
-  public static final String SERIALIZED_NAME_CONTAINS_HTML = "ContainsHtml";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_HTML)
+  public static final String JSON_PROPERTY_CONTAINS_HTML = "ContainsHtml";
   @javax.annotation.Nullable
   private Boolean containsHtml;
 
-  public static final String SERIALIZED_NAME_CONTAINS_UNSAFE_ARCHIVE = "ContainsUnsafeArchive";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_UNSAFE_ARCHIVE)
+  public static final String JSON_PROPERTY_CONTAINS_UNSAFE_ARCHIVE = "ContainsUnsafeArchive";
   @javax.annotation.Nullable
   private Boolean containsUnsafeArchive;
 
-  public static final String SERIALIZED_NAME_CONTAINS_OLE_EMBEDDED_OBJECT = "ContainsOleEmbeddedObject";
-  @SerializedName(SERIALIZED_NAME_CONTAINS_OLE_EMBEDDED_OBJECT)
+  public static final String JSON_PROPERTY_CONTAINS_OLE_EMBEDDED_OBJECT = "ContainsOleEmbeddedObject";
   @javax.annotation.Nullable
   private Boolean containsOleEmbeddedObject;
 
-  public static final String SERIALIZED_NAME_VERIFIED_FILE_FORMAT = "VerifiedFileFormat";
-  @SerializedName(SERIALIZED_NAME_VERIFIED_FILE_FORMAT)
+  public static final String JSON_PROPERTY_VERIFIED_FILE_FORMAT = "VerifiedFileFormat";
   @javax.annotation.Nullable
   private String verifiedFileFormat;
 
-  public static final String SERIALIZED_NAME_FOUND_VIRUSES = "FoundViruses";
-  @SerializedName(SERIALIZED_NAME_FOUND_VIRUSES)
+  public static final String JSON_PROPERTY_FOUND_VIRUSES = "FoundViruses";
   @javax.annotation.Nullable
   private List<CloudStorageVirusFound> foundViruses = new ArrayList<>();
 
-  public static final String SERIALIZED_NAME_ERROR_DETAILED_DESCRIPTION = "ErrorDetailedDescription";
-  @SerializedName(SERIALIZED_NAME_ERROR_DETAILED_DESCRIPTION)
+  public static final String JSON_PROPERTY_ERROR_DETAILED_DESCRIPTION = "ErrorDetailedDescription";
   @javax.annotation.Nullable
   private String errorDetailedDescription;
 
-  public static final String SERIALIZED_NAME_FILE_SIZE = "FileSize";
-  @SerializedName(SERIALIZED_NAME_FILE_SIZE)
+  public static final String JSON_PROPERTY_FILE_SIZE = "FileSize";
   @javax.annotation.Nullable
   private Long fileSize;
 
-  public static final String SERIALIZED_NAME_CONTENT_INFORMATION = "ContentInformation";
-  @SerializedName(SERIALIZED_NAME_CONTENT_INFORMATION)
+  public static final String JSON_PROPERTY_CONTENT_INFORMATION = "ContentInformation";
   @javax.annotation.Nullable
   private AdditionalAdvancedScanInformation contentInformation;
 
-  public CloudStorageAdvancedVirusScanResult() {
+  public CloudStorageAdvancedVirusScanResult() { 
   }
 
   public CloudStorageAdvancedVirusScanResult successful(@javax.annotation.Nullable Boolean successful) {
@@ -157,10 +143,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return successful
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_SUCCESSFUL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getSuccessful() {
     return successful;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_SUCCESSFUL)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setSuccessful(@javax.annotation.Nullable Boolean successful) {
     this.successful = successful;
   }
@@ -176,10 +167,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return cleanResult
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CLEAN_RESULT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getCleanResult() {
     return cleanResult;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CLEAN_RESULT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setCleanResult(@javax.annotation.Nullable Boolean cleanResult) {
     this.cleanResult = cleanResult;
   }
@@ -195,10 +191,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsExecutable
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_EXECUTABLE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsExecutable() {
     return containsExecutable;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_EXECUTABLE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsExecutable(@javax.annotation.Nullable Boolean containsExecutable) {
     this.containsExecutable = containsExecutable;
   }
@@ -214,10 +215,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsInvalidFile
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_INVALID_FILE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsInvalidFile() {
     return containsInvalidFile;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_INVALID_FILE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsInvalidFile(@javax.annotation.Nullable Boolean containsInvalidFile) {
     this.containsInvalidFile = containsInvalidFile;
   }
@@ -233,10 +239,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsScript
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_SCRIPT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsScript() {
     return containsScript;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_SCRIPT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsScript(@javax.annotation.Nullable Boolean containsScript) {
     this.containsScript = containsScript;
   }
@@ -252,10 +263,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsPasswordProtectedFile
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_PASSWORD_PROTECTED_FILE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsPasswordProtectedFile() {
     return containsPasswordProtectedFile;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_PASSWORD_PROTECTED_FILE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsPasswordProtectedFile(@javax.annotation.Nullable Boolean containsPasswordProtectedFile) {
     this.containsPasswordProtectedFile = containsPasswordProtectedFile;
   }
@@ -271,10 +287,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsRestrictedFileFormat
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_RESTRICTED_FILE_FORMAT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsRestrictedFileFormat() {
     return containsRestrictedFileFormat;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_RESTRICTED_FILE_FORMAT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsRestrictedFileFormat(@javax.annotation.Nullable Boolean containsRestrictedFileFormat) {
     this.containsRestrictedFileFormat = containsRestrictedFileFormat;
   }
@@ -290,10 +311,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsMacros
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_MACROS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsMacros() {
     return containsMacros;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_MACROS)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsMacros(@javax.annotation.Nullable Boolean containsMacros) {
     this.containsMacros = containsMacros;
   }
@@ -309,10 +335,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsXmlExternalEntities
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_XML_EXTERNAL_ENTITIES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsXmlExternalEntities() {
     return containsXmlExternalEntities;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_XML_EXTERNAL_ENTITIES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsXmlExternalEntities(@javax.annotation.Nullable Boolean containsXmlExternalEntities) {
     this.containsXmlExternalEntities = containsXmlExternalEntities;
   }
@@ -328,10 +359,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsInsecureDeserialization
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_INSECURE_DESERIALIZATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsInsecureDeserialization() {
     return containsInsecureDeserialization;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_INSECURE_DESERIALIZATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsInsecureDeserialization(@javax.annotation.Nullable Boolean containsInsecureDeserialization) {
     this.containsInsecureDeserialization = containsInsecureDeserialization;
   }
@@ -347,10 +383,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsHtml
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_HTML)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsHtml() {
     return containsHtml;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_HTML)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsHtml(@javax.annotation.Nullable Boolean containsHtml) {
     this.containsHtml = containsHtml;
   }
@@ -366,10 +407,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsUnsafeArchive
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_UNSAFE_ARCHIVE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsUnsafeArchive() {
     return containsUnsafeArchive;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_UNSAFE_ARCHIVE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsUnsafeArchive(@javax.annotation.Nullable Boolean containsUnsafeArchive) {
     this.containsUnsafeArchive = containsUnsafeArchive;
   }
@@ -385,10 +431,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return containsOleEmbeddedObject
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTAINS_OLE_EMBEDDED_OBJECT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Boolean getContainsOleEmbeddedObject() {
     return containsOleEmbeddedObject;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTAINS_OLE_EMBEDDED_OBJECT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContainsOleEmbeddedObject(@javax.annotation.Nullable Boolean containsOleEmbeddedObject) {
     this.containsOleEmbeddedObject = containsOleEmbeddedObject;
   }
@@ -404,10 +455,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return verifiedFileFormat
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_VERIFIED_FILE_FORMAT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getVerifiedFileFormat() {
     return verifiedFileFormat;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_VERIFIED_FILE_FORMAT)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setVerifiedFileFormat(@javax.annotation.Nullable String verifiedFileFormat) {
     this.verifiedFileFormat = verifiedFileFormat;
   }
@@ -431,10 +487,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return foundViruses
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_FOUND_VIRUSES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public List<CloudStorageVirusFound> getFoundViruses() {
     return foundViruses;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_FOUND_VIRUSES)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFoundViruses(@javax.annotation.Nullable List<CloudStorageVirusFound> foundViruses) {
     this.foundViruses = foundViruses;
   }
@@ -450,10 +511,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return errorDetailedDescription
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_ERROR_DETAILED_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public String getErrorDetailedDescription() {
     return errorDetailedDescription;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_ERROR_DETAILED_DESCRIPTION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setErrorDetailedDescription(@javax.annotation.Nullable String errorDetailedDescription) {
     this.errorDetailedDescription = errorDetailedDescription;
   }
@@ -469,10 +535,15 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return fileSize
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_FILE_SIZE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public Long getFileSize() {
     return fileSize;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_FILE_SIZE)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setFileSize(@javax.annotation.Nullable Long fileSize) {
     this.fileSize = fileSize;
   }
@@ -488,16 +559,23 @@ public class CloudStorageAdvancedVirusScanResult {
    * @return contentInformation
    */
   @javax.annotation.Nullable
+  @JsonProperty(JSON_PROPERTY_CONTENT_INFORMATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public AdditionalAdvancedScanInformation getContentInformation() {
     return contentInformation;
   }
 
+
+  @JsonProperty(JSON_PROPERTY_CONTENT_INFORMATION)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   public void setContentInformation(@javax.annotation.Nullable AdditionalAdvancedScanInformation contentInformation) {
     this.contentInformation = contentInformation;
   }
 
 
-
+  /**
+   * Return true if this CloudStorageAdvancedVirusScanResult object is equal to o.
+   */
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -569,130 +647,134 @@ public class CloudStorageAdvancedVirusScanResult {
     return o.toString().replace("\n", "\n    ");
   }
 
-
-  public static HashSet<String> openapiFields;
-  public static HashSet<String> openapiRequiredFields;
-
-  static {
-    // a set of all properties/fields (JSON key names)
-    openapiFields = new HashSet<String>();
-    openapiFields.add("Successful");
-    openapiFields.add("CleanResult");
-    openapiFields.add("ContainsExecutable");
-    openapiFields.add("ContainsInvalidFile");
-    openapiFields.add("ContainsScript");
-    openapiFields.add("ContainsPasswordProtectedFile");
-    openapiFields.add("ContainsRestrictedFileFormat");
-    openapiFields.add("ContainsMacros");
-    openapiFields.add("ContainsXmlExternalEntities");
-    openapiFields.add("ContainsInsecureDeserialization");
-    openapiFields.add("ContainsHtml");
-    openapiFields.add("ContainsUnsafeArchive");
-    openapiFields.add("ContainsOleEmbeddedObject");
-    openapiFields.add("VerifiedFileFormat");
-    openapiFields.add("FoundViruses");
-    openapiFields.add("ErrorDetailedDescription");
-    openapiFields.add("FileSize");
-    openapiFields.add("ContentInformation");
-
-    // a set of required properties/fields (JSON key names)
-    openapiRequiredFields = new HashSet<String>();
+  /**
+   * Convert the instance into URL query string.
+   *
+   * @return URL query string
+   */
+  public String toUrlQueryString() {
+    return toUrlQueryString(null);
   }
 
   /**
-   * Validates the JSON Element and throws an exception if issues found
+   * Convert the instance into URL query string.
    *
-   * @param jsonElement JSON Element
-   * @throws IOException if the JSON Element is invalid with respect to CloudStorageAdvancedVirusScanResult
+   * @param prefix prefix of the query string
+   * @return URL query string
    */
-  public static void validateJsonElement(JsonElement jsonElement) throws IOException {
-      if (jsonElement == null) {
-        if (!CloudStorageAdvancedVirusScanResult.openapiRequiredFields.isEmpty()) { // has required fields but JSON element is null
-          throw new IllegalArgumentException(String.format("The required field(s) %s in CloudStorageAdvancedVirusScanResult is not found in the empty JSON string", CloudStorageAdvancedVirusScanResult.openapiRequiredFields.toString()));
-        }
-      }
-
-      Set<Map.Entry<String, JsonElement>> entries = jsonElement.getAsJsonObject().entrySet();
-      // check to see if the JSON string contains additional fields
-      for (Map.Entry<String, JsonElement> entry : entries) {
-        if (!CloudStorageAdvancedVirusScanResult.openapiFields.contains(entry.getKey())) {
-          throw new IllegalArgumentException(String.format("The field `%s` in the JSON string is not defined in the `CloudStorageAdvancedVirusScanResult` properties. JSON: %s", entry.getKey(), jsonElement.toString()));
-        }
-      }
-        JsonObject jsonObj = jsonElement.getAsJsonObject();
-      if ((jsonObj.get("VerifiedFileFormat") != null && !jsonObj.get("VerifiedFileFormat").isJsonNull()) && !jsonObj.get("VerifiedFileFormat").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `VerifiedFileFormat` to be a primitive type in the JSON string but got `%s`", jsonObj.get("VerifiedFileFormat").toString()));
-      }
-      if (jsonObj.get("FoundViruses") != null && !jsonObj.get("FoundViruses").isJsonNull()) {
-        JsonArray jsonArrayfoundViruses = jsonObj.getAsJsonArray("FoundViruses");
-        if (jsonArrayfoundViruses != null) {
-          // ensure the json data is an array
-          if (!jsonObj.get("FoundViruses").isJsonArray()) {
-            throw new IllegalArgumentException(String.format("Expected the field `FoundViruses` to be an array in the JSON string but got `%s`", jsonObj.get("FoundViruses").toString()));
-          }
-
-          // validate the optional field `FoundViruses` (array)
-          for (int i = 0; i < jsonArrayfoundViruses.size(); i++) {
-            CloudStorageVirusFound.validateJsonElement(jsonArrayfoundViruses.get(i));
-          };
-        }
-      }
-      if ((jsonObj.get("ErrorDetailedDescription") != null && !jsonObj.get("ErrorDetailedDescription").isJsonNull()) && !jsonObj.get("ErrorDetailedDescription").isJsonPrimitive()) {
-        throw new IllegalArgumentException(String.format("Expected the field `ErrorDetailedDescription` to be a primitive type in the JSON string but got `%s`", jsonObj.get("ErrorDetailedDescription").toString()));
-      }
-      // validate the optional field `ContentInformation`
-      if (jsonObj.get("ContentInformation") != null && !jsonObj.get("ContentInformation").isJsonNull()) {
-        AdditionalAdvancedScanInformation.validateJsonElement(jsonObj.get("ContentInformation"));
-      }
-  }
-
-  public static class CustomTypeAdapterFactory implements TypeAdapterFactory {
-    @SuppressWarnings("unchecked")
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-       if (!CloudStorageAdvancedVirusScanResult.class.isAssignableFrom(type.getRawType())) {
-         return null; // this class only serializes 'CloudStorageAdvancedVirusScanResult' and its subtypes
-       }
-       final TypeAdapter<JsonElement> elementAdapter = gson.getAdapter(JsonElement.class);
-       final TypeAdapter<CloudStorageAdvancedVirusScanResult> thisAdapter
-                        = gson.getDelegateAdapter(this, TypeToken.get(CloudStorageAdvancedVirusScanResult.class));
-
-       return (TypeAdapter<T>) new TypeAdapter<CloudStorageAdvancedVirusScanResult>() {
-           @Override
-           public void write(JsonWriter out, CloudStorageAdvancedVirusScanResult value) throws IOException {
-             JsonObject obj = thisAdapter.toJsonTree(value).getAsJsonObject();
-             elementAdapter.write(out, obj);
-           }
-
-           @Override
-           public CloudStorageAdvancedVirusScanResult read(JsonReader in) throws IOException {
-             JsonElement jsonElement = elementAdapter.read(in);
-             validateJsonElement(jsonElement);
-             return thisAdapter.fromJsonTree(jsonElement);
-           }
-
-       }.nullSafe();
+  public String toUrlQueryString(String prefix) {
+    String suffix = "";
+    String containerSuffix = "";
+    String containerPrefix = "";
+    if (prefix == null) {
+      // style=form, explode=true, e.g. /pet?name=cat&type=manx
+      prefix = "";
+    } else {
+      // deepObject style e.g. /pet?id[name]=cat&id[type]=manx
+      prefix = prefix + "[";
+      suffix = "]";
+      containerSuffix = "]";
+      containerPrefix = "[";
     }
-  }
 
-  /**
-   * Create an instance of CloudStorageAdvancedVirusScanResult given an JSON string
-   *
-   * @param jsonString JSON string
-   * @return An instance of CloudStorageAdvancedVirusScanResult
-   * @throws IOException if the JSON string is invalid with respect to CloudStorageAdvancedVirusScanResult
-   */
-  public static CloudStorageAdvancedVirusScanResult fromJson(String jsonString) throws IOException {
-    return JSON.getGson().fromJson(jsonString, CloudStorageAdvancedVirusScanResult.class);
-  }
+    StringJoiner joiner = new StringJoiner("&");
 
-  /**
-   * Convert an instance of CloudStorageAdvancedVirusScanResult to an JSON string
-   *
-   * @return JSON string
-   */
-  public String toJson() {
-    return JSON.getGson().toJson(this);
+    // add `Successful` to the URL query string
+    if (getSuccessful() != null) {
+      joiner.add(String.format("%sSuccessful%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getSuccessful()))));
+    }
+
+    // add `CleanResult` to the URL query string
+    if (getCleanResult() != null) {
+      joiner.add(String.format("%sCleanResult%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getCleanResult()))));
+    }
+
+    // add `ContainsExecutable` to the URL query string
+    if (getContainsExecutable() != null) {
+      joiner.add(String.format("%sContainsExecutable%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsExecutable()))));
+    }
+
+    // add `ContainsInvalidFile` to the URL query string
+    if (getContainsInvalidFile() != null) {
+      joiner.add(String.format("%sContainsInvalidFile%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsInvalidFile()))));
+    }
+
+    // add `ContainsScript` to the URL query string
+    if (getContainsScript() != null) {
+      joiner.add(String.format("%sContainsScript%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsScript()))));
+    }
+
+    // add `ContainsPasswordProtectedFile` to the URL query string
+    if (getContainsPasswordProtectedFile() != null) {
+      joiner.add(String.format("%sContainsPasswordProtectedFile%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsPasswordProtectedFile()))));
+    }
+
+    // add `ContainsRestrictedFileFormat` to the URL query string
+    if (getContainsRestrictedFileFormat() != null) {
+      joiner.add(String.format("%sContainsRestrictedFileFormat%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsRestrictedFileFormat()))));
+    }
+
+    // add `ContainsMacros` to the URL query string
+    if (getContainsMacros() != null) {
+      joiner.add(String.format("%sContainsMacros%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsMacros()))));
+    }
+
+    // add `ContainsXmlExternalEntities` to the URL query string
+    if (getContainsXmlExternalEntities() != null) {
+      joiner.add(String.format("%sContainsXmlExternalEntities%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsXmlExternalEntities()))));
+    }
+
+    // add `ContainsInsecureDeserialization` to the URL query string
+    if (getContainsInsecureDeserialization() != null) {
+      joiner.add(String.format("%sContainsInsecureDeserialization%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsInsecureDeserialization()))));
+    }
+
+    // add `ContainsHtml` to the URL query string
+    if (getContainsHtml() != null) {
+      joiner.add(String.format("%sContainsHtml%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsHtml()))));
+    }
+
+    // add `ContainsUnsafeArchive` to the URL query string
+    if (getContainsUnsafeArchive() != null) {
+      joiner.add(String.format("%sContainsUnsafeArchive%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsUnsafeArchive()))));
+    }
+
+    // add `ContainsOleEmbeddedObject` to the URL query string
+    if (getContainsOleEmbeddedObject() != null) {
+      joiner.add(String.format("%sContainsOleEmbeddedObject%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getContainsOleEmbeddedObject()))));
+    }
+
+    // add `VerifiedFileFormat` to the URL query string
+    if (getVerifiedFileFormat() != null) {
+      joiner.add(String.format("%sVerifiedFileFormat%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getVerifiedFileFormat()))));
+    }
+
+    // add `FoundViruses` to the URL query string
+    if (getFoundViruses() != null) {
+      for (int i = 0; i < getFoundViruses().size(); i++) {
+        if (getFoundViruses().get(i) != null) {
+          joiner.add(getFoundViruses().get(i).toUrlQueryString(String.format("%sFoundViruses%s%s", prefix, suffix,
+          "".equals(suffix) ? "" : String.format("%s%d%s", containerPrefix, i, containerSuffix))));
+        }
+      }
+    }
+
+    // add `ErrorDetailedDescription` to the URL query string
+    if (getErrorDetailedDescription() != null) {
+      joiner.add(String.format("%sErrorDetailedDescription%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getErrorDetailedDescription()))));
+    }
+
+    // add `FileSize` to the URL query string
+    if (getFileSize() != null) {
+      joiner.add(String.format("%sFileSize%s=%s", prefix, suffix, ApiClient.urlEncode(ApiClient.valueToString(getFileSize()))));
+    }
+
+    // add `ContentInformation` to the URL query string
+    if (getContentInformation() != null) {
+      joiner.add(getContentInformation().toUrlQueryString(prefix + "ContentInformation" + suffix));
+    }
+
+    return joiner.toString();
   }
 }
 

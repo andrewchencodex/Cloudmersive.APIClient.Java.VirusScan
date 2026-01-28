@@ -10,22 +10,13 @@
  * Do not edit the class manually.
  */
 
-
 package org.openapitools.client.api;
 
-import org.openapitools.client.ApiCallback;
 import org.openapitools.client.ApiClient;
 import org.openapitools.client.ApiException;
 import org.openapitools.client.ApiResponse;
 import org.openapitools.client.Configuration;
 import org.openapitools.client.Pair;
-import org.openapitools.client.ProgressRequestBody;
-import org.openapitools.client.ProgressResponseBody;
-
-import com.google.gson.reflect.TypeToken;
-
-import java.io.IOException;
-
 
 import org.openapitools.client.model.CloudStorageAdvancedVirusScanResult;
 import org.openapitools.client.model.CloudStorageVirusScanResult;
@@ -33,2375 +24,1582 @@ import java.io.File;
 import org.openapitools.client.model.ScanCloudStorageBatchJobCreateResult;
 import org.openapitools.client.model.ScanCloudStorageJobStatusResult;
 
-import java.lang.reflect.Type;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.NameValuePair;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+
+import java.io.InputStream;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.http.HttpRequest;
+import java.nio.channels.Channels;
+import java.nio.channels.Pipe;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.time.Duration;
+
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.StringJoiner;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.function.Consumer;
 
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-01-27T21:04:27.160244900-08:00[America/Los_Angeles]", comments = "Generator version: 7.12.0")
 public class ScanCloudStorageApi {
-    private ApiClient localVarApiClient;
-    private int localHostIndex;
-    private String localCustomBaseUrl;
+  private final HttpClient memberVarHttpClient;
+  private final ObjectMapper memberVarObjectMapper;
+  private final String memberVarBaseUri;
+  private final Consumer<HttpRequest.Builder> memberVarInterceptor;
+  private final Duration memberVarReadTimeout;
+  private final Consumer<HttpResponse<InputStream>> memberVarResponseInterceptor;
+  private final Consumer<HttpResponse<String>> memberVarAsyncResponseInterceptor;
 
-    public ScanCloudStorageApi() {
-        this(Configuration.getDefaultApiClient());
+  public ScanCloudStorageApi() {
+    this(Configuration.getDefaultApiClient());
+  }
+
+  public ScanCloudStorageApi(ApiClient apiClient) {
+    memberVarHttpClient = apiClient.getHttpClient();
+    memberVarObjectMapper = apiClient.getObjectMapper();
+    memberVarBaseUri = apiClient.getBaseUri();
+    memberVarInterceptor = apiClient.getRequestInterceptor();
+    memberVarReadTimeout = apiClient.getReadTimeout();
+    memberVarResponseInterceptor = apiClient.getResponseInterceptor();
+    memberVarAsyncResponseInterceptor = apiClient.getAsyncResponseInterceptor();
+  }
+
+  protected ApiException getApiException(String operationId, HttpResponse<InputStream> response) throws IOException {
+    String body = response.body() == null ? null : new String(response.body().readAllBytes());
+    String message = formatExceptionMessage(operationId, response.statusCode(), body);
+    return new ApiException(response.statusCode(), message, response.headers(), body);
+  }
+
+  private String formatExceptionMessage(String operationId, int statusCode, String body) {
+    if (body == null || body.isEmpty()) {
+      body = "[no body]";
+    }
+    return operationId + " call failed with: " + statusCode + " - " + body;
+  }
+
+  /**
+   * Get the status and result of a Scan Cloud Storage Batch Job
+   * Returns the result of the Async Job - possible states can be STARTED or COMPLETED.  This API is only available for Cloudmersive Managed Instance and Private Cloud deployments.
+   * @param asyncJobID  (required)
+   * @return ScanCloudStorageJobStatusResult
+   * @throws ApiException if fails to make API call
+   */
+  public ScanCloudStorageJobStatusResult scanCloudStorageGetAsyncJobStatus(String asyncJobID) throws ApiException {
+    ApiResponse<ScanCloudStorageJobStatusResult> localVarResponse = scanCloudStorageGetAsyncJobStatusWithHttpInfo(asyncJobID);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Get the status and result of a Scan Cloud Storage Batch Job
+   * Returns the result of the Async Job - possible states can be STARTED or COMPLETED.  This API is only available for Cloudmersive Managed Instance and Private Cloud deployments.
+   * @param asyncJobID  (required)
+   * @return ApiResponse&lt;ScanCloudStorageJobStatusResult&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<ScanCloudStorageJobStatusResult> scanCloudStorageGetAsyncJobStatusWithHttpInfo(String asyncJobID) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = scanCloudStorageGetAsyncJobStatusRequestBuilder(asyncJobID);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("scanCloudStorageGetAsyncJobStatus", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<ScanCloudStorageJobStatusResult>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes());
+        localVarResponse.body().close();
+
+        return new ApiResponse<ScanCloudStorageJobStatusResult>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<ScanCloudStorageJobStatusResult>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder scanCloudStorageGetAsyncJobStatusRequestBuilder(String asyncJobID) throws ApiException {
+    // verify the required parameter 'asyncJobID' is set
+    if (asyncJobID == null) {
+      throw new ApiException(400, "Missing the required parameter 'asyncJobID' when calling scanCloudStorageGetAsyncJobStatus");
     }
 
-    public ScanCloudStorageApi(ApiClient apiClient) {
-        this.localVarApiClient = apiClient;
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/virus/scan/cloud-storage/batch-job/status";
+
+    List<Pair> localVarQueryParams = new ArrayList<>();
+    StringJoiner localVarQueryStringJoiner = new StringJoiner("&");
+    String localVarQueryParameterBaseName;
+    localVarQueryParameterBaseName = "AsyncJobID";
+    localVarQueryParams.addAll(ApiClient.parameterToPairs("AsyncJobID", asyncJobID));
+
+    if (!localVarQueryParams.isEmpty() || localVarQueryStringJoiner.length() != 0) {
+      StringJoiner queryJoiner = new StringJoiner("&");
+      localVarQueryParams.forEach(p -> queryJoiner.add(p.getName() + '=' + p.getValue()));
+      if (localVarQueryStringJoiner.length() != 0) {
+        queryJoiner.add(localVarQueryStringJoiner.toString());
+      }
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath + '?' + queryJoiner.toString()));
+    } else {
+      localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
     }
 
-    public ApiClient getApiClient() {
-        return localVarApiClient;
+    localVarRequestBuilder.header("Accept", "application/json, text/json, application/xml, text/xml");
+
+    localVarRequestBuilder.method("GET", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Scan an AWS S3 file for viruses
+   * Scan the contents of a single AWS S3 file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
+   * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
+   * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
+   * @param bucketName Name of the S3 bucket (required)
+   * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
+   * @return CloudStorageVirusScanResult
+   * @throws ApiException if fails to make API call
+   */
+  public CloudStorageVirusScanResult scanCloudStorageScanAwsS3File(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn) throws ApiException {
+    ApiResponse<CloudStorageVirusScanResult> localVarResponse = scanCloudStorageScanAwsS3FileWithHttpInfo(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Scan an AWS S3 file for viruses
+   * Scan the contents of a single AWS S3 file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
+   * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
+   * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
+   * @param bucketName Name of the S3 bucket (required)
+   * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
+   * @return ApiResponse&lt;CloudStorageVirusScanResult&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanAwsS3FileWithHttpInfo(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = scanCloudStorageScanAwsS3FileRequestBuilder(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("scanCloudStorageScanAwsS3File", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<CloudStorageVirusScanResult>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes());
+        localVarResponse.body().close();
+
+        return new ApiResponse<CloudStorageVirusScanResult>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CloudStorageVirusScanResult>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder scanCloudStorageScanAwsS3FileRequestBuilder(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn) throws ApiException {
+    // verify the required parameter 'accessKey' is set
+    if (accessKey == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessKey' when calling scanCloudStorageScanAwsS3File");
+    }
+    // verify the required parameter 'secretKey' is set
+    if (secretKey == null) {
+      throw new ApiException(400, "Missing the required parameter 'secretKey' when calling scanCloudStorageScanAwsS3File");
+    }
+    // verify the required parameter 'bucketRegion' is set
+    if (bucketRegion == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketRegion' when calling scanCloudStorageScanAwsS3File");
+    }
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling scanCloudStorageScanAwsS3File");
+    }
+    // verify the required parameter 'keyName' is set
+    if (keyName == null) {
+      throw new ApiException(400, "Missing the required parameter 'keyName' when calling scanCloudStorageScanAwsS3File");
     }
 
-    public void setApiClient(ApiClient apiClient) {
-        this.localVarApiClient = apiClient;
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/virus/scan/cloud-storage/aws-s3/single";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    if (accessKey != null) {
+      localVarRequestBuilder.header("accessKey", accessKey.toString());
+    }
+    if (secretKey != null) {
+      localVarRequestBuilder.header("secretKey", secretKey.toString());
+    }
+    if (bucketRegion != null) {
+      localVarRequestBuilder.header("bucketRegion", bucketRegion.toString());
+    }
+    if (bucketName != null) {
+      localVarRequestBuilder.header("bucketName", bucketName.toString());
+    }
+    if (keyName != null) {
+      localVarRequestBuilder.header("keyName", keyName.toString());
+    }
+    if (roleArn != null) {
+      localVarRequestBuilder.header("roleArn", roleArn.toString());
+    }
+    localVarRequestBuilder.header("Accept", "application/json, text/json, application/xml, text/xml");
+
+    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Advanced Scan an AWS S3 file for viruses
+   * Advanced Scan the contents of a single AWS S3 file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
+   * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
+   * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
+   * @param bucketName Name of the S3 bucket (required)
+   * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
+   * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
+   * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
+   * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
+   * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
+   * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
+   * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
+   * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
+   * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
+   * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
+   * @return CloudStorageAdvancedVirusScanResult
+   * @throws ApiException if fails to make API call
+   */
+  public CloudStorageAdvancedVirusScanResult scanCloudStorageScanAwsS3FileAdvanced(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    ApiResponse<CloudStorageAdvancedVirusScanResult> localVarResponse = scanCloudStorageScanAwsS3FileAdvancedWithHttpInfo(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Advanced Scan an AWS S3 file for viruses
+   * Advanced Scan the contents of a single AWS S3 file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
+   * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
+   * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
+   * @param bucketName Name of the S3 bucket (required)
+   * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
+   * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
+   * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
+   * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
+   * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
+   * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
+   * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
+   * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
+   * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
+   * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
+   * @return ApiResponse&lt;CloudStorageAdvancedVirusScanResult&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanAwsS3FileAdvancedWithHttpInfo(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = scanCloudStorageScanAwsS3FileAdvancedRequestBuilder(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("scanCloudStorageScanAwsS3FileAdvanced", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<CloudStorageAdvancedVirusScanResult>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes());
+        localVarResponse.body().close();
+
+        return new ApiResponse<CloudStorageAdvancedVirusScanResult>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CloudStorageAdvancedVirusScanResult>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder scanCloudStorageScanAwsS3FileAdvancedRequestBuilder(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    // verify the required parameter 'accessKey' is set
+    if (accessKey == null) {
+      throw new ApiException(400, "Missing the required parameter 'accessKey' when calling scanCloudStorageScanAwsS3FileAdvanced");
+    }
+    // verify the required parameter 'secretKey' is set
+    if (secretKey == null) {
+      throw new ApiException(400, "Missing the required parameter 'secretKey' when calling scanCloudStorageScanAwsS3FileAdvanced");
+    }
+    // verify the required parameter 'bucketRegion' is set
+    if (bucketRegion == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketRegion' when calling scanCloudStorageScanAwsS3FileAdvanced");
+    }
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling scanCloudStorageScanAwsS3FileAdvanced");
+    }
+    // verify the required parameter 'keyName' is set
+    if (keyName == null) {
+      throw new ApiException(400, "Missing the required parameter 'keyName' when calling scanCloudStorageScanAwsS3FileAdvanced");
     }
 
-    public int getHostIndex() {
-        return localHostIndex;
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/virus/scan/cloud-storage/aws-s3/single/advanced";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    if (accessKey != null) {
+      localVarRequestBuilder.header("accessKey", accessKey.toString());
+    }
+    if (secretKey != null) {
+      localVarRequestBuilder.header("secretKey", secretKey.toString());
+    }
+    if (bucketRegion != null) {
+      localVarRequestBuilder.header("bucketRegion", bucketRegion.toString());
+    }
+    if (bucketName != null) {
+      localVarRequestBuilder.header("bucketName", bucketName.toString());
+    }
+    if (keyName != null) {
+      localVarRequestBuilder.header("keyName", keyName.toString());
+    }
+    if (roleArn != null) {
+      localVarRequestBuilder.header("roleArn", roleArn.toString());
+    }
+    if (allowExecutables != null) {
+      localVarRequestBuilder.header("allowExecutables", allowExecutables.toString());
+    }
+    if (allowInvalidFiles != null) {
+      localVarRequestBuilder.header("allowInvalidFiles", allowInvalidFiles.toString());
+    }
+    if (allowScripts != null) {
+      localVarRequestBuilder.header("allowScripts", allowScripts.toString());
+    }
+    if (allowPasswordProtectedFiles != null) {
+      localVarRequestBuilder.header("allowPasswordProtectedFiles", allowPasswordProtectedFiles.toString());
+    }
+    if (allowMacros != null) {
+      localVarRequestBuilder.header("allowMacros", allowMacros.toString());
+    }
+    if (allowXmlExternalEntities != null) {
+      localVarRequestBuilder.header("allowXmlExternalEntities", allowXmlExternalEntities.toString());
+    }
+    if (allowInsecureDeserialization != null) {
+      localVarRequestBuilder.header("allowInsecureDeserialization", allowInsecureDeserialization.toString());
+    }
+    if (allowHtml != null) {
+      localVarRequestBuilder.header("allowHtml", allowHtml.toString());
+    }
+    if (allowUnsafeArchives != null) {
+      localVarRequestBuilder.header("allowUnsafeArchives", allowUnsafeArchives.toString());
+    }
+    if (allowOleEmbeddedObject != null) {
+      localVarRequestBuilder.header("allowOleEmbeddedObject", allowOleEmbeddedObject.toString());
+    }
+    if (allowUnwantedAction != null) {
+      localVarRequestBuilder.header("allowUnwantedAction", allowUnwantedAction.toString());
+    }
+    if (options != null) {
+      localVarRequestBuilder.header("options", options.toString());
+    }
+    if (restrictFileTypes != null) {
+      localVarRequestBuilder.header("restrictFileTypes", restrictFileTypes.toString());
+    }
+    localVarRequestBuilder.header("Accept", "application/json, text/json, application/xml, text/xml");
+
+    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Scan an Azure Blob for viruses
+   * Scan the contents of a single Azure Blob and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
+   * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
+   * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @return CloudStorageVirusScanResult
+   * @throws ApiException if fails to make API call
+   */
+  public CloudStorageVirusScanResult scanCloudStorageScanAzureBlob(String connectionString, String containerName, String blobPath) throws ApiException {
+    ApiResponse<CloudStorageVirusScanResult> localVarResponse = scanCloudStorageScanAzureBlobWithHttpInfo(connectionString, containerName, blobPath);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Scan an Azure Blob for viruses
+   * Scan the contents of a single Azure Blob and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
+   * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
+   * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @return ApiResponse&lt;CloudStorageVirusScanResult&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanAzureBlobWithHttpInfo(String connectionString, String containerName, String blobPath) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = scanCloudStorageScanAzureBlobRequestBuilder(connectionString, containerName, blobPath);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("scanCloudStorageScanAzureBlob", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<CloudStorageVirusScanResult>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes());
+        localVarResponse.body().close();
+
+        return new ApiResponse<CloudStorageVirusScanResult>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CloudStorageVirusScanResult>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder scanCloudStorageScanAzureBlobRequestBuilder(String connectionString, String containerName, String blobPath) throws ApiException {
+    // verify the required parameter 'connectionString' is set
+    if (connectionString == null) {
+      throw new ApiException(400, "Missing the required parameter 'connectionString' when calling scanCloudStorageScanAzureBlob");
+    }
+    // verify the required parameter 'containerName' is set
+    if (containerName == null) {
+      throw new ApiException(400, "Missing the required parameter 'containerName' when calling scanCloudStorageScanAzureBlob");
+    }
+    // verify the required parameter 'blobPath' is set
+    if (blobPath == null) {
+      throw new ApiException(400, "Missing the required parameter 'blobPath' when calling scanCloudStorageScanAzureBlob");
     }
 
-    public void setHostIndex(int hostIndex) {
-        this.localHostIndex = hostIndex;
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/virus/scan/cloud-storage/azure-blob/single";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    if (connectionString != null) {
+      localVarRequestBuilder.header("connectionString", connectionString.toString());
+    }
+    if (containerName != null) {
+      localVarRequestBuilder.header("containerName", containerName.toString());
+    }
+    if (blobPath != null) {
+      localVarRequestBuilder.header("blobPath", blobPath.toString());
+    }
+    localVarRequestBuilder.header("Accept", "application/json, text/json, application/xml, text/xml");
+
+    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Advanced Scan an Azure Blob for viruses
+   * Advanced Scan the contents of a single Azure Blob and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
+   * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
+   * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
+   * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
+   * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
+   * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
+   * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
+   * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
+   * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
+   * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
+   * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
+   * @return CloudStorageAdvancedVirusScanResult
+   * @throws ApiException if fails to make API call
+   */
+  public CloudStorageAdvancedVirusScanResult scanCloudStorageScanAzureBlobAdvanced(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    ApiResponse<CloudStorageAdvancedVirusScanResult> localVarResponse = scanCloudStorageScanAzureBlobAdvancedWithHttpInfo(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Advanced Scan an Azure Blob for viruses
+   * Advanced Scan the contents of a single Azure Blob and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
+   * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
+   * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
+   * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
+   * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
+   * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
+   * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
+   * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
+   * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
+   * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
+   * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
+   * @return ApiResponse&lt;CloudStorageAdvancedVirusScanResult&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanAzureBlobAdvancedWithHttpInfo(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = scanCloudStorageScanAzureBlobAdvancedRequestBuilder(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("scanCloudStorageScanAzureBlobAdvanced", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<CloudStorageAdvancedVirusScanResult>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes());
+        localVarResponse.body().close();
+
+        return new ApiResponse<CloudStorageAdvancedVirusScanResult>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CloudStorageAdvancedVirusScanResult>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder scanCloudStorageScanAzureBlobAdvancedRequestBuilder(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    // verify the required parameter 'connectionString' is set
+    if (connectionString == null) {
+      throw new ApiException(400, "Missing the required parameter 'connectionString' when calling scanCloudStorageScanAzureBlobAdvanced");
+    }
+    // verify the required parameter 'containerName' is set
+    if (containerName == null) {
+      throw new ApiException(400, "Missing the required parameter 'containerName' when calling scanCloudStorageScanAzureBlobAdvanced");
+    }
+    // verify the required parameter 'blobPath' is set
+    if (blobPath == null) {
+      throw new ApiException(400, "Missing the required parameter 'blobPath' when calling scanCloudStorageScanAzureBlobAdvanced");
     }
 
-    public String getCustomBaseUrl() {
-        return localCustomBaseUrl;
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/virus/scan/cloud-storage/azure-blob/single/advanced";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    if (connectionString != null) {
+      localVarRequestBuilder.header("connectionString", connectionString.toString());
+    }
+    if (containerName != null) {
+      localVarRequestBuilder.header("containerName", containerName.toString());
+    }
+    if (blobPath != null) {
+      localVarRequestBuilder.header("blobPath", blobPath.toString());
+    }
+    if (allowExecutables != null) {
+      localVarRequestBuilder.header("allowExecutables", allowExecutables.toString());
+    }
+    if (allowInvalidFiles != null) {
+      localVarRequestBuilder.header("allowInvalidFiles", allowInvalidFiles.toString());
+    }
+    if (allowScripts != null) {
+      localVarRequestBuilder.header("allowScripts", allowScripts.toString());
+    }
+    if (allowPasswordProtectedFiles != null) {
+      localVarRequestBuilder.header("allowPasswordProtectedFiles", allowPasswordProtectedFiles.toString());
+    }
+    if (allowMacros != null) {
+      localVarRequestBuilder.header("allowMacros", allowMacros.toString());
+    }
+    if (allowXmlExternalEntities != null) {
+      localVarRequestBuilder.header("allowXmlExternalEntities", allowXmlExternalEntities.toString());
+    }
+    if (allowInsecureDeserialization != null) {
+      localVarRequestBuilder.header("allowInsecureDeserialization", allowInsecureDeserialization.toString());
+    }
+    if (allowHtml != null) {
+      localVarRequestBuilder.header("allowHtml", allowHtml.toString());
+    }
+    if (allowUnsafeArchives != null) {
+      localVarRequestBuilder.header("allowUnsafeArchives", allowUnsafeArchives.toString());
+    }
+    if (allowOleEmbeddedObject != null) {
+      localVarRequestBuilder.header("allowOleEmbeddedObject", allowOleEmbeddedObject.toString());
+    }
+    if (allowUnwantedAction != null) {
+      localVarRequestBuilder.header("allowUnwantedAction", allowUnwantedAction.toString());
+    }
+    if (options != null) {
+      localVarRequestBuilder.header("options", options.toString());
+    }
+    if (restrictFileTypes != null) {
+      localVarRequestBuilder.header("restrictFileTypes", restrictFileTypes.toString());
+    }
+    localVarRequestBuilder.header("Accept", "application/json, text/json, application/xml, text/xml");
+
+    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Advanced Scan an Azure Blob for viruses via a batch job
+   * Via a batch job, advanced Scan the contents of a single Azure Blob and its content for viruses and threats, great for larger/longer processing jobs.  Requires Managed Instance or Private Cloud.  Returns a job ID which you can then use the Get Job Status API to get the status and output of the job.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
+   * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
+   * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
+   * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
+   * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
+   * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
+   * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
+   * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
+   * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
+   * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
+   * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
+   * @return ScanCloudStorageBatchJobCreateResult
+   * @throws ApiException if fails to make API call
+   */
+  public ScanCloudStorageBatchJobCreateResult scanCloudStorageScanAzureBlobAdvancedBatchJob(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    ApiResponse<ScanCloudStorageBatchJobCreateResult> localVarResponse = scanCloudStorageScanAzureBlobAdvancedBatchJobWithHttpInfo(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Advanced Scan an Azure Blob for viruses via a batch job
+   * Via a batch job, advanced Scan the contents of a single Azure Blob and its content for viruses and threats, great for larger/longer processing jobs.  Requires Managed Instance or Private Cloud.  Returns a job ID which you can then use the Get Job Status API to get the status and output of the job.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
+   * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
+   * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
+   * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
+   * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
+   * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
+   * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
+   * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
+   * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
+   * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
+   * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
+   * @return ApiResponse&lt;ScanCloudStorageBatchJobCreateResult&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<ScanCloudStorageBatchJobCreateResult> scanCloudStorageScanAzureBlobAdvancedBatchJobWithHttpInfo(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = scanCloudStorageScanAzureBlobAdvancedBatchJobRequestBuilder(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("scanCloudStorageScanAzureBlobAdvancedBatchJob", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<ScanCloudStorageBatchJobCreateResult>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes());
+        localVarResponse.body().close();
+
+        return new ApiResponse<ScanCloudStorageBatchJobCreateResult>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<ScanCloudStorageBatchJobCreateResult>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder scanCloudStorageScanAzureBlobAdvancedBatchJobRequestBuilder(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    // verify the required parameter 'connectionString' is set
+    if (connectionString == null) {
+      throw new ApiException(400, "Missing the required parameter 'connectionString' when calling scanCloudStorageScanAzureBlobAdvancedBatchJob");
+    }
+    // verify the required parameter 'containerName' is set
+    if (containerName == null) {
+      throw new ApiException(400, "Missing the required parameter 'containerName' when calling scanCloudStorageScanAzureBlobAdvancedBatchJob");
+    }
+    // verify the required parameter 'blobPath' is set
+    if (blobPath == null) {
+      throw new ApiException(400, "Missing the required parameter 'blobPath' when calling scanCloudStorageScanAzureBlobAdvancedBatchJob");
     }
 
-    public void setCustomBaseUrl(String customBaseUrl) {
-        this.localCustomBaseUrl = customBaseUrl;
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/virus/scan/cloud-storage/azure-blob/single/advanced/batch-job";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    if (connectionString != null) {
+      localVarRequestBuilder.header("connectionString", connectionString.toString());
+    }
+    if (containerName != null) {
+      localVarRequestBuilder.header("containerName", containerName.toString());
+    }
+    if (blobPath != null) {
+      localVarRequestBuilder.header("blobPath", blobPath.toString());
+    }
+    if (allowExecutables != null) {
+      localVarRequestBuilder.header("allowExecutables", allowExecutables.toString());
+    }
+    if (allowInvalidFiles != null) {
+      localVarRequestBuilder.header("allowInvalidFiles", allowInvalidFiles.toString());
+    }
+    if (allowScripts != null) {
+      localVarRequestBuilder.header("allowScripts", allowScripts.toString());
+    }
+    if (allowPasswordProtectedFiles != null) {
+      localVarRequestBuilder.header("allowPasswordProtectedFiles", allowPasswordProtectedFiles.toString());
+    }
+    if (allowMacros != null) {
+      localVarRequestBuilder.header("allowMacros", allowMacros.toString());
+    }
+    if (allowXmlExternalEntities != null) {
+      localVarRequestBuilder.header("allowXmlExternalEntities", allowXmlExternalEntities.toString());
+    }
+    if (allowInsecureDeserialization != null) {
+      localVarRequestBuilder.header("allowInsecureDeserialization", allowInsecureDeserialization.toString());
+    }
+    if (allowHtml != null) {
+      localVarRequestBuilder.header("allowHtml", allowHtml.toString());
+    }
+    if (allowUnsafeArchives != null) {
+      localVarRequestBuilder.header("allowUnsafeArchives", allowUnsafeArchives.toString());
+    }
+    if (allowOleEmbeddedObject != null) {
+      localVarRequestBuilder.header("allowOleEmbeddedObject", allowOleEmbeddedObject.toString());
+    }
+    if (allowUnwantedAction != null) {
+      localVarRequestBuilder.header("allowUnwantedAction", allowUnwantedAction.toString());
+    }
+    if (options != null) {
+      localVarRequestBuilder.header("options", options.toString());
+    }
+    if (restrictFileTypes != null) {
+      localVarRequestBuilder.header("restrictFileTypes", restrictFileTypes.toString());
+    }
+    localVarRequestBuilder.header("Accept", "application/json, text/json, application/xml, text/xml");
+
+    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Scan an Google Cloud Platform (GCP) Storage file for viruses
+   * Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param bucketName Name of the bucket in Google Cloud Storage (required)
+   * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
+   * @return CloudStorageVirusScanResult
+   * @throws ApiException if fails to make API call
+   */
+  public CloudStorageVirusScanResult scanCloudStorageScanGcpStorageFile(String bucketName, String objectName, File jsonCredentialFile) throws ApiException {
+    ApiResponse<CloudStorageVirusScanResult> localVarResponse = scanCloudStorageScanGcpStorageFileWithHttpInfo(bucketName, objectName, jsonCredentialFile);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Scan an Google Cloud Platform (GCP) Storage file for viruses
+   * Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param bucketName Name of the bucket in Google Cloud Storage (required)
+   * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
+   * @return ApiResponse&lt;CloudStorageVirusScanResult&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanGcpStorageFileWithHttpInfo(String bucketName, String objectName, File jsonCredentialFile) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = scanCloudStorageScanGcpStorageFileRequestBuilder(bucketName, objectName, jsonCredentialFile);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("scanCloudStorageScanGcpStorageFile", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<CloudStorageVirusScanResult>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes());
+        localVarResponse.body().close();
+
+        return new ApiResponse<CloudStorageVirusScanResult>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CloudStorageVirusScanResult>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder scanCloudStorageScanGcpStorageFileRequestBuilder(String bucketName, String objectName, File jsonCredentialFile) throws ApiException {
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling scanCloudStorageScanGcpStorageFile");
+    }
+    // verify the required parameter 'objectName' is set
+    if (objectName == null) {
+      throw new ApiException(400, "Missing the required parameter 'objectName' when calling scanCloudStorageScanGcpStorageFile");
+    }
+    // verify the required parameter 'jsonCredentialFile' is set
+    if (jsonCredentialFile == null) {
+      throw new ApiException(400, "Missing the required parameter 'jsonCredentialFile' when calling scanCloudStorageScanGcpStorageFile");
     }
 
-    /**
-     * Build call for scanCloudStorageGetAsyncJobStatus
-     * @param asyncJobID  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageGetAsyncJobStatusCall(String asyncJobID, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
 
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
+    String localVarPath = "/virus/scan/cloud-storage/gcp-storage/single";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    if (bucketName != null) {
+      localVarRequestBuilder.header("bucketName", bucketName.toString());
+    }
+    if (objectName != null) {
+      localVarRequestBuilder.header("objectName", objectName.toString());
+    }
+    localVarRequestBuilder.header("Accept", "application/json, text/json, application/xml, text/xml");
+
+    MultipartEntityBuilder multiPartBuilder = MultipartEntityBuilder.create();
+    boolean hasFiles = false;
+    multiPartBuilder.addBinaryBody("jsonCredentialFile", jsonCredentialFile);
+    hasFiles = true;
+    HttpEntity entity = multiPartBuilder.build();
+    HttpRequest.BodyPublisher formDataPublisher;
+    if (ApiClient.isChunkedTransferEnabled()) {
+        Pipe pipe;
+        try {
+            pipe = Pipe.open();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        new Thread(() -> {
+            try (OutputStream outputStream = Channels.newOutputStream(pipe.sink())) {
+                entity.writeTo(outputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        formDataPublisher = HttpRequest.BodyPublishers.ofInputStream(() -> Channels.newInputStream(pipe.source()));
+    } else {
+        ByteArrayOutputStream formOutputStream = new ByteArrayOutputStream();
+        try {
+            entity.writeTo(formOutputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        formDataPublisher = HttpRequest.BodyPublishers.ofByteArray(formOutputStream.toByteArray());
+    }
+    localVarRequestBuilder
+        .header("Content-Type", entity.getContentType().getValue())
+        .method("POST", formDataPublisher);
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses
+   * Advanced Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param bucketName Name of the bucket in Google Cloud Storage (required)
+   * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
+   * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
+   * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
+   * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
+   * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
+   * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
+   * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
+   * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
+   * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
+   * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
+   * @return CloudStorageAdvancedVirusScanResult
+   * @throws ApiException if fails to make API call
+   */
+  public CloudStorageAdvancedVirusScanResult scanCloudStorageScanGcpStorageFileAdvanced(String bucketName, String objectName, File jsonCredentialFile, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    ApiResponse<CloudStorageAdvancedVirusScanResult> localVarResponse = scanCloudStorageScanGcpStorageFileAdvancedWithHttpInfo(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses
+   * Advanced Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
+   * @param bucketName Name of the bucket in Google Cloud Storage (required)
+   * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
+   * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
+   * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
+   * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
+   * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
+   * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
+   * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
+   * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
+   * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
+   * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
+   * @return ApiResponse&lt;CloudStorageAdvancedVirusScanResult&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanGcpStorageFileAdvancedWithHttpInfo(String bucketName, String objectName, File jsonCredentialFile, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = scanCloudStorageScanGcpStorageFileAdvancedRequestBuilder(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("scanCloudStorageScanGcpStorageFileAdvanced", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<CloudStorageAdvancedVirusScanResult>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
         }
 
-        Object localVarPostBody = null;
+        String responseBody = new String(localVarResponse.body().readAllBytes());
+        localVarResponse.body().close();
 
-        // create path and map variables
-        String localVarPath = "/virus/scan/cloud-storage/batch-job/status";
+        return new ApiResponse<CloudStorageAdvancedVirusScanResult>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CloudStorageAdvancedVirusScanResult>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
 
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (asyncJobID != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("AsyncJobID", asyncJobID));
-        }
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        String[] localVarAuthNames = new String[] { "Apikey" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+  private HttpRequest.Builder scanCloudStorageScanGcpStorageFileAdvancedRequestBuilder(String bucketName, String objectName, File jsonCredentialFile, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
+    // verify the required parameter 'bucketName' is set
+    if (bucketName == null) {
+      throw new ApiException(400, "Missing the required parameter 'bucketName' when calling scanCloudStorageScanGcpStorageFileAdvanced");
+    }
+    // verify the required parameter 'objectName' is set
+    if (objectName == null) {
+      throw new ApiException(400, "Missing the required parameter 'objectName' when calling scanCloudStorageScanGcpStorageFileAdvanced");
+    }
+    // verify the required parameter 'jsonCredentialFile' is set
+    if (jsonCredentialFile == null) {
+      throw new ApiException(400, "Missing the required parameter 'jsonCredentialFile' when calling scanCloudStorageScanGcpStorageFileAdvanced");
     }
 
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call scanCloudStorageGetAsyncJobStatusValidateBeforeCall(String asyncJobID, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'asyncJobID' is set
-        if (asyncJobID == null) {
-            throw new ApiException("Missing the required parameter 'asyncJobID' when calling scanCloudStorageGetAsyncJobStatus(Async)");
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/virus/scan/cloud-storage/gcp-storage/single/advanced";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    if (bucketName != null) {
+      localVarRequestBuilder.header("bucketName", bucketName.toString());
+    }
+    if (objectName != null) {
+      localVarRequestBuilder.header("objectName", objectName.toString());
+    }
+    if (allowExecutables != null) {
+      localVarRequestBuilder.header("allowExecutables", allowExecutables.toString());
+    }
+    if (allowInvalidFiles != null) {
+      localVarRequestBuilder.header("allowInvalidFiles", allowInvalidFiles.toString());
+    }
+    if (allowScripts != null) {
+      localVarRequestBuilder.header("allowScripts", allowScripts.toString());
+    }
+    if (allowPasswordProtectedFiles != null) {
+      localVarRequestBuilder.header("allowPasswordProtectedFiles", allowPasswordProtectedFiles.toString());
+    }
+    if (allowMacros != null) {
+      localVarRequestBuilder.header("allowMacros", allowMacros.toString());
+    }
+    if (allowXmlExternalEntities != null) {
+      localVarRequestBuilder.header("allowXmlExternalEntities", allowXmlExternalEntities.toString());
+    }
+    if (allowInsecureDeserialization != null) {
+      localVarRequestBuilder.header("allowInsecureDeserialization", allowInsecureDeserialization.toString());
+    }
+    if (allowHtml != null) {
+      localVarRequestBuilder.header("allowHtml", allowHtml.toString());
+    }
+    if (allowUnsafeArchives != null) {
+      localVarRequestBuilder.header("allowUnsafeArchives", allowUnsafeArchives.toString());
+    }
+    if (allowOleEmbeddedObject != null) {
+      localVarRequestBuilder.header("allowOleEmbeddedObject", allowOleEmbeddedObject.toString());
+    }
+    if (allowUnwantedAction != null) {
+      localVarRequestBuilder.header("allowUnwantedAction", allowUnwantedAction.toString());
+    }
+    if (options != null) {
+      localVarRequestBuilder.header("options", options.toString());
+    }
+    if (restrictFileTypes != null) {
+      localVarRequestBuilder.header("restrictFileTypes", restrictFileTypes.toString());
+    }
+    localVarRequestBuilder.header("Accept", "application/json, text/json, application/xml, text/xml");
+
+    MultipartEntityBuilder multiPartBuilder = MultipartEntityBuilder.create();
+    boolean hasFiles = false;
+    multiPartBuilder.addBinaryBody("jsonCredentialFile", jsonCredentialFile);
+    hasFiles = true;
+    HttpEntity entity = multiPartBuilder.build();
+    HttpRequest.BodyPublisher formDataPublisher;
+    if (ApiClient.isChunkedTransferEnabled()) {
+        Pipe pipe;
+        try {
+            pipe = Pipe.open();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        new Thread(() -> {
+            try (OutputStream outputStream = Channels.newOutputStream(pipe.sink())) {
+                entity.writeTo(outputStream);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }).start();
+        formDataPublisher = HttpRequest.BodyPublishers.ofInputStream(() -> Channels.newInputStream(pipe.source()));
+    } else {
+        ByteArrayOutputStream formOutputStream = new ByteArrayOutputStream();
+        try {
+            entity.writeTo(formOutputStream);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        formDataPublisher = HttpRequest.BodyPublishers.ofByteArray(formOutputStream.toByteArray());
+    }
+    localVarRequestBuilder
+        .header("Content-Type", entity.getContentType().getValue())
+        .method("POST", formDataPublisher);
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Virus Scan a file in a SharePoint Online Site Drive
+   * Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
+   * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
+   * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
+   * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
+   * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
+   * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
+   * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
+   * @return CloudStorageVirusScanResult
+   * @throws ApiException if fails to make API call
+   */
+  public CloudStorageVirusScanResult scanCloudStorageScanSharePointOnlineFile(String clientID, String clientSecret, String sharepointDomainName, String siteID, String filePath, String tenantID, String itemID) throws ApiException {
+    ApiResponse<CloudStorageVirusScanResult> localVarResponse = scanCloudStorageScanSharePointOnlineFileWithHttpInfo(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Virus Scan a file in a SharePoint Online Site Drive
+   * Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
+   * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
+   * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
+   * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
+   * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
+   * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
+   * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
+   * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
+   * @return ApiResponse&lt;CloudStorageVirusScanResult&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanSharePointOnlineFileWithHttpInfo(String clientID, String clientSecret, String sharepointDomainName, String siteID, String filePath, String tenantID, String itemID) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = scanCloudStorageScanSharePointOnlineFileRequestBuilder(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("scanCloudStorageScanSharePointOnlineFile", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<CloudStorageVirusScanResult>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
         }
 
-        return scanCloudStorageGetAsyncJobStatusCall(asyncJobID, _callback);
+        String responseBody = new String(localVarResponse.body().readAllBytes());
+        localVarResponse.body().close();
 
+        return new ApiResponse<CloudStorageVirusScanResult>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CloudStorageVirusScanResult>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder scanCloudStorageScanSharePointOnlineFileRequestBuilder(String clientID, String clientSecret, String sharepointDomainName, String siteID, String filePath, String tenantID, String itemID) throws ApiException {
+    // verify the required parameter 'clientID' is set
+    if (clientID == null) {
+      throw new ApiException(400, "Missing the required parameter 'clientID' when calling scanCloudStorageScanSharePointOnlineFile");
+    }
+    // verify the required parameter 'clientSecret' is set
+    if (clientSecret == null) {
+      throw new ApiException(400, "Missing the required parameter 'clientSecret' when calling scanCloudStorageScanSharePointOnlineFile");
+    }
+    // verify the required parameter 'sharepointDomainName' is set
+    if (sharepointDomainName == null) {
+      throw new ApiException(400, "Missing the required parameter 'sharepointDomainName' when calling scanCloudStorageScanSharePointOnlineFile");
+    }
+    // verify the required parameter 'siteID' is set
+    if (siteID == null) {
+      throw new ApiException(400, "Missing the required parameter 'siteID' when calling scanCloudStorageScanSharePointOnlineFile");
+    }
+    // verify the required parameter 'filePath' is set
+    if (filePath == null) {
+      throw new ApiException(400, "Missing the required parameter 'filePath' when calling scanCloudStorageScanSharePointOnlineFile");
     }
 
-    /**
-     * Get the status and result of a Scan Cloud Storage Batch Job
-     * Returns the result of the Async Job - possible states can be STARTED or COMPLETED.  This API is only available for Cloudmersive Managed Instance and Private Cloud deployments.
-     * @param asyncJobID  (required)
-     * @return ScanCloudStorageJobStatusResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ScanCloudStorageJobStatusResult scanCloudStorageGetAsyncJobStatus(String asyncJobID) throws ApiException {
-        ApiResponse<ScanCloudStorageJobStatusResult> localVarResp = scanCloudStorageGetAsyncJobStatusWithHttpInfo(asyncJobID);
-        return localVarResp.getData();
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/virus/scan/cloud-storage/sharepoint-online/site/single";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    if (clientID != null) {
+      localVarRequestBuilder.header("clientID", clientID.toString());
+    }
+    if (clientSecret != null) {
+      localVarRequestBuilder.header("clientSecret", clientSecret.toString());
+    }
+    if (sharepointDomainName != null) {
+      localVarRequestBuilder.header("sharepointDomainName", sharepointDomainName.toString());
+    }
+    if (siteID != null) {
+      localVarRequestBuilder.header("siteID", siteID.toString());
+    }
+    if (tenantID != null) {
+      localVarRequestBuilder.header("tenantID", tenantID.toString());
+    }
+    if (filePath != null) {
+      localVarRequestBuilder.header("filePath", filePath.toString());
+    }
+    if (itemID != null) {
+      localVarRequestBuilder.header("itemID", itemID.toString());
+    }
+    localVarRequestBuilder.header("Accept", "application/json, text/json, application/xml, text/xml");
+
+    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
+    }
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
+    }
+    return localVarRequestBuilder;
+  }
+
+  /**
+   * Advanced Virus Scan a file in a SharePoint Online Site Drive
+   * Advanced Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
+   * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
+   * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
+   * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
+   * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
+   * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
+   * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
+   * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
+   * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
+   * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
+   * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
+   * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
+   * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
+   * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
+   * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
+   * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
+   * @return CloudStorageAdvancedVirusScanResult
+   * @throws ApiException if fails to make API call
+   */
+  public CloudStorageAdvancedVirusScanResult scanCloudStorageScanSharePointOnlineFileAdvanced(String clientID, String clientSecret, String sharepointDomainName, String siteID, String tenantID, String filePath, String itemID, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String restrictFileTypes) throws ApiException {
+    ApiResponse<CloudStorageAdvancedVirusScanResult> localVarResponse = scanCloudStorageScanSharePointOnlineFileAdvancedWithHttpInfo(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes);
+    return localVarResponse.getData();
+  }
+
+  /**
+   * Advanced Virus Scan a file in a SharePoint Online Site Drive
+   * Advanced Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
+   * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
+   * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
+   * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
+   * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
+   * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
+   * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
+   * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
+   * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
+   * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
+   * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
+   * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
+   * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
+   * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
+   * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
+   * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
+   * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
+   * @return ApiResponse&lt;CloudStorageAdvancedVirusScanResult&gt;
+   * @throws ApiException if fails to make API call
+   */
+  public ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanSharePointOnlineFileAdvancedWithHttpInfo(String clientID, String clientSecret, String sharepointDomainName, String siteID, String tenantID, String filePath, String itemID, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String restrictFileTypes) throws ApiException {
+    HttpRequest.Builder localVarRequestBuilder = scanCloudStorageScanSharePointOnlineFileAdvancedRequestBuilder(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes);
+    try {
+      HttpResponse<InputStream> localVarResponse = memberVarHttpClient.send(
+          localVarRequestBuilder.build(),
+          HttpResponse.BodyHandlers.ofInputStream());
+      if (memberVarResponseInterceptor != null) {
+        memberVarResponseInterceptor.accept(localVarResponse);
+      }
+      try {
+        if (localVarResponse.statusCode()/ 100 != 2) {
+          throw getApiException("scanCloudStorageScanSharePointOnlineFileAdvanced", localVarResponse);
+        }
+        if (localVarResponse.body() == null) {
+          return new ApiResponse<CloudStorageAdvancedVirusScanResult>(
+              localVarResponse.statusCode(),
+              localVarResponse.headers().map(),
+              null
+          );
+        }
+
+        String responseBody = new String(localVarResponse.body().readAllBytes());
+        localVarResponse.body().close();
+
+        return new ApiResponse<CloudStorageAdvancedVirusScanResult>(
+            localVarResponse.statusCode(),
+            localVarResponse.headers().map(),
+            responseBody.isBlank()? null: memberVarObjectMapper.readValue(responseBody, new TypeReference<CloudStorageAdvancedVirusScanResult>() {})
+        );
+      } finally {
+      }
+    } catch (IOException e) {
+      throw new ApiException(e);
+    }
+    catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+      throw new ApiException(e);
+    }
+  }
+
+  private HttpRequest.Builder scanCloudStorageScanSharePointOnlineFileAdvancedRequestBuilder(String clientID, String clientSecret, String sharepointDomainName, String siteID, String tenantID, String filePath, String itemID, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String restrictFileTypes) throws ApiException {
+    // verify the required parameter 'clientID' is set
+    if (clientID == null) {
+      throw new ApiException(400, "Missing the required parameter 'clientID' when calling scanCloudStorageScanSharePointOnlineFileAdvanced");
+    }
+    // verify the required parameter 'clientSecret' is set
+    if (clientSecret == null) {
+      throw new ApiException(400, "Missing the required parameter 'clientSecret' when calling scanCloudStorageScanSharePointOnlineFileAdvanced");
+    }
+    // verify the required parameter 'sharepointDomainName' is set
+    if (sharepointDomainName == null) {
+      throw new ApiException(400, "Missing the required parameter 'sharepointDomainName' when calling scanCloudStorageScanSharePointOnlineFileAdvanced");
+    }
+    // verify the required parameter 'siteID' is set
+    if (siteID == null) {
+      throw new ApiException(400, "Missing the required parameter 'siteID' when calling scanCloudStorageScanSharePointOnlineFileAdvanced");
     }
 
-    /**
-     * Get the status and result of a Scan Cloud Storage Batch Job
-     * Returns the result of the Async Job - possible states can be STARTED or COMPLETED.  This API is only available for Cloudmersive Managed Instance and Private Cloud deployments.
-     * @param asyncJobID  (required)
-     * @return ApiResponse&lt;ScanCloudStorageJobStatusResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<ScanCloudStorageJobStatusResult> scanCloudStorageGetAsyncJobStatusWithHttpInfo(String asyncJobID) throws ApiException {
-        okhttp3.Call localVarCall = scanCloudStorageGetAsyncJobStatusValidateBeforeCall(asyncJobID, null);
-        Type localVarReturnType = new TypeToken<ScanCloudStorageJobStatusResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    HttpRequest.Builder localVarRequestBuilder = HttpRequest.newBuilder();
+
+    String localVarPath = "/virus/scan/cloud-storage/sharepoint-online/site/advanced";
+
+    localVarRequestBuilder.uri(URI.create(memberVarBaseUri + localVarPath));
+
+    if (clientID != null) {
+      localVarRequestBuilder.header("clientID", clientID.toString());
     }
-
-    /**
-     * Get the status and result of a Scan Cloud Storage Batch Job (asynchronously)
-     * Returns the result of the Async Job - possible states can be STARTED or COMPLETED.  This API is only available for Cloudmersive Managed Instance and Private Cloud deployments.
-     * @param asyncJobID  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageGetAsyncJobStatusAsync(String asyncJobID, final ApiCallback<ScanCloudStorageJobStatusResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = scanCloudStorageGetAsyncJobStatusValidateBeforeCall(asyncJobID, _callback);
-        Type localVarReturnType = new TypeToken<ScanCloudStorageJobStatusResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
+    if (clientSecret != null) {
+      localVarRequestBuilder.header("clientSecret", clientSecret.toString());
     }
-    /**
-     * Build call for scanCloudStorageScanAwsS3File
-     * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
-     * @param bucketName Name of the S3 bucket (required)
-     * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanAwsS3FileCall(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/virus/scan/cloud-storage/aws-s3/single";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        if (accessKey != null) {
-            localVarHeaderParams.put("accessKey", localVarApiClient.parameterToString(accessKey));
-        }
-
-
-        if (secretKey != null) {
-            localVarHeaderParams.put("secretKey", localVarApiClient.parameterToString(secretKey));
-        }
-
-
-        if (bucketRegion != null) {
-            localVarHeaderParams.put("bucketRegion", localVarApiClient.parameterToString(bucketRegion));
-        }
-
-
-        if (bucketName != null) {
-            localVarHeaderParams.put("bucketName", localVarApiClient.parameterToString(bucketName));
-        }
-
-
-        if (keyName != null) {
-            localVarHeaderParams.put("keyName", localVarApiClient.parameterToString(keyName));
-        }
-
-
-        if (roleArn != null) {
-            localVarHeaderParams.put("roleArn", localVarApiClient.parameterToString(roleArn));
-        }
-
-
-        String[] localVarAuthNames = new String[] { "Apikey" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    if (sharepointDomainName != null) {
+      localVarRequestBuilder.header("sharepointDomainName", sharepointDomainName.toString());
     }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call scanCloudStorageScanAwsS3FileValidateBeforeCall(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'accessKey' is set
-        if (accessKey == null) {
-            throw new ApiException("Missing the required parameter 'accessKey' when calling scanCloudStorageScanAwsS3File(Async)");
-        }
-
-        // verify the required parameter 'secretKey' is set
-        if (secretKey == null) {
-            throw new ApiException("Missing the required parameter 'secretKey' when calling scanCloudStorageScanAwsS3File(Async)");
-        }
-
-        // verify the required parameter 'bucketRegion' is set
-        if (bucketRegion == null) {
-            throw new ApiException("Missing the required parameter 'bucketRegion' when calling scanCloudStorageScanAwsS3File(Async)");
-        }
-
-        // verify the required parameter 'bucketName' is set
-        if (bucketName == null) {
-            throw new ApiException("Missing the required parameter 'bucketName' when calling scanCloudStorageScanAwsS3File(Async)");
-        }
-
-        // verify the required parameter 'keyName' is set
-        if (keyName == null) {
-            throw new ApiException("Missing the required parameter 'keyName' when calling scanCloudStorageScanAwsS3File(Async)");
-        }
-
-        return scanCloudStorageScanAwsS3FileCall(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, _callback);
-
+    if (siteID != null) {
+      localVarRequestBuilder.header("siteID", siteID.toString());
     }
-
-    /**
-     * Scan an AWS S3 file for viruses
-     * Scan the contents of a single AWS S3 file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
-     * @param bucketName Name of the S3 bucket (required)
-     * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @return CloudStorageVirusScanResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public CloudStorageVirusScanResult scanCloudStorageScanAwsS3File(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn) throws ApiException {
-        ApiResponse<CloudStorageVirusScanResult> localVarResp = scanCloudStorageScanAwsS3FileWithHttpInfo(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn);
-        return localVarResp.getData();
+    if (tenantID != null) {
+      localVarRequestBuilder.header("tenantID", tenantID.toString());
     }
-
-    /**
-     * Scan an AWS S3 file for viruses
-     * Scan the contents of a single AWS S3 file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
-     * @param bucketName Name of the S3 bucket (required)
-     * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @return ApiResponse&lt;CloudStorageVirusScanResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanAwsS3FileWithHttpInfo(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn) throws ApiException {
-        okhttp3.Call localVarCall = scanCloudStorageScanAwsS3FileValidateBeforeCall(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, null);
-        Type localVarReturnType = new TypeToken<CloudStorageVirusScanResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    if (filePath != null) {
+      localVarRequestBuilder.header("filePath", filePath.toString());
     }
-
-    /**
-     * Scan an AWS S3 file for viruses (asynchronously)
-     * Scan the contents of a single AWS S3 file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
-     * @param bucketName Name of the S3 bucket (required)
-     * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanAwsS3FileAsync(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, final ApiCallback<CloudStorageVirusScanResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = scanCloudStorageScanAwsS3FileValidateBeforeCall(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, _callback);
-        Type localVarReturnType = new TypeToken<CloudStorageVirusScanResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
+    if (itemID != null) {
+      localVarRequestBuilder.header("itemID", itemID.toString());
     }
-    /**
-     * Build call for scanCloudStorageScanAwsS3FileAdvanced
-     * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
-     * @param bucketName Name of the S3 bucket (required)
-     * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanAwsS3FileAdvancedCall(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/virus/scan/cloud-storage/aws-s3/single/advanced";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        if (accessKey != null) {
-            localVarHeaderParams.put("accessKey", localVarApiClient.parameterToString(accessKey));
-        }
-
-
-        if (secretKey != null) {
-            localVarHeaderParams.put("secretKey", localVarApiClient.parameterToString(secretKey));
-        }
-
-
-        if (bucketRegion != null) {
-            localVarHeaderParams.put("bucketRegion", localVarApiClient.parameterToString(bucketRegion));
-        }
-
-
-        if (bucketName != null) {
-            localVarHeaderParams.put("bucketName", localVarApiClient.parameterToString(bucketName));
-        }
-
-
-        if (keyName != null) {
-            localVarHeaderParams.put("keyName", localVarApiClient.parameterToString(keyName));
-        }
-
-
-        if (roleArn != null) {
-            localVarHeaderParams.put("roleArn", localVarApiClient.parameterToString(roleArn));
-        }
-
-
-        if (allowExecutables != null) {
-            localVarHeaderParams.put("allowExecutables", localVarApiClient.parameterToString(allowExecutables));
-        }
-
-
-        if (allowInvalidFiles != null) {
-            localVarHeaderParams.put("allowInvalidFiles", localVarApiClient.parameterToString(allowInvalidFiles));
-        }
-
-
-        if (allowScripts != null) {
-            localVarHeaderParams.put("allowScripts", localVarApiClient.parameterToString(allowScripts));
-        }
-
-
-        if (allowPasswordProtectedFiles != null) {
-            localVarHeaderParams.put("allowPasswordProtectedFiles", localVarApiClient.parameterToString(allowPasswordProtectedFiles));
-        }
-
-
-        if (allowMacros != null) {
-            localVarHeaderParams.put("allowMacros", localVarApiClient.parameterToString(allowMacros));
-        }
-
-
-        if (allowXmlExternalEntities != null) {
-            localVarHeaderParams.put("allowXmlExternalEntities", localVarApiClient.parameterToString(allowXmlExternalEntities));
-        }
-
-
-        if (allowInsecureDeserialization != null) {
-            localVarHeaderParams.put("allowInsecureDeserialization", localVarApiClient.parameterToString(allowInsecureDeserialization));
-        }
-
-
-        if (allowHtml != null) {
-            localVarHeaderParams.put("allowHtml", localVarApiClient.parameterToString(allowHtml));
-        }
-
-
-        if (allowUnsafeArchives != null) {
-            localVarHeaderParams.put("allowUnsafeArchives", localVarApiClient.parameterToString(allowUnsafeArchives));
-        }
-
-
-        if (allowOleEmbeddedObject != null) {
-            localVarHeaderParams.put("allowOleEmbeddedObject", localVarApiClient.parameterToString(allowOleEmbeddedObject));
-        }
-
-
-        if (allowUnwantedAction != null) {
-            localVarHeaderParams.put("allowUnwantedAction", localVarApiClient.parameterToString(allowUnwantedAction));
-        }
-
-
-        if (options != null) {
-            localVarHeaderParams.put("options", localVarApiClient.parameterToString(options));
-        }
-
-
-        if (restrictFileTypes != null) {
-            localVarHeaderParams.put("restrictFileTypes", localVarApiClient.parameterToString(restrictFileTypes));
-        }
-
-
-        String[] localVarAuthNames = new String[] { "Apikey" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    if (allowExecutables != null) {
+      localVarRequestBuilder.header("allowExecutables", allowExecutables.toString());
     }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call scanCloudStorageScanAwsS3FileAdvancedValidateBeforeCall(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'accessKey' is set
-        if (accessKey == null) {
-            throw new ApiException("Missing the required parameter 'accessKey' when calling scanCloudStorageScanAwsS3FileAdvanced(Async)");
-        }
-
-        // verify the required parameter 'secretKey' is set
-        if (secretKey == null) {
-            throw new ApiException("Missing the required parameter 'secretKey' when calling scanCloudStorageScanAwsS3FileAdvanced(Async)");
-        }
-
-        // verify the required parameter 'bucketRegion' is set
-        if (bucketRegion == null) {
-            throw new ApiException("Missing the required parameter 'bucketRegion' when calling scanCloudStorageScanAwsS3FileAdvanced(Async)");
-        }
-
-        // verify the required parameter 'bucketName' is set
-        if (bucketName == null) {
-            throw new ApiException("Missing the required parameter 'bucketName' when calling scanCloudStorageScanAwsS3FileAdvanced(Async)");
-        }
-
-        // verify the required parameter 'keyName' is set
-        if (keyName == null) {
-            throw new ApiException("Missing the required parameter 'keyName' when calling scanCloudStorageScanAwsS3FileAdvanced(Async)");
-        }
-
-        return scanCloudStorageScanAwsS3FileAdvancedCall(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, _callback);
-
+    if (allowInvalidFiles != null) {
+      localVarRequestBuilder.header("allowInvalidFiles", allowInvalidFiles.toString());
     }
-
-    /**
-     * Advanced Scan an AWS S3 file for viruses
-     * Advanced Scan the contents of a single AWS S3 file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
-     * @param bucketName Name of the S3 bucket (required)
-     * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @return CloudStorageAdvancedVirusScanResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public CloudStorageAdvancedVirusScanResult scanCloudStorageScanAwsS3FileAdvanced(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
-        ApiResponse<CloudStorageAdvancedVirusScanResult> localVarResp = scanCloudStorageScanAwsS3FileAdvancedWithHttpInfo(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
-        return localVarResp.getData();
+    if (allowScripts != null) {
+      localVarRequestBuilder.header("allowScripts", allowScripts.toString());
     }
-
-    /**
-     * Advanced Scan an AWS S3 file for viruses
-     * Advanced Scan the contents of a single AWS S3 file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
-     * @param bucketName Name of the S3 bucket (required)
-     * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @return ApiResponse&lt;CloudStorageAdvancedVirusScanResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanAwsS3FileAdvancedWithHttpInfo(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
-        okhttp3.Call localVarCall = scanCloudStorageScanAwsS3FileAdvancedValidateBeforeCall(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, null);
-        Type localVarReturnType = new TypeToken<CloudStorageAdvancedVirusScanResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    if (allowPasswordProtectedFiles != null) {
+      localVarRequestBuilder.header("allowPasswordProtectedFiles", allowPasswordProtectedFiles.toString());
     }
-
-    /**
-     * Advanced Scan an AWS S3 file for viruses (asynchronously)
-     * Advanced Scan the contents of a single AWS S3 file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param accessKey AWS S3 access key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param secretKey AWS S3 secret key for the S3 bucket; you can get this from My Security Credentials in the AWS console (required)
-     * @param bucketRegion Name of the region of the S3 bucket, such as &#39;US-East-1&#39; (required)
-     * @param bucketName Name of the S3 bucket (required)
-     * @param keyName Key name (also called file name) of the file in S3 that you wish to scan for viruses.  If the key name contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param roleArn Optional: Role ARN for STS Credential-based access.  This is for advanced access using the Security Token Service and is not required.  If the roleArn contains Unicode characters, you must base64 encode the key name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanAwsS3FileAdvancedAsync(String accessKey, String secretKey, String bucketRegion, String bucketName, String keyName, String roleArn, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback<CloudStorageAdvancedVirusScanResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = scanCloudStorageScanAwsS3FileAdvancedValidateBeforeCall(accessKey, secretKey, bucketRegion, bucketName, keyName, roleArn, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, _callback);
-        Type localVarReturnType = new TypeToken<CloudStorageAdvancedVirusScanResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
+    if (allowMacros != null) {
+      localVarRequestBuilder.header("allowMacros", allowMacros.toString());
     }
-    /**
-     * Build call for scanCloudStorageScanAzureBlob
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanAzureBlobCall(String connectionString, String containerName, String blobPath, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/virus/scan/cloud-storage/azure-blob/single";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        if (connectionString != null) {
-            localVarHeaderParams.put("connectionString", localVarApiClient.parameterToString(connectionString));
-        }
-
-
-        if (containerName != null) {
-            localVarHeaderParams.put("containerName", localVarApiClient.parameterToString(containerName));
-        }
-
-
-        if (blobPath != null) {
-            localVarHeaderParams.put("blobPath", localVarApiClient.parameterToString(blobPath));
-        }
-
-
-        String[] localVarAuthNames = new String[] { "Apikey" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    if (allowXmlExternalEntities != null) {
+      localVarRequestBuilder.header("allowXmlExternalEntities", allowXmlExternalEntities.toString());
     }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call scanCloudStorageScanAzureBlobValidateBeforeCall(String connectionString, String containerName, String blobPath, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'connectionString' is set
-        if (connectionString == null) {
-            throw new ApiException("Missing the required parameter 'connectionString' when calling scanCloudStorageScanAzureBlob(Async)");
-        }
-
-        // verify the required parameter 'containerName' is set
-        if (containerName == null) {
-            throw new ApiException("Missing the required parameter 'containerName' when calling scanCloudStorageScanAzureBlob(Async)");
-        }
-
-        // verify the required parameter 'blobPath' is set
-        if (blobPath == null) {
-            throw new ApiException("Missing the required parameter 'blobPath' when calling scanCloudStorageScanAzureBlob(Async)");
-        }
-
-        return scanCloudStorageScanAzureBlobCall(connectionString, containerName, blobPath, _callback);
-
+    if (allowInsecureDeserialization != null) {
+      localVarRequestBuilder.header("allowInsecureDeserialization", allowInsecureDeserialization.toString());
     }
-
-    /**
-     * Scan an Azure Blob for viruses
-     * Scan the contents of a single Azure Blob and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @return CloudStorageVirusScanResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public CloudStorageVirusScanResult scanCloudStorageScanAzureBlob(String connectionString, String containerName, String blobPath) throws ApiException {
-        ApiResponse<CloudStorageVirusScanResult> localVarResp = scanCloudStorageScanAzureBlobWithHttpInfo(connectionString, containerName, blobPath);
-        return localVarResp.getData();
+    if (allowHtml != null) {
+      localVarRequestBuilder.header("allowHtml", allowHtml.toString());
     }
-
-    /**
-     * Scan an Azure Blob for viruses
-     * Scan the contents of a single Azure Blob and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @return ApiResponse&lt;CloudStorageVirusScanResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanAzureBlobWithHttpInfo(String connectionString, String containerName, String blobPath) throws ApiException {
-        okhttp3.Call localVarCall = scanCloudStorageScanAzureBlobValidateBeforeCall(connectionString, containerName, blobPath, null);
-        Type localVarReturnType = new TypeToken<CloudStorageVirusScanResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    if (allowUnsafeArchives != null) {
+      localVarRequestBuilder.header("allowUnsafeArchives", allowUnsafeArchives.toString());
     }
-
-    /**
-     * Scan an Azure Blob for viruses (asynchronously)
-     * Scan the contents of a single Azure Blob and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanAzureBlobAsync(String connectionString, String containerName, String blobPath, final ApiCallback<CloudStorageVirusScanResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = scanCloudStorageScanAzureBlobValidateBeforeCall(connectionString, containerName, blobPath, _callback);
-        Type localVarReturnType = new TypeToken<CloudStorageVirusScanResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
+    if (allowOleEmbeddedObject != null) {
+      localVarRequestBuilder.header("allowOleEmbeddedObject", allowOleEmbeddedObject.toString());
     }
-    /**
-     * Build call for scanCloudStorageScanAzureBlobAdvanced
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanAzureBlobAdvancedCall(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/virus/scan/cloud-storage/azure-blob/single/advanced";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        if (connectionString != null) {
-            localVarHeaderParams.put("connectionString", localVarApiClient.parameterToString(connectionString));
-        }
-
-
-        if (containerName != null) {
-            localVarHeaderParams.put("containerName", localVarApiClient.parameterToString(containerName));
-        }
-
-
-        if (blobPath != null) {
-            localVarHeaderParams.put("blobPath", localVarApiClient.parameterToString(blobPath));
-        }
-
-
-        if (allowExecutables != null) {
-            localVarHeaderParams.put("allowExecutables", localVarApiClient.parameterToString(allowExecutables));
-        }
-
-
-        if (allowInvalidFiles != null) {
-            localVarHeaderParams.put("allowInvalidFiles", localVarApiClient.parameterToString(allowInvalidFiles));
-        }
-
-
-        if (allowScripts != null) {
-            localVarHeaderParams.put("allowScripts", localVarApiClient.parameterToString(allowScripts));
-        }
-
-
-        if (allowPasswordProtectedFiles != null) {
-            localVarHeaderParams.put("allowPasswordProtectedFiles", localVarApiClient.parameterToString(allowPasswordProtectedFiles));
-        }
-
-
-        if (allowMacros != null) {
-            localVarHeaderParams.put("allowMacros", localVarApiClient.parameterToString(allowMacros));
-        }
-
-
-        if (allowXmlExternalEntities != null) {
-            localVarHeaderParams.put("allowXmlExternalEntities", localVarApiClient.parameterToString(allowXmlExternalEntities));
-        }
-
-
-        if (allowInsecureDeserialization != null) {
-            localVarHeaderParams.put("allowInsecureDeserialization", localVarApiClient.parameterToString(allowInsecureDeserialization));
-        }
-
-
-        if (allowHtml != null) {
-            localVarHeaderParams.put("allowHtml", localVarApiClient.parameterToString(allowHtml));
-        }
-
-
-        if (allowUnsafeArchives != null) {
-            localVarHeaderParams.put("allowUnsafeArchives", localVarApiClient.parameterToString(allowUnsafeArchives));
-        }
-
-
-        if (allowOleEmbeddedObject != null) {
-            localVarHeaderParams.put("allowOleEmbeddedObject", localVarApiClient.parameterToString(allowOleEmbeddedObject));
-        }
-
-
-        if (allowUnwantedAction != null) {
-            localVarHeaderParams.put("allowUnwantedAction", localVarApiClient.parameterToString(allowUnwantedAction));
-        }
-
-
-        if (options != null) {
-            localVarHeaderParams.put("options", localVarApiClient.parameterToString(options));
-        }
-
-
-        if (restrictFileTypes != null) {
-            localVarHeaderParams.put("restrictFileTypes", localVarApiClient.parameterToString(restrictFileTypes));
-        }
-
-
-        String[] localVarAuthNames = new String[] { "Apikey" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    if (allowUnwantedAction != null) {
+      localVarRequestBuilder.header("allowUnwantedAction", allowUnwantedAction.toString());
     }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call scanCloudStorageScanAzureBlobAdvancedValidateBeforeCall(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'connectionString' is set
-        if (connectionString == null) {
-            throw new ApiException("Missing the required parameter 'connectionString' when calling scanCloudStorageScanAzureBlobAdvanced(Async)");
-        }
-
-        // verify the required parameter 'containerName' is set
-        if (containerName == null) {
-            throw new ApiException("Missing the required parameter 'containerName' when calling scanCloudStorageScanAzureBlobAdvanced(Async)");
-        }
-
-        // verify the required parameter 'blobPath' is set
-        if (blobPath == null) {
-            throw new ApiException("Missing the required parameter 'blobPath' when calling scanCloudStorageScanAzureBlobAdvanced(Async)");
-        }
-
-        return scanCloudStorageScanAzureBlobAdvancedCall(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, _callback);
-
+    if (restrictFileTypes != null) {
+      localVarRequestBuilder.header("restrictFileTypes", restrictFileTypes.toString());
     }
+    localVarRequestBuilder.header("Accept", "application/json, text/json, application/xml, text/xml");
 
-    /**
-     * Advanced Scan an Azure Blob for viruses
-     * Advanced Scan the contents of a single Azure Blob and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @return CloudStorageAdvancedVirusScanResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public CloudStorageAdvancedVirusScanResult scanCloudStorageScanAzureBlobAdvanced(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
-        ApiResponse<CloudStorageAdvancedVirusScanResult> localVarResp = scanCloudStorageScanAzureBlobAdvancedWithHttpInfo(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
-        return localVarResp.getData();
+    localVarRequestBuilder.method("POST", HttpRequest.BodyPublishers.noBody());
+    if (memberVarReadTimeout != null) {
+      localVarRequestBuilder.timeout(memberVarReadTimeout);
     }
-
-    /**
-     * Advanced Scan an Azure Blob for viruses
-     * Advanced Scan the contents of a single Azure Blob and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @return ApiResponse&lt;CloudStorageAdvancedVirusScanResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanAzureBlobAdvancedWithHttpInfo(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
-        okhttp3.Call localVarCall = scanCloudStorageScanAzureBlobAdvancedValidateBeforeCall(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, null);
-        Type localVarReturnType = new TypeToken<CloudStorageAdvancedVirusScanResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    if (memberVarInterceptor != null) {
+      memberVarInterceptor.accept(localVarRequestBuilder);
     }
+    return localVarRequestBuilder;
+  }
 
-    /**
-     * Advanced Scan an Azure Blob for viruses (asynchronously)
-     * Advanced Scan the contents of a single Azure Blob and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanAzureBlobAdvancedAsync(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback<CloudStorageAdvancedVirusScanResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = scanCloudStorageScanAzureBlobAdvancedValidateBeforeCall(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, _callback);
-        Type localVarReturnType = new TypeToken<CloudStorageAdvancedVirusScanResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for scanCloudStorageScanAzureBlobAdvancedBatchJob
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanAzureBlobAdvancedBatchJobCall(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/virus/scan/cloud-storage/azure-blob/single/advanced/batch-job";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        if (connectionString != null) {
-            localVarHeaderParams.put("connectionString", localVarApiClient.parameterToString(connectionString));
-        }
-
-
-        if (containerName != null) {
-            localVarHeaderParams.put("containerName", localVarApiClient.parameterToString(containerName));
-        }
-
-
-        if (blobPath != null) {
-            localVarHeaderParams.put("blobPath", localVarApiClient.parameterToString(blobPath));
-        }
-
-
-        if (allowExecutables != null) {
-            localVarHeaderParams.put("allowExecutables", localVarApiClient.parameterToString(allowExecutables));
-        }
-
-
-        if (allowInvalidFiles != null) {
-            localVarHeaderParams.put("allowInvalidFiles", localVarApiClient.parameterToString(allowInvalidFiles));
-        }
-
-
-        if (allowScripts != null) {
-            localVarHeaderParams.put("allowScripts", localVarApiClient.parameterToString(allowScripts));
-        }
-
-
-        if (allowPasswordProtectedFiles != null) {
-            localVarHeaderParams.put("allowPasswordProtectedFiles", localVarApiClient.parameterToString(allowPasswordProtectedFiles));
-        }
-
-
-        if (allowMacros != null) {
-            localVarHeaderParams.put("allowMacros", localVarApiClient.parameterToString(allowMacros));
-        }
-
-
-        if (allowXmlExternalEntities != null) {
-            localVarHeaderParams.put("allowXmlExternalEntities", localVarApiClient.parameterToString(allowXmlExternalEntities));
-        }
-
-
-        if (allowInsecureDeserialization != null) {
-            localVarHeaderParams.put("allowInsecureDeserialization", localVarApiClient.parameterToString(allowInsecureDeserialization));
-        }
-
-
-        if (allowHtml != null) {
-            localVarHeaderParams.put("allowHtml", localVarApiClient.parameterToString(allowHtml));
-        }
-
-
-        if (allowUnsafeArchives != null) {
-            localVarHeaderParams.put("allowUnsafeArchives", localVarApiClient.parameterToString(allowUnsafeArchives));
-        }
-
-
-        if (allowOleEmbeddedObject != null) {
-            localVarHeaderParams.put("allowOleEmbeddedObject", localVarApiClient.parameterToString(allowOleEmbeddedObject));
-        }
-
-
-        if (allowUnwantedAction != null) {
-            localVarHeaderParams.put("allowUnwantedAction", localVarApiClient.parameterToString(allowUnwantedAction));
-        }
-
-
-        if (options != null) {
-            localVarHeaderParams.put("options", localVarApiClient.parameterToString(options));
-        }
-
-
-        if (restrictFileTypes != null) {
-            localVarHeaderParams.put("restrictFileTypes", localVarApiClient.parameterToString(restrictFileTypes));
-        }
-
-
-        String[] localVarAuthNames = new String[] { "Apikey" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call scanCloudStorageScanAzureBlobAdvancedBatchJobValidateBeforeCall(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'connectionString' is set
-        if (connectionString == null) {
-            throw new ApiException("Missing the required parameter 'connectionString' when calling scanCloudStorageScanAzureBlobAdvancedBatchJob(Async)");
-        }
-
-        // verify the required parameter 'containerName' is set
-        if (containerName == null) {
-            throw new ApiException("Missing the required parameter 'containerName' when calling scanCloudStorageScanAzureBlobAdvancedBatchJob(Async)");
-        }
-
-        // verify the required parameter 'blobPath' is set
-        if (blobPath == null) {
-            throw new ApiException("Missing the required parameter 'blobPath' when calling scanCloudStorageScanAzureBlobAdvancedBatchJob(Async)");
-        }
-
-        return scanCloudStorageScanAzureBlobAdvancedBatchJobCall(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, _callback);
-
-    }
-
-    /**
-     * Advanced Scan an Azure Blob for viruses via a batch job
-     * Via a batch job, advanced Scan the contents of a single Azure Blob and its content for viruses and threats, great for larger/longer processing jobs.  Requires Managed Instance or Private Cloud.  Returns a job ID which you can then use the Get Job Status API to get the status and output of the job.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @return ScanCloudStorageBatchJobCreateResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ScanCloudStorageBatchJobCreateResult scanCloudStorageScanAzureBlobAdvancedBatchJob(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
-        ApiResponse<ScanCloudStorageBatchJobCreateResult> localVarResp = scanCloudStorageScanAzureBlobAdvancedBatchJobWithHttpInfo(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Advanced Scan an Azure Blob for viruses via a batch job
-     * Via a batch job, advanced Scan the contents of a single Azure Blob and its content for viruses and threats, great for larger/longer processing jobs.  Requires Managed Instance or Private Cloud.  Returns a job ID which you can then use the Get Job Status API to get the status and output of the job.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @return ApiResponse&lt;ScanCloudStorageBatchJobCreateResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<ScanCloudStorageBatchJobCreateResult> scanCloudStorageScanAzureBlobAdvancedBatchJobWithHttpInfo(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
-        okhttp3.Call localVarCall = scanCloudStorageScanAzureBlobAdvancedBatchJobValidateBeforeCall(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, null);
-        Type localVarReturnType = new TypeToken<ScanCloudStorageBatchJobCreateResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Advanced Scan an Azure Blob for viruses via a batch job (asynchronously)
-     * Via a batch job, advanced Scan the contents of a single Azure Blob and its content for viruses and threats, great for larger/longer processing jobs.  Requires Managed Instance or Private Cloud.  Returns a job ID which you can then use the Get Job Status API to get the status and output of the job.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param connectionString Connection string for the Azure Blob Storage Account; you can get this connection string from the Access Keys tab of the Storage Account blade in the Azure Portal. (required)
-     * @param containerName Name of the Blob container within the Azure Blob Storage account (required)
-     * @param blobPath Path to the blob within the container, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the blob path contains Unicode characters, you must base64 encode the blob path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Include scanMultipartFile to scan multi-part files such as split zip files.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanAzureBlobAdvancedBatchJobAsync(String connectionString, String containerName, String blobPath, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback<ScanCloudStorageBatchJobCreateResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = scanCloudStorageScanAzureBlobAdvancedBatchJobValidateBeforeCall(connectionString, containerName, blobPath, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, _callback);
-        Type localVarReturnType = new TypeToken<ScanCloudStorageBatchJobCreateResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for scanCloudStorageScanGcpStorageFile
-     * @param bucketName Name of the bucket in Google Cloud Storage (required)
-     * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanGcpStorageFileCall(String bucketName, String objectName, File jsonCredentialFile, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/virus/scan/cloud-storage/gcp-storage/single";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (jsonCredentialFile != null) {
-            localVarFormParams.put("jsonCredentialFile", jsonCredentialFile);
-        }
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "multipart/form-data"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        if (bucketName != null) {
-            localVarHeaderParams.put("bucketName", localVarApiClient.parameterToString(bucketName));
-        }
-
-
-        if (objectName != null) {
-            localVarHeaderParams.put("objectName", localVarApiClient.parameterToString(objectName));
-        }
-
-
-        String[] localVarAuthNames = new String[] { "Apikey" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call scanCloudStorageScanGcpStorageFileValidateBeforeCall(String bucketName, String objectName, File jsonCredentialFile, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'bucketName' is set
-        if (bucketName == null) {
-            throw new ApiException("Missing the required parameter 'bucketName' when calling scanCloudStorageScanGcpStorageFile(Async)");
-        }
-
-        // verify the required parameter 'objectName' is set
-        if (objectName == null) {
-            throw new ApiException("Missing the required parameter 'objectName' when calling scanCloudStorageScanGcpStorageFile(Async)");
-        }
-
-        // verify the required parameter 'jsonCredentialFile' is set
-        if (jsonCredentialFile == null) {
-            throw new ApiException("Missing the required parameter 'jsonCredentialFile' when calling scanCloudStorageScanGcpStorageFile(Async)");
-        }
-
-        return scanCloudStorageScanGcpStorageFileCall(bucketName, objectName, jsonCredentialFile, _callback);
-
-    }
-
-    /**
-     * Scan an Google Cloud Platform (GCP) Storage file for viruses
-     * Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param bucketName Name of the bucket in Google Cloud Storage (required)
-     * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
-     * @return CloudStorageVirusScanResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public CloudStorageVirusScanResult scanCloudStorageScanGcpStorageFile(String bucketName, String objectName, File jsonCredentialFile) throws ApiException {
-        ApiResponse<CloudStorageVirusScanResult> localVarResp = scanCloudStorageScanGcpStorageFileWithHttpInfo(bucketName, objectName, jsonCredentialFile);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Scan an Google Cloud Platform (GCP) Storage file for viruses
-     * Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param bucketName Name of the bucket in Google Cloud Storage (required)
-     * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
-     * @return ApiResponse&lt;CloudStorageVirusScanResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanGcpStorageFileWithHttpInfo(String bucketName, String objectName, File jsonCredentialFile) throws ApiException {
-        okhttp3.Call localVarCall = scanCloudStorageScanGcpStorageFileValidateBeforeCall(bucketName, objectName, jsonCredentialFile, null);
-        Type localVarReturnType = new TypeToken<CloudStorageVirusScanResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Scan an Google Cloud Platform (GCP) Storage file for viruses (asynchronously)
-     * Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param bucketName Name of the bucket in Google Cloud Storage (required)
-     * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanGcpStorageFileAsync(String bucketName, String objectName, File jsonCredentialFile, final ApiCallback<CloudStorageVirusScanResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = scanCloudStorageScanGcpStorageFileValidateBeforeCall(bucketName, objectName, jsonCredentialFile, _callback);
-        Type localVarReturnType = new TypeToken<CloudStorageVirusScanResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for scanCloudStorageScanGcpStorageFileAdvanced
-     * @param bucketName Name of the bucket in Google Cloud Storage (required)
-     * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanGcpStorageFileAdvancedCall(String bucketName, String objectName, File jsonCredentialFile, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/virus/scan/cloud-storage/gcp-storage/single/advanced";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        if (jsonCredentialFile != null) {
-            localVarFormParams.put("jsonCredentialFile", jsonCredentialFile);
-        }
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "multipart/form-data"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        if (bucketName != null) {
-            localVarHeaderParams.put("bucketName", localVarApiClient.parameterToString(bucketName));
-        }
-
-
-        if (objectName != null) {
-            localVarHeaderParams.put("objectName", localVarApiClient.parameterToString(objectName));
-        }
-
-
-        if (allowExecutables != null) {
-            localVarHeaderParams.put("allowExecutables", localVarApiClient.parameterToString(allowExecutables));
-        }
-
-
-        if (allowInvalidFiles != null) {
-            localVarHeaderParams.put("allowInvalidFiles", localVarApiClient.parameterToString(allowInvalidFiles));
-        }
-
-
-        if (allowScripts != null) {
-            localVarHeaderParams.put("allowScripts", localVarApiClient.parameterToString(allowScripts));
-        }
-
-
-        if (allowPasswordProtectedFiles != null) {
-            localVarHeaderParams.put("allowPasswordProtectedFiles", localVarApiClient.parameterToString(allowPasswordProtectedFiles));
-        }
-
-
-        if (allowMacros != null) {
-            localVarHeaderParams.put("allowMacros", localVarApiClient.parameterToString(allowMacros));
-        }
-
-
-        if (allowXmlExternalEntities != null) {
-            localVarHeaderParams.put("allowXmlExternalEntities", localVarApiClient.parameterToString(allowXmlExternalEntities));
-        }
-
-
-        if (allowInsecureDeserialization != null) {
-            localVarHeaderParams.put("allowInsecureDeserialization", localVarApiClient.parameterToString(allowInsecureDeserialization));
-        }
-
-
-        if (allowHtml != null) {
-            localVarHeaderParams.put("allowHtml", localVarApiClient.parameterToString(allowHtml));
-        }
-
-
-        if (allowUnsafeArchives != null) {
-            localVarHeaderParams.put("allowUnsafeArchives", localVarApiClient.parameterToString(allowUnsafeArchives));
-        }
-
-
-        if (allowOleEmbeddedObject != null) {
-            localVarHeaderParams.put("allowOleEmbeddedObject", localVarApiClient.parameterToString(allowOleEmbeddedObject));
-        }
-
-
-        if (allowUnwantedAction != null) {
-            localVarHeaderParams.put("allowUnwantedAction", localVarApiClient.parameterToString(allowUnwantedAction));
-        }
-
-
-        if (options != null) {
-            localVarHeaderParams.put("options", localVarApiClient.parameterToString(options));
-        }
-
-
-        if (restrictFileTypes != null) {
-            localVarHeaderParams.put("restrictFileTypes", localVarApiClient.parameterToString(restrictFileTypes));
-        }
-
-
-        String[] localVarAuthNames = new String[] { "Apikey" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call scanCloudStorageScanGcpStorageFileAdvancedValidateBeforeCall(String bucketName, String objectName, File jsonCredentialFile, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'bucketName' is set
-        if (bucketName == null) {
-            throw new ApiException("Missing the required parameter 'bucketName' when calling scanCloudStorageScanGcpStorageFileAdvanced(Async)");
-        }
-
-        // verify the required parameter 'objectName' is set
-        if (objectName == null) {
-            throw new ApiException("Missing the required parameter 'objectName' when calling scanCloudStorageScanGcpStorageFileAdvanced(Async)");
-        }
-
-        // verify the required parameter 'jsonCredentialFile' is set
-        if (jsonCredentialFile == null) {
-            throw new ApiException("Missing the required parameter 'jsonCredentialFile' when calling scanCloudStorageScanGcpStorageFileAdvanced(Async)");
-        }
-
-        return scanCloudStorageScanGcpStorageFileAdvancedCall(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, _callback);
-
-    }
-
-    /**
-     * Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses
-     * Advanced Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param bucketName Name of the bucket in Google Cloud Storage (required)
-     * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @return CloudStorageAdvancedVirusScanResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public CloudStorageAdvancedVirusScanResult scanCloudStorageScanGcpStorageFileAdvanced(String bucketName, String objectName, File jsonCredentialFile, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
-        ApiResponse<CloudStorageAdvancedVirusScanResult> localVarResp = scanCloudStorageScanGcpStorageFileAdvancedWithHttpInfo(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses
-     * Advanced Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param bucketName Name of the bucket in Google Cloud Storage (required)
-     * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @return ApiResponse&lt;CloudStorageAdvancedVirusScanResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanGcpStorageFileAdvancedWithHttpInfo(String bucketName, String objectName, File jsonCredentialFile, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes) throws ApiException {
-        okhttp3.Call localVarCall = scanCloudStorageScanGcpStorageFileAdvancedValidateBeforeCall(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, null);
-        Type localVarReturnType = new TypeToken<CloudStorageAdvancedVirusScanResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Advanced Scan an Google Cloud Platform (GCP) Storage file for viruses (asynchronously)
-     * Advanced Scan the contents of a single Google Cloud Platform (GCP) Storage file and its content for viruses and threats. Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time.
-     * @param bucketName Name of the bucket in Google Cloud Storage (required)
-     * @param objectName Name of the object or file in Google Cloud Storage.  If the object name contains Unicode characters, you must base64 encode the object name and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param jsonCredentialFile Service Account credential for Google Cloud stored in a JSON file. (required)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param options Comma separated set of configuration operations.  Include permitJavascriptAndHtmlInPDFs to allow JavaScript and HTML in PDF files.  Include blockOfficeXmlOleEmbeddedFile to block embedded OLE files in Office Documents using the modern file format.  Default is no options. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanGcpStorageFileAdvancedAsync(String bucketName, String objectName, File jsonCredentialFile, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String options, String restrictFileTypes, final ApiCallback<CloudStorageAdvancedVirusScanResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = scanCloudStorageScanGcpStorageFileAdvancedValidateBeforeCall(bucketName, objectName, jsonCredentialFile, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, options, restrictFileTypes, _callback);
-        Type localVarReturnType = new TypeToken<CloudStorageAdvancedVirusScanResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for scanCloudStorageScanSharePointOnlineFile
-     * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
-     * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
-     * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
-     * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
-     * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
-     * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanSharePointOnlineFileCall(String clientID, String clientSecret, String sharepointDomainName, String siteID, String filePath, String tenantID, String itemID, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/virus/scan/cloud-storage/sharepoint-online/site/single";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        if (clientID != null) {
-            localVarHeaderParams.put("clientID", localVarApiClient.parameterToString(clientID));
-        }
-
-
-        if (clientSecret != null) {
-            localVarHeaderParams.put("clientSecret", localVarApiClient.parameterToString(clientSecret));
-        }
-
-
-        if (sharepointDomainName != null) {
-            localVarHeaderParams.put("sharepointDomainName", localVarApiClient.parameterToString(sharepointDomainName));
-        }
-
-
-        if (siteID != null) {
-            localVarHeaderParams.put("siteID", localVarApiClient.parameterToString(siteID));
-        }
-
-
-        if (tenantID != null) {
-            localVarHeaderParams.put("tenantID", localVarApiClient.parameterToString(tenantID));
-        }
-
-
-        if (filePath != null) {
-            localVarHeaderParams.put("filePath", localVarApiClient.parameterToString(filePath));
-        }
-
-
-        if (itemID != null) {
-            localVarHeaderParams.put("itemID", localVarApiClient.parameterToString(itemID));
-        }
-
-
-        String[] localVarAuthNames = new String[] { "Apikey" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call scanCloudStorageScanSharePointOnlineFileValidateBeforeCall(String clientID, String clientSecret, String sharepointDomainName, String siteID, String filePath, String tenantID, String itemID, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'clientID' is set
-        if (clientID == null) {
-            throw new ApiException("Missing the required parameter 'clientID' when calling scanCloudStorageScanSharePointOnlineFile(Async)");
-        }
-
-        // verify the required parameter 'clientSecret' is set
-        if (clientSecret == null) {
-            throw new ApiException("Missing the required parameter 'clientSecret' when calling scanCloudStorageScanSharePointOnlineFile(Async)");
-        }
-
-        // verify the required parameter 'sharepointDomainName' is set
-        if (sharepointDomainName == null) {
-            throw new ApiException("Missing the required parameter 'sharepointDomainName' when calling scanCloudStorageScanSharePointOnlineFile(Async)");
-        }
-
-        // verify the required parameter 'siteID' is set
-        if (siteID == null) {
-            throw new ApiException("Missing the required parameter 'siteID' when calling scanCloudStorageScanSharePointOnlineFile(Async)");
-        }
-
-        // verify the required parameter 'filePath' is set
-        if (filePath == null) {
-            throw new ApiException("Missing the required parameter 'filePath' when calling scanCloudStorageScanSharePointOnlineFile(Async)");
-        }
-
-        return scanCloudStorageScanSharePointOnlineFileCall(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID, _callback);
-
-    }
-
-    /**
-     * Virus Scan a file in a SharePoint Online Site Drive
-     * Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
-     * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
-     * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
-     * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
-     * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
-     * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
-     * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
-     * @return CloudStorageVirusScanResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public CloudStorageVirusScanResult scanCloudStorageScanSharePointOnlineFile(String clientID, String clientSecret, String sharepointDomainName, String siteID, String filePath, String tenantID, String itemID) throws ApiException {
-        ApiResponse<CloudStorageVirusScanResult> localVarResp = scanCloudStorageScanSharePointOnlineFileWithHttpInfo(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Virus Scan a file in a SharePoint Online Site Drive
-     * Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
-     * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
-     * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
-     * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
-     * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
-     * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
-     * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
-     * @return ApiResponse&lt;CloudStorageVirusScanResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<CloudStorageVirusScanResult> scanCloudStorageScanSharePointOnlineFileWithHttpInfo(String clientID, String clientSecret, String sharepointDomainName, String siteID, String filePath, String tenantID, String itemID) throws ApiException {
-        okhttp3.Call localVarCall = scanCloudStorageScanSharePointOnlineFileValidateBeforeCall(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID, null);
-        Type localVarReturnType = new TypeToken<CloudStorageVirusScanResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Virus Scan a file in a SharePoint Online Site Drive (asynchronously)
-     * Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
-     * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
-     * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
-     * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
-     * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
-     * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (required)
-     * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
-     * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanSharePointOnlineFileAsync(String clientID, String clientSecret, String sharepointDomainName, String siteID, String filePath, String tenantID, String itemID, final ApiCallback<CloudStorageVirusScanResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = scanCloudStorageScanSharePointOnlineFileValidateBeforeCall(clientID, clientSecret, sharepointDomainName, siteID, filePath, tenantID, itemID, _callback);
-        Type localVarReturnType = new TypeToken<CloudStorageVirusScanResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for scanCloudStorageScanSharePointOnlineFileAdvanced
-     * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
-     * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
-     * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
-     * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
-     * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
-     * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanSharePointOnlineFileAdvancedCall(String clientID, String clientSecret, String sharepointDomainName, String siteID, String tenantID, String filePath, String itemID, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String restrictFileTypes, final ApiCallback _callback) throws ApiException {
-        String basePath = null;
-        // Operation Servers
-        String[] localBasePaths = new String[] {  };
-
-        // Determine Base Path to Use
-        if (localCustomBaseUrl != null){
-            basePath = localCustomBaseUrl;
-        } else if ( localBasePaths.length > 0 ) {
-            basePath = localBasePaths[localHostIndex];
-        } else {
-            basePath = null;
-        }
-
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/virus/scan/cloud-storage/sharepoint-online/site/advanced";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json",
-            "text/json",
-            "application/xml",
-            "text/xml"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        if (localVarContentType != null) {
-            localVarHeaderParams.put("Content-Type", localVarContentType);
-        }
-
-        if (clientID != null) {
-            localVarHeaderParams.put("clientID", localVarApiClient.parameterToString(clientID));
-        }
-
-
-        if (clientSecret != null) {
-            localVarHeaderParams.put("clientSecret", localVarApiClient.parameterToString(clientSecret));
-        }
-
-
-        if (sharepointDomainName != null) {
-            localVarHeaderParams.put("sharepointDomainName", localVarApiClient.parameterToString(sharepointDomainName));
-        }
-
-
-        if (siteID != null) {
-            localVarHeaderParams.put("siteID", localVarApiClient.parameterToString(siteID));
-        }
-
-
-        if (tenantID != null) {
-            localVarHeaderParams.put("tenantID", localVarApiClient.parameterToString(tenantID));
-        }
-
-
-        if (filePath != null) {
-            localVarHeaderParams.put("filePath", localVarApiClient.parameterToString(filePath));
-        }
-
-
-        if (itemID != null) {
-            localVarHeaderParams.put("itemID", localVarApiClient.parameterToString(itemID));
-        }
-
-
-        if (allowExecutables != null) {
-            localVarHeaderParams.put("allowExecutables", localVarApiClient.parameterToString(allowExecutables));
-        }
-
-
-        if (allowInvalidFiles != null) {
-            localVarHeaderParams.put("allowInvalidFiles", localVarApiClient.parameterToString(allowInvalidFiles));
-        }
-
-
-        if (allowScripts != null) {
-            localVarHeaderParams.put("allowScripts", localVarApiClient.parameterToString(allowScripts));
-        }
-
-
-        if (allowPasswordProtectedFiles != null) {
-            localVarHeaderParams.put("allowPasswordProtectedFiles", localVarApiClient.parameterToString(allowPasswordProtectedFiles));
-        }
-
-
-        if (allowMacros != null) {
-            localVarHeaderParams.put("allowMacros", localVarApiClient.parameterToString(allowMacros));
-        }
-
-
-        if (allowXmlExternalEntities != null) {
-            localVarHeaderParams.put("allowXmlExternalEntities", localVarApiClient.parameterToString(allowXmlExternalEntities));
-        }
-
-
-        if (allowInsecureDeserialization != null) {
-            localVarHeaderParams.put("allowInsecureDeserialization", localVarApiClient.parameterToString(allowInsecureDeserialization));
-        }
-
-
-        if (allowHtml != null) {
-            localVarHeaderParams.put("allowHtml", localVarApiClient.parameterToString(allowHtml));
-        }
-
-
-        if (allowUnsafeArchives != null) {
-            localVarHeaderParams.put("allowUnsafeArchives", localVarApiClient.parameterToString(allowUnsafeArchives));
-        }
-
-
-        if (allowOleEmbeddedObject != null) {
-            localVarHeaderParams.put("allowOleEmbeddedObject", localVarApiClient.parameterToString(allowOleEmbeddedObject));
-        }
-
-
-        if (allowUnwantedAction != null) {
-            localVarHeaderParams.put("allowUnwantedAction", localVarApiClient.parameterToString(allowUnwantedAction));
-        }
-
-
-        if (restrictFileTypes != null) {
-            localVarHeaderParams.put("restrictFileTypes", localVarApiClient.parameterToString(restrictFileTypes));
-        }
-
-
-        String[] localVarAuthNames = new String[] { "Apikey" };
-        return localVarApiClient.buildCall(basePath, localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call scanCloudStorageScanSharePointOnlineFileAdvancedValidateBeforeCall(String clientID, String clientSecret, String sharepointDomainName, String siteID, String tenantID, String filePath, String itemID, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String restrictFileTypes, final ApiCallback _callback) throws ApiException {
-        // verify the required parameter 'clientID' is set
-        if (clientID == null) {
-            throw new ApiException("Missing the required parameter 'clientID' when calling scanCloudStorageScanSharePointOnlineFileAdvanced(Async)");
-        }
-
-        // verify the required parameter 'clientSecret' is set
-        if (clientSecret == null) {
-            throw new ApiException("Missing the required parameter 'clientSecret' when calling scanCloudStorageScanSharePointOnlineFileAdvanced(Async)");
-        }
-
-        // verify the required parameter 'sharepointDomainName' is set
-        if (sharepointDomainName == null) {
-            throw new ApiException("Missing the required parameter 'sharepointDomainName' when calling scanCloudStorageScanSharePointOnlineFileAdvanced(Async)");
-        }
-
-        // verify the required parameter 'siteID' is set
-        if (siteID == null) {
-            throw new ApiException("Missing the required parameter 'siteID' when calling scanCloudStorageScanSharePointOnlineFileAdvanced(Async)");
-        }
-
-        return scanCloudStorageScanSharePointOnlineFileAdvancedCall(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes, _callback);
-
-    }
-
-    /**
-     * Advanced Virus Scan a file in a SharePoint Online Site Drive
-     * Advanced Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
-     * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
-     * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
-     * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
-     * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
-     * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
-     * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @return CloudStorageAdvancedVirusScanResult
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public CloudStorageAdvancedVirusScanResult scanCloudStorageScanSharePointOnlineFileAdvanced(String clientID, String clientSecret, String sharepointDomainName, String siteID, String tenantID, String filePath, String itemID, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String restrictFileTypes) throws ApiException {
-        ApiResponse<CloudStorageAdvancedVirusScanResult> localVarResp = scanCloudStorageScanSharePointOnlineFileAdvancedWithHttpInfo(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Advanced Virus Scan a file in a SharePoint Online Site Drive
-     * Advanced Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
-     * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
-     * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
-     * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
-     * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
-     * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
-     * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @return ApiResponse&lt;CloudStorageAdvancedVirusScanResult&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<CloudStorageAdvancedVirusScanResult> scanCloudStorageScanSharePointOnlineFileAdvancedWithHttpInfo(String clientID, String clientSecret, String sharepointDomainName, String siteID, String tenantID, String filePath, String itemID, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String restrictFileTypes) throws ApiException {
-        okhttp3.Call localVarCall = scanCloudStorageScanSharePointOnlineFileAdvancedValidateBeforeCall(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes, null);
-        Type localVarReturnType = new TypeToken<CloudStorageAdvancedVirusScanResult>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Advanced Virus Scan a file in a SharePoint Online Site Drive (asynchronously)
-     * Advanced Virus Scan the contents of a single SharePoint Online Site Drive file and its content for viruses and threats.  Advanced Scan files with 360-degree Content Protection across Viruses and Malware, executables, invalid files, scripts, and even restrictions on accepted file types with complete content verification. Customize threat rules to your needs. Leverage continuously updated signatures for millions of threats, and advanced high-performance scanning capabilities.  Over 17 million virus and malware signatures.  Continuous cloud-based updates.  Block threats beyond viruses including executables, scripts, invalid files, and more.  Optionally limit input files to a specific set of file types (e.g. PDF and Word Documents only).  Wide file format support including Office, PDF, HTML, Flash.  Zip support including .Zip, .Rar, .DMG, .Tar, and other archive formats.  Multi-threat scanning across viruses, malware, trojans, ransomware, and spyware.  High-speed in-memory scanning delivers subsecond typical response time. To get the Client ID and Client Secret, follow these steps: (1) Navigate to the Azure Portal and click on Azure Active Directory, (2) click on App Registrations on the left hand side, (3) click on Register Application, (4) Name the application CloudmersiveAntiVirus and click on Register, (5) Get the client ID by clicking on Overview and copying the value labeled Application (client) ID, (6) click on Certificates and Secrets, (7) click on New client secret, choose a longer expiration and give the secret a name, (8) copy the secret value to the clipboard and save it securely, this is your Client Secret, (9) Now we need to grant permissions to SharePOint; click on API Permissions on the left hand side, (10) click on Add a permission and choose Microsoft Graph, (11) click on Application Permissions, (12) search for Sites.FullControl.All, (13) Click on Add Permissions, (14) now navigate back to Azure Active Directory and click on Enterprise Applications, click on CloudmersiveAntiVirus and click on Permissions, and (15) click on Grant Admin Consent.
-     * @param clientID Client ID access credentials; see description above for instructions on how to get the Client ID from the Azure Active Directory portal. (required)
-     * @param clientSecret Client Secret access credentials; see description above for instructions on how to get the Client Secret from the Azure Active Directory portal (required)
-     * @param sharepointDomainName SharePoint Online domain name, such as mydomain.sharepoint.com (required)
-     * @param siteID Site ID (GUID) of the SharePoint site you wish to retrieve the file from (required)
-     * @param tenantID Optional; Tenant ID of your Azure Active Directory (optional)
-     * @param filePath Path to the file within the drive, such as &#39;hello.pdf&#39; or &#39;/folder/subfolder/world.pdf&#39;.  If the file path contains Unicode characters, you must base64 encode the file path and prepend it with &#39;base64:&#39;, such as: &#39;base64:6ZWV6ZWV6ZWV6ZWV6ZWV6ZWV&#39;. (optional)
-     * @param itemID SharePoint itemID, such as a DriveItem Id (optional)
-     * @param allowExecutables Set to false to block executable files (program code) from being allowed in the input file.  Default is false (recommended). (optional)
-     * @param allowInvalidFiles Set to false to block invalid files, such as a PDF file that is not really a valid PDF file, or a Word Document that is not a valid Word Document.  Default is false (recommended). (optional)
-     * @param allowScripts Set to false to block script files, such as a PHP files, Python scripts, and other malicious content or security threats that can be embedded in the file.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowPasswordProtectedFiles Set to false to block password protected and encrypted files, such as encrypted zip and rar files, and other files that seek to circumvent scanning through passwords.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowMacros Set to false to block macros and other threats embedded in document files, such as Word, Excel and PowerPoint embedded Macros, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowXmlExternalEntities Set to false to block XML External Entities and other threats embedded in XML files, and other files that contain embedded content threats. Set to true to allow these file types. Default is false (recommended). (optional)
-     * @param allowInsecureDeserialization Set to false to block Insecure Deserialization and other threats embedded in JSON and other object serialization files, and other files that contain embedded content threats.  Set to true to allow these file types.  Default is false (recommended). (optional)
-     * @param allowHtml Set to false to block HTML input in the top level file; HTML can contain XSS, scripts, local file accesses and other threats.  Set to true to allow these file types.  Default is false (recommended) [for API keys created prior to the release of this feature default is true for backward compatability]. (optional)
-     * @param allowUnsafeArchives Set to false to block unsafe archives such as Zip Bombs, and other archives that can cause unsafe extraction outcomes.  Default is false (recommended).  If set to true, unsafe archives will be allowed. (optional)
-     * @param allowOleEmbeddedObject Set to false to block OLE embedded objects, which can contain vulnerabilities and executable code.  Default is false (recommended).  If set to true, OLE embedded objects will be allowed. (optional)
-     * @param allowUnwantedAction Set to false to block unwanted or undesired actions, which can contain execute or open links or content when the file is viewed.  Default is false (recommended).  If set to true, unwanted actions will be allowed. (optional)
-     * @param restrictFileTypes Specify a restricted set of file formats to allow as clean as a comma-separated list of file formats, such as .pdf,.docx,.png would allow only PDF, PNG and Word document files.  All files must pass content verification against this list of file formats, if they do not, then the result will be returned as CleanResult&#x3D;false.  Set restrictFileTypes parameter to null or empty string to disable; default is disabled. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table border="1">
-       <caption>Response Details</caption>
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> OK </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call scanCloudStorageScanSharePointOnlineFileAdvancedAsync(String clientID, String clientSecret, String sharepointDomainName, String siteID, String tenantID, String filePath, String itemID, Boolean allowExecutables, Boolean allowInvalidFiles, Boolean allowScripts, Boolean allowPasswordProtectedFiles, Boolean allowMacros, Boolean allowXmlExternalEntities, Boolean allowInsecureDeserialization, Boolean allowHtml, Boolean allowUnsafeArchives, Boolean allowOleEmbeddedObject, Boolean allowUnwantedAction, String restrictFileTypes, final ApiCallback<CloudStorageAdvancedVirusScanResult> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = scanCloudStorageScanSharePointOnlineFileAdvancedValidateBeforeCall(clientID, clientSecret, sharepointDomainName, siteID, tenantID, filePath, itemID, allowExecutables, allowInvalidFiles, allowScripts, allowPasswordProtectedFiles, allowMacros, allowXmlExternalEntities, allowInsecureDeserialization, allowHtml, allowUnsafeArchives, allowOleEmbeddedObject, allowUnwantedAction, restrictFileTypes, _callback);
-        Type localVarReturnType = new TypeToken<CloudStorageAdvancedVirusScanResult>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
 }

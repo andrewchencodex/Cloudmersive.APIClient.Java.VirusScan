@@ -13,7 +13,7 @@
       "licenseName": "Apache License 2.0",
       "licenseUrl": "https://www.apache.org/licenses/LICENSE-2.0.html",
   
-      "artifactVersion": "10.1.0",
+      "artifactVersion": "11.0.0",
 
       "scmConnection": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.VirusScan.git",
     "scmDeveloperConnection": "https://github.com/Cloudmersive/Cloudmersive.APIClient.Java.VirusScan.git",

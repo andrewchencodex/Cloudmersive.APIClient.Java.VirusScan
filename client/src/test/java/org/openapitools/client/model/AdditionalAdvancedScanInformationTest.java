@@ -13,27 +13,27 @@
 
 package org.openapitools.client.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  * Model tests for AdditionalAdvancedScanInformation
  */
-public class AdditionalAdvancedScanInformationTest {
+class AdditionalAdvancedScanInformationTest {
     private final AdditionalAdvancedScanInformation model = new AdditionalAdvancedScanInformation();
 
     /**
      * Model tests for AdditionalAdvancedScanInformation
      */
     @Test
-    public void testAdditionalAdvancedScanInformation() {
+    void testAdditionalAdvancedScanInformation() {
         // TODO: test AdditionalAdvancedScanInformation
     }
 
@@ -41,7 +41,7 @@ public class AdditionalAdvancedScanInformationTest {
      * Test the property 'containsJSON'
      */
     @Test
-    public void containsJSONTest() {
+    void containsJSONTest() {
         // TODO: test containsJSON
     }
 
@@ -49,7 +49,7 @@ public class AdditionalAdvancedScanInformationTest {
      * Test the property 'containsXML'
      */
     @Test
-    public void containsXMLTest() {
+    void containsXMLTest() {
         // TODO: test containsXML
     }
 
@@ -57,7 +57,7 @@ public class AdditionalAdvancedScanInformationTest {
      * Test the property 'containsImage'
      */
     @Test
-    public void containsImageTest() {
+    void containsImageTest() {
         // TODO: test containsImage
     }
 
@@ -65,7 +65,7 @@ public class AdditionalAdvancedScanInformationTest {
      * Test the property 'hashSHA1'
      */
     @Test
-    public void hashSHA1Test() {
+    void hashSHA1Test() {
         // TODO: test hashSHA1
     }
 
@@ -73,7 +73,7 @@ public class AdditionalAdvancedScanInformationTest {
      * Test the property 'relevantSubfileName'
      */
     @Test
-    public void relevantSubfileNameTest() {
+    void relevantSubfileNameTest() {
         // TODO: test relevantSubfileName
     }
 
@@ -81,7 +81,7 @@ public class AdditionalAdvancedScanInformationTest {
      * Test the property 'relevantSubfileHashSHA1'
      */
     @Test
-    public void relevantSubfileHashSHA1Test() {
+    void relevantSubfileHashSHA1Test() {
         // TODO: test relevantSubfileHashSHA1
     }
 
@@ -89,7 +89,7 @@ public class AdditionalAdvancedScanInformationTest {
      * Test the property 'isAuthenticodeSigned'
      */
     @Test
-    public void isAuthenticodeSignedTest() {
+    void isAuthenticodeSignedTest() {
         // TODO: test isAuthenticodeSigned
     }
 

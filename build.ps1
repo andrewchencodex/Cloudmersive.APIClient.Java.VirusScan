@@ -1,4 +1,4 @@
-﻿$ErrorActionPreference = "Stop"
+$ErrorActionPreference = "Stop"
 
 # Always operate relative to this script's directory (NOT the caller's cwd)
 $root = $PSScriptRoot
@@ -47,10 +47,9 @@ try {
   $packageConfig  = Join-Path $root "packageconfig.json"
 
   $patchRoot          = Join-Path $root "patches"
-  $patchInterceptor   = Join-Path $patchRoot "ForceChunkedMultipartInterceptor.java"
   $patchChunkedMethod = Join-Path $patchRoot "ApiClient.enableChunkedTransfer.snippet.java"
 
-  foreach ($p in @($openapiJar, $packageConfig, $patchInterceptor, $patchChunkedMethod)) {
+  foreach ($p in @($openapiJar, $packageConfig, $patchChunkedMethod)) {
     if (!(Test-Path $p)) { throw "Missing required file: $p" }
   }
 
@@ -91,53 +90,22 @@ try {
   Write-Utf8NoBom -Path $swaggerPath -Content $swaggerJson
 
   # ----------------------------------------------------------------------
-  # Generate Java client
+  # Generate Java client (native library = java.net.http.HttpClient)
   # ----------------------------------------------------------------------
   Write-Host "Generating client -> $clientDir"
   & java -jar $openapiJar generate `
     -i $swaggerPath `
     -g java `
-    --library okhttp-gson `
+    --library native `
     -o $clientDir `
     -c $packageConfig
 
   # ----------------------------------------------------------------------
-  # Copy ForceChunkedMultipartInterceptor.java into generated sources (UTF-8 no BOM)
-  # ----------------------------------------------------------------------
-  $destInterceptor = Join-Path $clientDir "src\main\java\org\openapitools\client\ForceChunkedMultipartInterceptor.java"
-  New-Item -ItemType Directory -Force -Path (Split-Path -Parent $destInterceptor) | Out-Null
-  Write-Utf8NoBom -Path $destInterceptor -Content (Read-TextFile $patchInterceptor)
-
-  # ----------------------------------------------------------------------
-  # Patch ApiClient.java:
-  #   (1) force TLS 1.2 for OkHttp connections
-  #   (2) add enableChunkedTransfer() helper method from patch file
+  # Patch ApiClient.java: add enableChunkedTransfer() helper method
   # ----------------------------------------------------------------------
   $apiClientPath = Join-Path $clientDir "src\main\java\org\openapitools\client\ApiClient.java"
   $apiClientContent = Read-TextFile $apiClientPath
 
-  # (1) Insert TLS 1.2 connectionSpecs inside initHttpClient(...) after builder creation
-  if ($apiClientContent -notmatch 'tlsVersions\(TlsVersion\.TLS_1_2\)') {
-
-    $tlsSnippet = @'
-        // Force TLS 1.2 (some environments default to TLS 1.0/1.1 which many APIs block)
-        builder.connectionSpecs(Arrays.asList(
-                new ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
-                        .tlsVersions(TlsVersion.TLS_1_2)
-                        .build(),
-                ConnectionSpec.CLEARTEXT
-        ));
-'@
-
-    $pattern = 'OkHttpClient\.Builder\s+builder\s*=\s*new\s+OkHttpClient\.Builder\(\)\s*;'
-    $m = [System.Text.RegularExpressions.Regex]::Match($apiClientContent, $pattern)
-    if (-not $m.Success) { throw "Could not find OkHttpClient.Builder initialization in ApiClient.java" }
-
-    $insertPos = $m.Index + $m.Length
-    $apiClientContent = $apiClientContent.Insert($insertPos, "`r`n" + $tlsSnippet)
-  }
-
-  # (2) Inject enableChunkedTransfer() before final class closing brace
   if ($apiClientContent -notmatch '\benableChunkedTransfer\s*\(') {
     $chunkedSnippet = Read-TextFile $patchChunkedMethod
 
@@ -147,8 +115,62 @@ try {
     $apiClientContent = $apiClientContent.Insert($lastBrace, "`r`n" + $chunkedSnippet + "`r`n")
   }
 
-  # Write ApiClient.java without BOM
   Write-Utf8NoBom -Path $apiClientPath -Content $apiClientContent
+
+  # ----------------------------------------------------------------------
+  # Patch API classes: make the Pipe-based (chunked) multipart body
+  # publisher conditional on ApiClient.isChunkedTransferEnabled().
+  #
+  # Generated code has:
+  #   if (hasFiles) {           // Pipe -> always chunked (unknown length)
+  #   } else {                  // ByteArrayOutputStream -> buffered
+  #   }
+  #
+  # We change it to:
+  #   if (ApiClient.isChunkedTransferEnabled()) {  // Pipe -> chunked
+  #   } else {                                     // buffer everything -> known Content-Length
+  #   }
+  #
+  # The else branch already buffers via ByteArrayOutputStream + entity.writeTo(),
+  # which works for both file and non-file multipart bodies (the entity is built
+  # by MultipartEntityBuilder before the if/else).  We also swap
+  # ofInputStream(() -> new ByteArrayInputStream(...)) to ofByteArray(...) so that
+  # java.net.http sends a proper Content-Length header.
+  # ----------------------------------------------------------------------
+  $apiDir = Join-Path $clientDir "src\main\java\org\openapitools\client\api"
+  $apiFiles = Get-ChildItem -Path $apiDir -Filter '*.java' -Recurse
+
+  foreach ($file in $apiFiles) {
+    $content = Read-TextFile $file.FullName
+    $changed = $false
+
+    # (1) Replace "if (hasFiles)" with "if (ApiClient.isChunkedTransferEnabled())"
+    if ($content -match '\bif\s*\(\s*hasFiles\s*\)') {
+      $content = [System.Text.RegularExpressions.Regex]::Replace(
+        $content,
+        '\bif\s*\(\s*hasFiles\s*\)',
+        'if (ApiClient.isChunkedTransferEnabled())'
+      )
+      $changed = $true
+    }
+
+    # (2) Replace ofInputStream(() -> new ByteArrayInputStream(...)) with ofByteArray(...)
+    #     in the else (buffered) branch so a known Content-Length is sent.
+    $ofInputStreamPattern = 'HttpRequest\.BodyPublishers\s*\n?\s*\.ofInputStream\(\(\)\s*->\s*new\s+ByteArrayInputStream\((\w+)\.toByteArray\(\)\)\)'
+    if ($content -match $ofInputStreamPattern) {
+      $content = [System.Text.RegularExpressions.Regex]::Replace(
+        $content,
+        $ofInputStreamPattern,
+        'HttpRequest.BodyPublishers.ofByteArray($1.toByteArray())'
+      )
+      $changed = $true
+    }
+
+    if ($changed) {
+      Write-Host "Patched multipart body publisher in $($file.Name)"
+      Write-Utf8NoBom -Path $file.FullName -Content $content
+    }
+  }
 
   # Safety net: strip UTF-8 BOM from ALL generated Java files
   Get-ChildItem -Path (Join-Path $clientDir "src\main\java") -Recurse -Filter '*.java' |

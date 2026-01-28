@@ -13,28 +13,28 @@
 
 package org.openapitools.client.model;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Arrays;
 import org.openapitools.client.model.CloudStorageAdvancedVirusScanResult;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  * Model tests for ScanCloudStorageJobStatusResult
  */
-public class ScanCloudStorageJobStatusResultTest {
+class ScanCloudStorageJobStatusResultTest {
     private final ScanCloudStorageJobStatusResult model = new ScanCloudStorageJobStatusResult();
 
     /**
      * Model tests for ScanCloudStorageJobStatusResult
      */
     @Test
-    public void testScanCloudStorageJobStatusResult() {
+    void testScanCloudStorageJobStatusResult() {
         // TODO: test ScanCloudStorageJobStatusResult
     }
 
@@ -42,7 +42,7 @@ public class ScanCloudStorageJobStatusResultTest {
      * Test the property 'successful'
      */
     @Test
-    public void successfulTest() {
+    void successfulTest() {
         // TODO: test successful
     }
 
@@ -50,7 +50,7 @@ public class ScanCloudStorageJobStatusResultTest {
      * Test the property 'asyncJobStatus'
      */
     @Test
-    public void asyncJobStatusTest() {
+    void asyncJobStatusTest() {
         // TODO: test asyncJobStatus
     }
 
@@ -58,7 +58,7 @@ public class ScanCloudStorageJobStatusResultTest {
      * Test the property 'asyncJobID'
      */
     @Test
-    public void asyncJobIDTest() {
+    void asyncJobIDTest() {
         // TODO: test asyncJobID
     }
 
@@ -66,7 +66,7 @@ public class ScanCloudStorageJobStatusResultTest {
      * Test the property 'result'
      */
     @Test
-    public void resultTest() {
+    void resultTest() {
         // TODO: test result
     }
 
@@ -74,7 +74,7 @@ public class ScanCloudStorageJobStatusResultTest {
      * Test the property 'jobDuration'
      */
     @Test
-    public void jobDurationTest() {
+    void jobDurationTest() {
         // TODO: test jobDuration
     }
 
@@ -82,7 +82,7 @@ public class ScanCloudStorageJobStatusResultTest {
      * Test the property 'errorMessage'
      */
     @Test
-    public void errorMessageTest() {
+    void errorMessageTest() {
         // TODO: test errorMessage
     }
 
